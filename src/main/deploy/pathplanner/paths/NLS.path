@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.796065248842593,
+        "y": 2.7733750723379624
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.66379441550926,
+        "y": 1.8155925202546301
+      },
+      "isLocked": false,
+      "linkedName": "NeutralLeft"
+    },
+    {
+      "anchor": {
+        "x": 9.033902728351128,
+        "y": 0.6942704626334513
+      },
+      "prevControl": {
+        "x": 8.54416101217345,
+        "y": 0.7550104079878677
+      },
+      "nextControl": {
+        "x": 9.964129557291667,
+        "y": 0.578899594907408
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.211654079861113,
+        "y": 0.6942704626334513
+      },
+      "prevControl": {
+        "x": 11.486490740740742,
+        "y": 0.5194564525462968
+      },
+      "nextControl": {
+        "x": 14.303052127143676,
+        "y": 0.804863856847379
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.809366030092592,
+        "y": 2.2797214265046297
+      },
+      "prevControl": {
+        "x": 13.944458116319442,
+        "y": 2.0261367187500006
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Shootleft2ndtime"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2.85,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 134.24320448838517
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

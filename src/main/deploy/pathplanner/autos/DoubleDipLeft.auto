@@ -1,0 +1,67 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "flipoutDeploy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LSN"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeRollers"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NLS"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SLNZ"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeRollers"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NZSL2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
