@@ -1,7 +1,10 @@
 package frc.robot.commands;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elavator;
+import frc.robot.Constants;
+import frc.robot.Constants.ElavatorConstants;
 
 public class elavatorLevelHL extends Command{
    
@@ -9,6 +12,7 @@ public class elavatorLevelHL extends Command{
   Elavator m_Elavator;
   double m_seconds;
   Timer m_timer = new Timer();
+  PIDController pid = new PIDController(ElavatorConstants.kP, ElavatorConstants.kI, ElavatorConstants.kD);
 
 
   // Constructor
@@ -28,7 +32,7 @@ public class elavatorLevelHL extends Command{
  
   // Actual command
   public void execute() {
-      m_Elavator.elavatorUp(0.2);
+      m_Elavator.elavatorUp(pid.calculate(0, 5));
   }
 
 
