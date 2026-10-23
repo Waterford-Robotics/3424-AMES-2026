@@ -29,6 +29,10 @@ public class Constants {
     public static final double kP=0;
     public static final double kD=0;
     public static final double targetRotHL=5;
+    public static final double targetRotPB1=5;
+    public static final double targetRotPB2=5;
+    public static final double targetRotPB3=5;
+    public static final double targetRotShelf=5;
   }
 
   
