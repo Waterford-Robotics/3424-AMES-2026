@@ -43,7 +43,7 @@ public class Elavator {
   }
   
 
-  public void stopIndex() {
+  public void stopElavator() {
     m_elavatorLeft.set(0);
     m_elavatorRight.set(0);
   }
