@@ -4,36 +4,29 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import javax.swing.text.ElementIterator;
+
 import com.ctre.phoenix6.SignalLogger;
-import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
-
-
-
-
+import frc.robot.commands.elavatorLevelHL;
 import frc.robot.generated.TunerConstants;
-
-
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
+import frc.robot.subsystems.Elavator;
 
 
 public class RobotContainer {
@@ -47,7 +40,7 @@ public class RobotContainer {
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	//private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
-	
+	private final Elavator m_elevator = new Elavator();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -72,6 +65,11 @@ public class RobotContainer {
 							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
 					)
 			);
+			
+		new JoystickButton(m_devController.getHID(), ControllerConstants.scoreManualButton)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, 2.0) // Runs the command for 2.0 seconds
+    );
 
 			// m_drivetrain.setDefaultCommand(
 			// 		// Drivetrain will execute this command periodically

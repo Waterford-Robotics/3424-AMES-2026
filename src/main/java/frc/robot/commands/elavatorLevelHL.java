@@ -3,7 +3,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elavator;
-import frc.robot.Constants;
+
 import frc.robot.Constants.ElavatorConstants;
 
 public class elavatorLevelHL extends Command{
@@ -32,7 +32,7 @@ public class elavatorLevelHL extends Command{
  
   // Actual command
   public void execute() {
-      m_Elavator.elavatorUp(pid.calculate(0, 5));
+      m_Elavator.elavatorUp(pid.calculate(0, ElavatorConstants.targetRotHL));
   }
 
 

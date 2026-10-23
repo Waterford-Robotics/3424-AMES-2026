@@ -28,6 +28,7 @@ public class Constants {
     public static final double kI=0;
     public static final double kP=0;
     public static final double kD=0;
+    public static final double targetRotHL=5;
   }
 
   
