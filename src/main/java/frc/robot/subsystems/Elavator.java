@@ -31,13 +31,13 @@ public class Elavator {
   }
 
   public void elavatorUp(double speed) {
-    m_elavatorLeft.set(speed*-1); // feeds the balls into the shooter
-    m_elavatorRight.set(speed); // conveys balls to shooter
+    m_elavatorLeft.set(speed*-1); 
+    m_elavatorRight.set(speed); 
     
   }
    public void elavatorDown(double speed) {
-    m_elavatorLeft.set(speed); // feeds the balls into the shooter
-    m_elavatorRight.set(speed*-1); // conveys balls to shooter
+    m_elavatorLeft.set(speed); 
+    m_elavatorRight.set(speed*-1); 
     
   }
   
