@@ -8,13 +8,20 @@ public class Constants {
 
   public static final class ControllerConstants {
     
+    public static final int scoreManualButton=1;
+    public static final int scoreAutoButton=2;
   }  
 
   public static final class MotorIDConstants {
     public static final int k_elavatorLeftKrakenID = 21;
     public static final int k_elavatorRightKrakenID = 22;
+    public static final int k_scorerKrakenID = 23;
    
 
+  }
+  public static final class ScorerConstants {
+    public static final double scoreSpeed=0.2;
+        
   }
 
   
