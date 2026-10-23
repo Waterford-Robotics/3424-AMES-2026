@@ -73,20 +73,7 @@ public class RobotContainer {
 					)
 			);
 
-			// m_drivetrain.setDefaultCommand(
-			// 		// Drivetrain will execute this command periodically
-			// 		m_drivetrain.applyRequest(() -> (
-			// 			if (new JoystickButton(m_driverController.getHID(), ControllerConstants.k_Start) || JoystickButton(m_operatorController.getHID(), ControllerConstants.k_Start)){
-			// 				return m_drivetrain.XWheels();
-			// 			}
-			// 			else {
-			// 				drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
-			// 			}
-			// 		)
-			// 		)
-			// );
+			
 
 
 			SignalLogger.enableAutoLogging(false);
@@ -125,6 +112,7 @@ public class RobotContainer {
 		// m_driverController.b().whileTrue(drivetrain.applyRequest(() ->
 		//     point.withModuleDirection(new Rotation2d(-m_driverController.getLeftY(), -m_driverController.getLeftX()))
 		// ));
+		
 
 		
 
