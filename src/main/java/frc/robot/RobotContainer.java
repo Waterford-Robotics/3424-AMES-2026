@@ -25,13 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.IndexForSecsCommand;
-import frc.robot.commands.IntakeForSecsCommand;
-import frc.robot.commands.RevAndShootCommand;
-import frc.robot.commands.SetIntakeFlipoutCommand;
-import frc.robot.commands.ShootForSecsCommand;
-import frc.robot.commands.ShootFarForSecsCommand;
-import frc.robot.commands.ZeroIntakeFlipoutCommand;
+
 
 
 
@@ -39,10 +33,8 @@ import frc.robot.generated.TunerConstants;
 
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.IntakeFlipoutSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.IndexSubsystem;
+// import frc.robot.subsystems.IntakeSubsystem; how to import
+
 
 public class RobotContainer {
 	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -54,16 +46,14 @@ public class RobotContainer {
 					.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-	private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-	private final IntakeFlipoutSubsystem m_intakeFlipoutSubsystem = new IntakeFlipoutSubsystem();
-
-	private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-	private final IndexSubsystem m_indexSubsystem = new IndexSubsystem();
+	//private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
+	
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
-	private final CommandXboxController m_driverController = new CommandXboxController(ControllerConstants.k_driverControllerPort);
-	private final CommandXboxController m_operatorController = new CommandXboxController(ControllerConstants.k_operatorControllerPort);
+	private final CommandXboxController m_driverController = new CommandXboxController(0);
+	private final CommandXboxController m_operatorController = new CommandXboxController(1);
+	private final CommandXboxController m_devController = new CommandXboxController(2);
 
 	
 
@@ -101,30 +91,22 @@ public class RobotContainer {
 
 			SignalLogger.enableAutoLogging(false);
 
-			// NamedCommands.registerCommand("ShootCommand", 
-			// 		new ShootForSecsCommand(m_shooterSubsystem,3)
-			// );
-			NamedCommands.registerCommand("Intake", 
-			 		new IntakeForSecsCommand(m_intakeSubsystem, 1.0)
-			);
+			
+			
 
-			NamedCommands.registerCommand("ShootAndFlipout", shootAndFlipoutCommandGroup().withTimeout(10));
-			NamedCommands.registerCommand("Shoot", shootCommandGroup());
-			NamedCommands.registerCommand("flipoutDeploy", flipoutDeploy().withTimeout(8));
+			// NamedCommands.registerCommand("ShootAndFlipout", shootAndFlipoutCommandGroup().withTimeout(10));
+
+			//shootAndFlipoutCommandGroup()== a sequential group
+			
 			
 			//autos!! (only one works)
-				m_chooser.addOption("Shoot", Shoot);
-				m_chooser.addOption("ShootFar", ShootFar);
-				m_chooser.addOption("LSNS", m_drivetrain.getAutonomousCommand("LSNS"));
-				m_chooser.addOption("RSNS", m_drivetrain.getAutonomousCommand("RSNS"));
-				m_chooser.addOption("test", m_drivetrain.getAutonomousCommand("test"));
-				m_chooser.addOption("middleshoot",m_drivetrain.getAutonomousCommand("MiddleShootAuto"));
-				m_chooser.addOption("DoubleDipLeftTrench", m_drivetrain.getAutonomousCommand("DoubleDipLeft"));
+				// m_chooser.addOption("Shoot", Shoot);
+				
 
-			new EventTrigger("intakeRollers")
-			.whileTrue(new RunCommand(
-					() -> m_intakeSubsystem.intake(),m_intakeSubsystem));
-
+			// new EventTrigger("intakeRollers")
+			// .whileTrue(new RunCommand(
+			// 		() -> m_intakeSubsystem.intake(),m_intakeSubsystem));
+// I thought lines above might be useful 
 			SmartDashboard.putData("Automode", m_chooser);
 			
 
@@ -144,173 +126,22 @@ public class RobotContainer {
 		//     point.withModuleDirection(new Rotation2d(-m_driverController.getLeftY(), -m_driverController.getLeftX()))
 		// ));
 
-		// Zero NavX
-		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_Start)
-		.onTrue(
-				new InstantCommand(() -> m_drivetrain.resetGyro(), m_drivetrain)
-		);
-
-		// X Wheels
-		new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_rightTrigger)
-    	.whileTrue(
-			new RunCommand(() -> m_drivetrain.XWheels(), m_drivetrain)
-		);
-
-		new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_Start)
-    	.whileTrue(
-			new InstantCommand(() -> m_drivetrain.XWheels(), m_drivetrain)
-		);
-
-
-		// intake wheels
-		new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.05)
-		.whileTrue(
-				new RunCommand(() -> m_intakeSubsystem.intake())
-		)
-		.onFalse(
-				new RunCommand(() -> m_intakeSubsystem.stopIntake())
-		);
-
-		// FLIP IN AND FLIP OUT BUTTON BINDINGS 
-
-		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightBumper)
-		.onTrue(
-			new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem,"HOME").andThen(
-				new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem)
-			)
-		);
-
-		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftBumper)
-		.onTrue(
-			new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem).andThen(
-				new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
-			)
-		);
-
-		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_Back)
-		.onTrue(
-			new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem)
-		);
-
-		// new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
-		// .whileTrue(
-		// 	new RevAndShootCommand(m_shooterSubsystem, m_indexSubsystem)
-		// );
-
-
-		//BACKUP FLIPOUT MANUAL ON OPERATOR CONBTROLLER
-		new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_leftBumper)
-		.onTrue(
-				new RunCommand(() -> m_intakeFlipoutSubsystem.flipout(), m_intakeFlipoutSubsystem)
-		)
-		.onFalse(
-				new RunCommand(() -> m_intakeFlipoutSubsystem.stopFlipout(), m_intakeFlipoutSubsystem)
-		);
-
-		new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_rightBumper)
-		.onTrue(
-				new RunCommand(() -> m_intakeFlipoutSubsystem.reverseFlipout(), m_intakeFlipoutSubsystem)
-		)
-		.onFalse(
-				new RunCommand(() -> m_intakeFlipoutSubsystem.stopFlipout(), m_intakeFlipoutSubsystem)
-		);
-		
-		// flip out on driver controller - UPDATED
-		// new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightBumper)
-		// .whileTrue(
-		// 		new RunCommand(() -> m_intakeFlipoutSubsystem.intakeFlip(), m_intakeFlipoutSubsystem)
-		// )
-		// .onFalse(
-		// 		new RunCommand(() -> m_intakeFlipoutSubsystem.stopIntakeFlip(), m_intakeFlipoutSubsystem)
-		// );
 		
 
-		//indexer runs: belt floor, shooter indexer on Driver controller
-		new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
-		.whileTrue(
-			new RunCommand(() -> m_indexSubsystem.index())
-		)
-		.onFalse(
-			new RunCommand(() -> m_indexSubsystem.stopIndex())
-		);
 		
-		// rev up normal speed
-		new Trigger (() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.05)
-		.whileTrue(
-				new RunCommand(() -> m_shooterSubsystem.shoot())
-	
-		)
-		.onFalse(
-				new RunCommand(() -> m_shooterSubsystem.stopShooter())
-		);
-
-		
-
-		// rev up faster speed
-		new Trigger (() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
-		.whileTrue(
-				new RunCommand(() -> m_shooterSubsystem.farShoot())
-		)
-		.onFalse(
-				new RunCommand(() -> m_shooterSubsystem.stopShooter())
-		);
-
-		new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_X)
-		.onTrue(
-				new RunCommand(() -> m_intakeSubsystem.reverseIntake(), m_intakeSubsystem)
-		)
-		.onFalse(
-				new RunCommand(() -> m_intakeSubsystem.stopIntake(), m_intakeSubsystem)
-		);
 	}
 
 	//Command Groups for autos, make em named commands
-	public SequentialCommandGroup shootAndFlipoutCommandGroup() { 
-		return new SequentialCommandGroup(
-		new ShootForSecsCommand(m_shooterSubsystem, 0.5),//rev first
-		new ParallelCommandGroup(
-			new ShootForSecsCommand(m_shooterSubsystem, 5),
-			new IndexForSecsCommand(m_indexSubsystem,5)),
-		new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem),
-		new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
-		);
-	}
-	//for shooting the second time
-	public SequentialCommandGroup shootCommandGroup() {
-		return new SequentialCommandGroup(
-		new ShootFarForSecsCommand(m_shooterSubsystem, 0.5),
-		new ParallelCommandGroup(
-			new ShootForSecsCommand(m_shooterSubsystem, 3),
-			new IndexForSecsCommand(m_indexSubsystem,3))
-		);
-	}
-	public SequentialCommandGroup flipoutDeploy() {
-		return new SequentialCommandGroup(
-			new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem),
-			new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
-		);
-	}
-
-		// Hardcoded Auto--stationary shoot w intake deploy (WORKS)
-	SequentialCommandGroup Shoot = new SequentialCommandGroup(
-		new ShootForSecsCommand(m_shooterSubsystem, 1),
-		new ParallelCommandGroup(
-			new ShootForSecsCommand(m_shooterSubsystem, 5),
-			new IndexForSecsCommand(m_indexSubsystem,5))
-	);
-
-	SequentialCommandGroup ShootFar = new SequentialCommandGroup(
-		new ShootFarForSecsCommand(m_shooterSubsystem, 0.5),
-		new ParallelCommandGroup(
-			new ShootFarForSecsCommand(m_shooterSubsystem, 3),
-			new IndexForSecsCommand(m_indexSubsystem,3))
-	);
-
-
-
-
-	public Command getAutonomousCommand() {
-			return m_chooser.getSelected();
-	}
+	// public SequentialCommandGroup shootAndFlipoutCommandGroup() { 
+	// 	return new SequentialCommandGroup(
+	// 	new ShootForSecsCommand(m_shooterSubsystem, 0.5),//rev first
+	// 	new ParallelCommandGroup(
+	// 		new ShootForSecsCommand(m_shooterSubsystem, 5),
+	// 		new IndexForSecsCommand(m_indexSubsystem,5)),
+	// 	new ZeroIntakeFlipoutCommand(m_intakeFlipoutSubsystem),
+	// 	new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
+	// 	);
+	// }
+	
 	
 }
