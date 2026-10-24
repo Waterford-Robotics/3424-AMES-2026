@@ -2,9 +2,8 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Elavator;
-
 import frc.robot.Constants.ElavatorConstants;
+import frc.robot.subsystems.Elavator;
 
 public class elavatorLevelHL extends Command{
    
@@ -45,6 +44,7 @@ public class elavatorLevelHL extends Command{
   // Checks if the command is done
   public boolean isFinished() {
     // Am I done?  Am I done? Am I finally done?
+    //return (sensor.hex_bore_enecoder==ElavatorConstants.targetRotHL);
     return m_timer.hasElapsed(m_seconds);
   }
 }

@@ -42,6 +42,7 @@ public class elavatorLevelPB3 {
   // Checks if the command is done
   public boolean isFinished() {
     // Am I done?  Am I done? Am I finally done?
+    //return (sensor.hex_bore_enecoder==ElavatorConstants.targetRotPB3);
     return m_timer.hasElapsed(m_seconds);
   }
     
