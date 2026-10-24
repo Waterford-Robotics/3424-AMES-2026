@@ -5,9 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DashboardConfigsSubsystem;
 
 
 /**
@@ -28,6 +28,31 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    DashboardConfigsSubsystem.set("Shelf Slot 1", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 2", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 3", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 4", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 5", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 6", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 7", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 8", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 9", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 1", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 2", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 3", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 4", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 5", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 6", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 7", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 8", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 9", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 10", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 11", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 12", false);
+    DashboardConfigsSubsystem.set("Status of Inventory Cell", false);
+    DashboardConfigsSubsystem.set("Status of Inventory Shell",false);
+
+
   }
 
   /**
