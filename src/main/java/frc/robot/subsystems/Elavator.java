@@ -5,16 +5,10 @@ import frc.robot.Configs.ElavatorConfigs;
 import frc.robot.Constants.MotorIDConstants;
 
 public class Elavator {
-    
-    
-
-
-
-
-
+  
   private TalonFX m_elavatorLeft;
   private TalonFX m_elavatorRight;
-  private double m_speedofMotors=0;
+  
 
   public void ElavatorSubsystem() {
     m_elavatorLeft = new TalonFX(MotorIDConstants.k_elavatorLeftKrakenID);
@@ -26,10 +20,7 @@ public class Elavator {
 
   
   }
-  public double elavatorSpeedCalculator (double currentRotation, double targetRotations){
-
-    return m_speedofMotors;
-  }
+  
 
   public void elavatorUp(double speed) {
     m_elavatorLeft.set(speed*-1); 
