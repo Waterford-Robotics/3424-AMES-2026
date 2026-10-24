@@ -40,7 +40,7 @@ public class RobotContainer {
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	//private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
-	private final Elavator m_elevator = new Elavator();
+	final Elavator m_elevator = new Elavator();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -68,7 +68,7 @@ public class RobotContainer {
 			
 		new JoystickButton(m_devController.getHID(), ControllerConstants.scoreManualButton)
     .onTrue(
-        new elavatorLevelHL(m_elevator, 2.0) // Runs the command for 2.0 seconds
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
     );
 
 			// m_drivetrain.setDefaultCommand(

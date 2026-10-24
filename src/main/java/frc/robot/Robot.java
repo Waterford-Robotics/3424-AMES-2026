@@ -5,9 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
+import frc.robot.subsystems.Elavator;
 
 
 /**
@@ -16,6 +18,7 @@ import frc.robot.subsystems.DashboardConfigsSubsystem;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+  private final Elavator m_elevator = new Elavator();
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
@@ -64,6 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Elavator Rotation", ((m_robotContainer.m_elevator.getPositionRight()+m_robotContainer.m_elevator.getPositionLeft())/2));
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

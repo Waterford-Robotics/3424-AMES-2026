@@ -33,7 +33,7 @@ public class Elavator {
     
   }
   public double getPositionLeft() {
-        return m_elavatorLeft.getPosition().getValueAsDouble();
+        return -m_elavatorLeft.getPosition().getValueAsDouble();
     }
     public double getPositionRight() {
         return m_elavatorRight.getPosition().getValueAsDouble();
