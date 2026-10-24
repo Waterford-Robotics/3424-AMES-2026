@@ -375,4 +375,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Command getAutonomousCommand(String pathName) {
         return new PathPlannerAuto(pathName);
     }
+    public Pose2d getPose() {
+        
+        return this.getState().Pose;
+    }
 }

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DashboardConfigsSubsystem;
+import frc.robot.subsystems.Elavator;
 
 
 /**
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+  private final Elavator m_elevator = new Elavator();
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
@@ -28,6 +31,31 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    DashboardConfigsSubsystem.set("Shelf Slot 1", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 2", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 3", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 4", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 5", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 6", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 7", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 8", false);
+    DashboardConfigsSubsystem.set("Shelf Slot 9", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 1", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 2", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 3", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 4", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 5", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 6", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 7", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 8", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 9", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 10", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 11", false);
+    DashboardConfigsSubsystem.set("Peg Board Slot 12", false);
+    DashboardConfigsSubsystem.set("Status of Inventory Cell", false);
+    DashboardConfigsSubsystem.set("Status of Inventory Shell",false);
+
+
   }
 
   /**
@@ -39,6 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Elavator Rotation", ((m_robotContainer.m_elevator.getPositionRight()+m_robotContainer.m_elevator.getPositionLeft())/2));
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

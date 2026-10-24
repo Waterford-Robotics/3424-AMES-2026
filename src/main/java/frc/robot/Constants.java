@@ -7,20 +7,36 @@ package frc.robot;
 public class Constants {
 
   public static final class ControllerConstants {
-
     
+    public static final int scoreManualButton=1;
+    public static final int scoreAutoButton=2;
   }  
+
 
   public static final class MotorIDConstants {
     public static final int k_elavatorLeftKrakenID = 21;
     public static final int k_elavatorRightKrakenID = 22;
-
+    public static final int k_scorerKrakenID = 23;
    
 
+  }
+  public static final class ScorerConstants {
+    public static final double scoreSpeed=0.2;
+        
+  }
+  public static final class ElavatorConstants{
+    public static final double kI=0;
+    public static final double kP=0.1;
+    public static final double kD=0;
+    public static final double targetRotHL=7;
+    public static final double targetRotPB1=5;
+    public static final double targetRotPB2=10;
+    public static final double targetRotPB3=15;
+    public static final double targetRotShelf=5;
   }
 
   
      public static final class VisionConstants{
-     //see 3424 for what was here
+     //see 3424 Rebuilt for what was here
   }
 }
