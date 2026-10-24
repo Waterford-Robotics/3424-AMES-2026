@@ -31,7 +31,7 @@ public class elavatorLevelHL extends Command{
  
   // Actual command
   public void execute() {
-      m_Elavator.elavatorUp(pid.calculate(0, ElavatorConstants.targetRotHL));
+      m_Elavator.elavatorUp(pid.calculate(((m_Elavator.getPositionRight()+m_Elavator.getPositionLeft())/2), ElavatorConstants.targetRotHL));
   }
 
 

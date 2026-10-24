@@ -15,7 +15,7 @@ public class Elavator {
     m_elavatorRight = new TalonFX(MotorIDConstants.k_elavatorRightKrakenID);    
   
    
-    m_elavatorLeft.getConfigurator().apply(ElavatorConfigs.ELAVATOR_LEFT_TALON_FX_CONFIGURATION, 0.05);
+    m_elavatorLeft.getConfigurator().apply(ElavatorConfigs.ELAVATOR_LEFT_TALON_FX_CONFIGURATION, 0.5);
     m_elavatorRight.getConfigurator().apply(ElavatorConfigs.ELAVATOR_Right_TALON_FX_CONFIGURATION, 0.5);
 
   
@@ -32,6 +32,12 @@ public class Elavator {
     m_elavatorRight.set(speed*-1); 
     
   }
+  public double getPositionLeft() {
+        return m_elavatorLeft.getPosition().getValueAsDouble();
+    }
+    public double getPositionRight() {
+        return m_elavatorRight.getPosition().getValueAsDouble();
+    }
   
 
   public void stopElavator() {

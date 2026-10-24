@@ -29,7 +29,7 @@ public class elavatorLevelPB2 {
  
   // Actual command
   public void execute() {
-      m_Elavator.elavatorUp(pid.calculate(0, ElavatorConstants.targetRotPB2));
+      m_Elavator.elavatorUp(pid.calculate(((m_Elavator.getPositionRight()+m_Elavator.getPositionLeft())/2), ElavatorConstants.targetRotPB2));
   }
 
 
