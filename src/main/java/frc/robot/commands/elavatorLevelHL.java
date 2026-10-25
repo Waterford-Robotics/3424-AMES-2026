@@ -19,6 +19,7 @@ public class elavatorLevelHL extends Command{
        
    
     m_Elavator = elavatorSubsystem;
+    addRequirements(elavatorSubsystem);
     m_seconds = seconds;
   }
 

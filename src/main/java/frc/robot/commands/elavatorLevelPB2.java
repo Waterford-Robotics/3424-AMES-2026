@@ -20,6 +20,7 @@ public class elavatorLevelPB2 extends Command{
    
     m_Elavator = elavatorSubsystem;
     m_seconds = seconds;
+    addRequirements(elavatorSubsystem);
   }
 
 

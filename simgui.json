@@ -15,6 +15,13 @@
       "/SmartDashboard/PathPlanner": "Alerts"
     }
   },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
+    }
+  },
   "NetworkTables Info": {
     "visible": true
   }
