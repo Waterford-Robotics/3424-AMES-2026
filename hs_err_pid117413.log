@@ -1,0 +1,238 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f38acffc89e, pid=117413, tid=117501
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.16+8 (17.0.16+8) (build 17.0.16+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (17.0.16+8, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libCTRE_Phoenix6_Sim.so+0x1fc89e]  c_ctre_phoenix6_swerve_module_get_current_state+0x8e
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F %I" (or dumping to /home/quinnj/Desktop/3424-AMES-2026/core.117413)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:43783 -Djava.library.path=/home/quinnj/Desktop/3424-AMES-2026/build/jni/release -XX:+ShowCodeDetailsInExceptionMessages frc.robot.Main
+
+Host: 13th Gen Intel(R) Core(TM) i7-13620H, 16 cores, 15G, Garuda Linux Temeraire
+Time: Sat Oct 24 22:30:30 2026 MDT elapsed time: 44.736523 seconds (0d 0h 0m 44s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f39344690a0):  JavaThread "Notifier" daemon [_thread_in_native, id=117501, stack(0x00007f38aa1f8000,0x00007f38aa2f8000)]
+
+Stack: [0x00007f38aa1f8000,0x00007f38aa2f8000],  sp=0x00007f38aa2f6690,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libCTRE_Phoenix6_Sim.so+0x1fc89e]  c_ctre_phoenix6_swerve_module_get_current_state+0x8e
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 965  com.ctre.phoenix6.swerve.jni.SwerveJNI.JNI_Module_GetCurrentState(II)V (0 bytes) @ 0x00007f3958de4d60 [0x00007f3958de4d20+0x0000000000000040]
+J 1550 c2 com.ctre.phoenix6.swerve.SimSwerveDrivetrain.update(DD[Lcom/ctre/phoenix6/swerve/SwerveModule;)V (1328 bytes) @ 0x00007f3958e773e4 [0x00007f3958e76680+0x0000000000000d64]
+J 1574 c2 frc.robot.subsystems.CommandSwerveDrivetrain$$Lambda$86+0x00007f38ec0ceb40.run()V (8 bytes) @ 0x00007f3958e966e4 [0x00007f3958e96640+0x00000000000000a4]
+j  edu.wpi.first.wpilibj.Notifier.lambda$new$0()V+111
+j  edu.wpi.first.wpilibj.Notifier$$Lambda$16+0x00007f38ec027188.run()V+4
+j  java.lang.Thread.run()V+11 java.base@17.0.16
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000580
+
+Registers:
+RAX=0x0000000000000040, RBX=0x0000000000000001, RCX=0x0000000000000000, RDX=0x0000000000000000
+RSP=0x00007f38aa2f6690, RBP=0x0000000000000000, RSI=0x00007f3934379e00, RDI=0x00007f38ad14eb28
+R8 =0x0000000712245db8, R9 =0x00000000e2448b71, R10=0x00007f38acfc7dc0, R11=0x00000000e2448b79
+R12=0x00007f38ad14eb50, R13=0x00000000e2440ab0, R14=0x00007f38aa2f6720, R15=0x00007f39344690a0
+RIP=0x00007f38acffc89e, EFLAGS=0x0000000000010246, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+XMM[0]=0x0000000000000000 0x0000000000000000
+XMM[1]=0x0000000000000000 0x0000000000000000
+XMM[2]=0x0000000000000000 0x403e000000000000
+XMM[3]=0x0000000000000000 0x3fc26b738477230b
+XMM[4]=0x0000000000000000 0x3f3c1ab5520a5bee
+XMM[5]=0x0000000000000000 0xbdea39ef35793c76
+XMM[6]=0x0000000000000000 0x0000000000000000
+XMM[7]=0x0000000000000000 0x0000000000000000
+XMM[8]=0x0000000000000000 0x0000000000000000
+XMM[9]=0x0000000000000000 0x0000000000000003
+XMM[10]=0x0000000000000000 0x0000000000000008
+XMM[11]=0x0000000000000000 0x00007f3934021bb0
+XMM[12]=0x0000000000000000 0x0000000000000006
+XMM[13]=0x0000000000000000 0x0000000000000000
+XMM[14]=0x0000000000000000 0x0000000000000000
+XMM[15]=0x0000000000000000 0x0000000000000000
+  MXCSR=0x00001fa0
+
+
+Register to memory mapping:
+
+RAX=0x0000000000000040 is an unknown value
+RBX=0x0000000000000001 is an unknown value
+RCX=0x0 is NULL
+RDX=0x0 is NULL
+RSP=0x00007f38aa2f6690 is pointing into the stack for thread: 0x00007f39344690a0
+RBP=0x0 is NULL
+RSI=0x00007f3934379e00 points into unknown readable memory: 0x00007f3934295880 | 80 58 29 34 39 7f 00 00
+RDI=0x00007f38ad14eb28: <offset 0x000000000034eb28> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f38ace00000
+R8 =0x0000000712245db8 is an oop: java.util.concurrent.locks.ReentrantLock 
+{0x0000000712245db8} - klass: 'java/util/concurrent/locks/ReentrantLock'
+ - ---- fields (total size 2 words):
+ - private final 'sync' 'Ljava/util/concurrent/locks/ReentrantLock$Sync;' @12  a 'java/util/concurrent/locks/ReentrantLock$NonfairSync'{0x0000000712245dc8} (e2448bb9)
+R9 =3796142961 is a compressed pointer to object: com.ctre.phoenix6.swerve.SwerveModule 
+{0x0000000712245b88} - klass: 'com/ctre/phoenix6/swerve/SwerveModule'
+ - ---- fields (total size 8 words):
+ - protected final 'm_drivetrainId' 'I' @12  1
+ - protected final 'm_moduleIdx' 'I' @16  0
+ - 'm_isValid' 'Z' @20  true
+ - protected final 'm_jni' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI;' @24  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI'{0x0000000712245bc8} (e2448b79)
+ - private final 'm_driveMotor' 'Lcom/ctre/phoenix6/hardware/traits/CommonTalon;' @28  a 'com/ctre/phoenix6/hardware/TalonFX'{0x00000007122229f0} (e244453e)
+ - private final 'm_steerMotor' 'Lcom/ctre/phoenix6/hardware/traits/CommonTalon;' @32  a 'com/ctre/phoenix6/hardware/TalonFX'{0x0000000712200b48} (e2440169)
+ - private final 'm_encoder' 'Lcom/ctre/phoenix6/hardware/ParentDevice;' @36  a 'com/ctre/phoenix6/hardware/CANcoder'{0x0000000712221bd8} (e244437b)
+ - private final 'm_driveClosedLoopOutput' 'Lcom/ctre/phoenix6/swerve/SwerveModuleConstants$ClosedLoopOutputType;' @40  a 'com/ctre/phoenix6/swerve/SwerveModuleConstants$ClosedLoopOutputType'{0x000000071220a708} (e24414e1)
+ - private final 'm_steerClosedLoopOutput' 'Lcom/ctre/phoenix6/swerve/SwerveModuleConstants$ClosedLoopOutputType;' @44  a 'com/ctre/phoenix6/swerve/SwerveModuleConstants$ClosedLoopOutputType'{0x000000071220a708} (e24414e1)
+ - private final 'm_currentPosition' 'Ledu/wpi/first/math/kinematics/SwerveModulePosition;' @48  a 'edu/wpi/first/math/kinematics/SwerveModulePosition'{0x0000000712245d48} (e2448ba9)
+ - private final 'm_currentState' 'Ledu/wpi/first/math/kinematics/SwerveModuleState;' @52  a 'edu/wpi/first/math/kinematics/SwerveModuleState'{0x0000000712245d60} (e2448bac)
+ - private final 'm_targetState' 'Ledu/wpi/first/math/kinematics/SwerveModuleState;' @56  a 'edu/wpi/first/math/kinematics/SwerveModuleState'{0x0000000712245da0} (e2448bb4)
+ - private final 'm_stateLock' 'Ljava/util/concurrent/locks/Lock;' @60  a 'java/util/concurrent/locks/ReentrantLock'{0x0000000712245db8} (e2448bb7)
+R10=0x00007f38acfc7dc0: Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1Module_1GetCurrentState+0x0000000000000000 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f38ace00000
+R11=3796142969 is a compressed pointer to object: com.ctre.phoenix6.swerve.jni.SwerveJNI 
+{0x0000000712245bc8} - klass: 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+ - ---- fields (total size 4 words):
+ - public 'driveState' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI$DriveState;' @12  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI$DriveState'{0x0000000712245be8} (e2448b7d)
+ - public 'controlParams' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI$ControlParams;' @16  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI$ControlParams'{0x0000000712245c50} (e2448b8a)
+ - public 'moduleApplyParams' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI$ModuleApplyParams;' @20  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI$ModuleApplyParams'{0x0000000712245cb0} (e2448b96)
+ - public 'moduleState' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI$ModuleState;' @24  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI$ModuleState'{0x0000000712245d08} (e2448ba1)
+ - public 'modulePosition' 'Lcom/ctre/phoenix6/swerve/jni/SwerveJNI$ModulePosition;' @28  a 'com/ctre/phoenix6/swerve/jni/SwerveJNI$ModulePosition'{0x0000000712245d28} (e2448ba5)
+R12=0x00007f38ad14eb50: <offset 0x000000000034eb50> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f38ace00000
+R13=3796110000 is a compressed pointer to object: java.util.HashMap$Node 
+{0x0000000712205580} - klass: 'java/util/HashMap$Node'
+ - ---- fields (total size 4 words):
+ - final 'hash' 'I' @12  0
+ - final 'key' 'Ljava/lang/Object;' @16  a 'java/lang/Integer'{0x00000007ffe71348} = 0 (fffce269)
+ - 'value' 'Ljava/lang/Object;' @20  a 'com/ctre/phoenix6/StatusCode'{0x0000000712201e90} (e24403d2)
+ - 'next' 'Ljava/util/HashMap$Node;' @24  NULL (0)
+R14=0x00007f38aa2f6720 is pointing into the stack for thread: 0x00007f39344690a0
+R15=0x00007f39344690a0 is a thread
+
+
+Top of Stack: (sp=0x00007f38aa2f6690)
+0x00007f38aa2f6690:   00007f3944010120 00007f38aa2f6700
+0x00007f38aa2f66a0:   00000000e2448bb9 00007f3934469350
+0x00007f38aa2f66b0:   00007f38aa2f66f0 00007f38acfc7ddb
+0x00007f38aa2f66c0:   00007f38aa2f6730 0000000000000000
+0x00007f38aa2f66d0:   00000000e344d030 00007f38aa2f6730
+0x00007f38aa2f66e0:   0000000000000000 00007f3958de4ddd
+0x00007f38aa2f66f0:   0000000712245bc8 000000071a267b80
+0x00007f38aa2f6700:   0000000712249700 00007f3900000001
+0x00007f38aa2f6710:   00007f38aa2f6740 00007f3939cdc818
+0x00007f38aa2f6720:   000000071234c730 000000002137a8ca
+0x00007f38aa2f6730:   0000000712245dc8 00007f3958e773e4
+0x00007f38aa2f6740:   0000000400000004 0000000000000004
+0x00007f38aa2f6750:   00000000e24400e1 0000000712200708
+0x00007f38aa2f6760:   000000071a2672e0 0000000712221bd8
+0x00007f38aa2f6770:   00000000e24444ef 0000000712200bf8
+0x00007f38aa2f6780:   3f706dd69d000000 4028000000000000
+0x00007f38aa2f6790:   0000000712200c18 0000000712222778
+0x00007f38aa2f67a0:   403e000000000000 00000000e2448b71
+0x00007f38aa2f67b0:   0000000712245b88 000000071a267a58
+0x00007f38aa2f67c0:   000000071a267a70 000000071a267a80
+0x00007f38aa2f67d0:   00007f38aa2f6820 403e000000000000
+0x00007f38aa2f67e0:   00007f396a682000 00007f39488d4ce0
+0x00007f38aa2f67f0:   00000007122d7630 00007f3970c6ea50
+0x00007f38aa2f6800:   0000000712249730 00007f3958e966e4
+0x00007f38aa2f6810:   00000007122497d0 0000000712249730
+0x00007f38aa2f6820:   40e740b1d5842b73 3f706dd69d000000
+0x00007f38aa2f6830:   00007f38aa2f6870 4028000000000000
+0x00007f38aa2f6840:   00007f3803000003 00007f3958668d44
+0x00007f38aa2f6850:   000000071220e018 0000000000000000
+0x00007f38aa2f6860:   00007f38aa2f68d0 00007f395866955e
+0x00007f38aa2f6870:   40462924f227ce9e 00007f395866955e
+0x00007f38aa2f6880:   00000007122497d0 00007f38aa2f6888 
+
+Instructions: (pc=0x00007f38acffc89e)
+0x00007f38acffc79e:   5e 20 7d 1e 4c 89 e7 e8 d6 b4 f2 ff f2 0f 10 04
+0x00007f38acffc7ae:   24 f2 0f 10 4c 24 08 48 83 c4 10 5b 5d 41 5c c3
+0x00007f38acffc7be:   66 90 48 8b 46 30 48 8b 90 40 05 00 00 48 8b 80
+0x00007f38acffc7ce:   48 05 00 00 48 29 d0 48 c1 f8 03 48 39 c5 73 c4
+0x00007f38acffc7de:   48 8b 04 ea 66 0f 10 98 e0 08 00 00 0f 29 1c 24
+0x00007f38acffc7ee:   eb b2 66 0f ef e4 0f 29 24 24 eb a8 bf 23 00 00
+0x00007f38acffc7fe:   00 e8 5c a0 f2 ff 66 66 2e 0f 1f 84 00 00 00 00
+0x00007f38acffc80e:   00 90 f3 0f 1e fa 41 54 4c 8d 25 33 23 15 00 55
+0x00007f38acffc81e:   48 89 f5 53 89 fb 48 83 ec 10 0f 1f 84 00 00 00
+0x00007f38acffc82e:   00 00 4c 89 e7 e8 a8 a8 f2 ff 83 f8 0b 74 f3 83
+0x00007f38acffc83e:   f8 23 0f 84 d4 00 00 00 48 8b 05 e3 22 15 00 48
+0x00007f38acffc84e:   85 c0 74 66 48 8d 3d cf 22 15 00 48 89 fe 0f 1f
+0x00007f38acffc85e:   40 00 48 8b 50 10 48 8b 48 18 3b 58 20 7f 18 48
+0x00007f38acffc86e:   89 c6 48 85 d2 74 1b 48 89 d0 48 8b 50 10 48 8b
+0x00007f38acffc87e:   48 18 3b 58 20 7e e8 48 85 c9 74 06 48 89 c8 eb
+0x00007f38acffc88e:   d1 90 48 39 fe 74 23 3b 5e 20 7c 1e 48 8b 46 30
+0x00007f38acffc89e:   48 8b 90 40 05 00 00 48 8b 80 48 05 00 00 48 29
+0x00007f38acffc8ae:   d0 48 c1 f8 03 48 39 c5 72 38 66 0f ef c9 66 0f
+0x00007f38acffc8be:   28 c1 4c 89 e7 f2 0f 11 4c 24 08 f2 0f 11 04 24
+0x00007f38acffc8ce:   e8 ad b3 f2 ff f2 0f 10 04 24 f2 0f 10 4c 24 08
+0x00007f38acffc8de:   48 83 c4 10 5b 5d 41 5c c3 66 0f 1f 84 00 00 00
+0x00007f38acffc8ee:   00 00 48 8b 04 ea f2 0f 10 0d 14 63 0b 00 f2 0f
+0x00007f38acffc8fe:   59 88 88 03 00 00 f2 0f 10 80 50 02 00 00 f2 0f
+0x00007f38acffc90e:   5e 80 b8 08 00 00 f2 0f 58 c9 eb a6 bf 23 00 00
+0x00007f38acffc91e:   00 e8 3c 9f f2 ff 66 66 2e 0f 1f 84 00 00 00 00
+0x00007f38acffc92e:   00 90 f3 0f 1e fa 41 54 4c 8d 25 13 22 15 00 55
+0x00007f38acffc93e:   48 89 f5 53 89 fb 48 83 ec 10 0f 1f 84 00 00 00
+0x00007f38acffc94e:   00 00 4c 89 e7 e8 88 a7 f2 ff 83 f8 0b 74 f3 83
+0x00007f38acffc95e:   f8 23 0f 84 b4 00 00 00 48 8b 05 c3 21 15 00 48
+0x00007f38acffc96e:   85 c0 0f 84 9a 00 00 00 48 8d 3d ab 21 15 00 48
+0x00007f38acffc97e:   89 fe 48 8b 50 10 48 8b 48 18 3b 58 20 7f 18 48
+0x00007f38acffc98e:   89 c6 48 85 d2 74 1b 48 89 d0 48 8b 50 10 48 8b 
+
+
+Stack slot to memory mapping:
+stack at sp + 0 slots: 0x00007f3944010120 points into unknown readable memory: 0x00007f39710b66b0 | b0 66 0b 71 39 7f 00 00
+stack at sp + 1 slots: 0x00007f38aa2f6700 is pointing into the stack for thread: 0x00007f39344690a0
+stack at sp + 2 slots: 3796143033 is a compressed pointer to object: java.util.concurrent.locks.ReentrantLock$NonfairSync 
+{0x0000000712245dc8} - klass: 'java/util/concurrent/locks/ReentrantLock$NonfairSync'
+ - ---- fields (total size 4 words):
+ - private transient 'exclusiveOwnerThread' 'Ljava/lang/Thread;' @12  a 'java/lang/Thread'{0x0000000712200708} (e24400e1)
+ - private volatile 'state' 'I' @16  1
+ - private volatile transient 'head' 'Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;' @20  NULL (0)
+ - private volatile transient 'tail' 'Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;' @24  NULL (0)
+stack at sp + 3 slots: 0x00007f3934469350 points into unknown readable memory: 0x00007f39710c9500 | 00 95 0c 71 39 7f 00 00
+stack at sp + 4 slots: 0x00007f38aa2f66f0 is pointing into the stack for thread: 0x00007f39344690a0
+stack at sp + 5 slots: 0x00007f38acfc7ddb: Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1Module_1GetCurrentState+0x000000000000001b in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f38ace00000
+stack at sp + 6 slots: 0x00007f38aa2f6730 is pointing into the stack for thread: 0x00007f39344690a0
+stack at sp + 7 slots: 0x0 is NULL
+
+
+Compiled method (n/a)   44754  965     n 0       com.ctre.phoenix6.swerve.jni.SwerveJNI::JNI_Module_GetCurrentState (native)
+ total in heap  [0x00007f3958de4b90,0x00007f3958de4ef0] = 864
+ relocation     [0x00007f3958de4cf0,0x00007f3958de4d20] = 48
+ main code      [0x00007f3958de4d20,0x00007f3958de4ee8] = 456
+ oops           [0x00007f3958de4ee8,0x00007f3958de4ef0] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f38e74e0360} 'JNI_Module_GetCurrentState' '(II)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+  # this:     rsi:rsi   = 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+  # parm0:    rdx       = int
+  # parm1:    rcx       = int
+  #           [sp+0x50]  (sp of caller)
+  0x00007f3958de4d20: 448b 5608 | 49bb 0000 | 00eb 387f | 0000 4d03 | d349 3bc2 | 0f84 0600 
+
+  0x00007f3958de4d38: ;   {runtime_call ic_miss_stub}
+  0x00007f3958de4d38: 0000 e941 | b08c ff90 
+[Verified Entry Point]
+  0x00007f3958de4d40: 8984 2400 | c0fe ff55 | 488b ec48 | 83ec 4048 | 8934 2448 | 83fe 0048 | 8d34 2448 | 0f44 3424 
+  0x00007f3958de4d60: ;   {internal_word}
+  0x00007f3958de4d60: c5f8 7749 | ba60 4dde | 5839 7f00 | 004d 8997 | 9802 0000 | 4989 a790 
+
+  0x00007f3958de4d78: ;   {external_word}
+  0x00007f3958de4d78: 0200 0080 | 3dc3 9332 | 1800 0f84 | 3600 0000 
+
+  0x00007f3958de4d88: ;   {metadata({method} {0x00007f38e74e0360} 'JNI_Module_GetCurrentState' '(II)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f3958de4d88: 5652 5148 | be60 034e | e738 7f00 | 0049 8bff | f7c4 0f00 | 0000 0f84 | 1200 0000 | 4883 ec08 
+  0x00007f3958de4da8: 

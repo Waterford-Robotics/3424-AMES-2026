@@ -1,0 +1,226 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fa122e9b934, pid=112554, tid=112594
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.16+8 (17.0.16+8) (build 17.0.16+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (17.0.16+8, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F %I" (or dumping to /home/quinnj/Desktop/3424-AMES-2026/core.112554)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:37541 -Djava.library.path=/home/quinnj/Desktop/3424-AMES-2026/build/jni/release -XX:+ShowCodeDetailsInExceptionMessages frc.robot.Main
+
+Host: 13th Gen Intel(R) Core(TM) i7-13620H, 16 cores, 15G, Garuda Linux Temeraire
+Time: Sat Oct 24 21:30:55 2026 MDT elapsed time: 207.348542 seconds (0d 0h 3m 27s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fa11c6b6040):  JavaThread "robot main" daemon [_thread_in_native, id=112594, stack(0x00007fa078700000,0x00007fa078800000)]
+
+Stack: [0x00007fa078700000,0x00007fa078800000],  sp=0x00007fa0787fe158,  free space=1016k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 1578  com.ctre.phoenix6.swerve.jni.SwerveJNI.JNI_SetControl_FieldCentric(IDDDDDDDIIZI)V (0 bytes) @ 0x00007fa10ce76076 [0x00007fa10ce76020+0x0000000000000056]
+J 1742 c2 edu.wpi.first.wpilibj2.command.FunctionalCommand.execute()V (10 bytes) @ 0x00007fa10cecd518 [0x00007fa10cecd2a0+0x0000000000000278]
+J 1695 c1 edu.wpi.first.wpilibj2.command.CommandScheduler.run()V (603 bytes) @ 0x00007fa1054eca1c [0x00007fa1054ea6c0+0x000000000000235c]
+J 1701 c2 edu.wpi.first.wpilibj.IterativeRobotBase.loopFunc()V (552 bytes) @ 0x00007fa10ceb5290 [0x00007fa10ceb4b20+0x0000000000000770]
+J 1663 c2 edu.wpi.first.wpilibj.TimedRobot$$Lambda$10+0x00007fa0a001dcd8.run()V (8 bytes) @ 0x00007fa10ceac9e4 [0x00007fa10ceac9a0+0x0000000000000044]
+j  edu.wpi.first.wpilibj.TimedRobot.startCompetition()V+75
+j  edu.wpi.first.wpilibj.RobotBase.runRobot(Ljava/util/function/Supplier;)V+265
+j  edu.wpi.first.wpilibj.RobotBase.lambda$startRobot$1(Ljava/util/function/Supplier;)V+1
+j  edu.wpi.first.wpilibj.RobotBase$$Lambda$2+0x00007fa0a0011b70.run()V+4
+j  java.lang.Thread.run()V+11 java.base@17.0.16
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000840
+
+Registers:
+RAX=0x00007fa05eff74f0, RBX=0x0000000000000040, RCX=0x00007fa0e8000f20, RDX=0x00007fa05f1399e8
+RSP=0x00007fa0787fe158, RBP=0x00007fa05f14eb50, RSI=0x00007fa05eff6e70, RDI=0x0000000000000830
+R8 =0x0000000000000000, R9 =0x0000000000000001, R10=0x00007fa05efc8080, R11=0x00000000e2488f38
+R12=0x0000000000000830, R13=0x0000000000000000, R14=0x0000000000000001, R15=0x0000000000000001
+RIP=0x00007fa122e9b934, EFLAGS=0x0000000000010206, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+XMM[0]=0x00007fa05eff74f0 0x00007fa05eff6e70
+XMM[1]=0x0000000000000000 0x8000000000000000
+XMM[2]=0x8000000000000000 0x8000000000000000
+XMM[3]=0x0000000000000000 0x3fe1d2f1a9fbe76d
+XMM[4]=0x0000000000000000 0x3fde28c731eb6950
+XMM[5]=0x0000000000000000 0x0000000000000000
+XMM[6]=0x0000000000000000 0x0000000000000000
+XMM[7]=0x0000000000000000 0x00007fa05eff74f0
+XMM[8]=0x0000000000000000 0x0a293633343a6176
+XMM[9]=0x0000000000000000 0x0000000000000000
+XMM[10]=0x0000000000000000 0xb92f1976b8000000
+XMM[11]=0x0000000000000000 0x00007fa0e8021bf0
+XMM[12]=0x0000000000000000 0x0000000000000006
+XMM[13]=0x0000000000000000 0x3ff0000000000000
+XMM[14]=0x0000000000000000 0x0000000000000000
+XMM[15]=0x0000000000000000 0x0000000000000000
+  MXCSR=0x00001fa0
+
+
+Register to memory mapping:
+
+RAX=0x00007fa05eff74f0: <offset 0x00000000001f74f0> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+RBX=0x0000000000000040 is an unknown value
+RCX=0x00007fa0e8000f20 points into unknown readable memory: 0x000f000e000f0010 | 10 00 0f 00 0e 00 0f 00
+RDX=0x00007fa05f1399e8: _ZTVN4ctre8phoenix66swerve8requests12FieldCentricE+0x0000000000000010 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+RSP=0x00007fa0787fe158 is pointing into the stack for thread: 0x00007fa11c6b6040
+RBP=0x00007fa05f14eb50: <offset 0x000000000034eb50> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+RSI=0x00007fa05eff6e70: <offset 0x00000000001f6e70> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+RDI=0x0000000000000830 is an unknown value
+R8 =0x0 is NULL
+R9 =0x0000000000000001 is an unknown value
+R10=0x00007fa05efc8080: Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1SetControl_1FieldCentric+0x0000000000000000 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+R11=3796406072 is a compressed pointer to object: com.ctre.phoenix6.swerve.SwerveRequest$ForwardPerspectiveValue 
+{0x00000007124479c0} - klass: 'com/ctre/phoenix6/swerve/SwerveRequest$ForwardPerspectiveValue'
+ - ---- fields (total size 3 words):
+ - private final 'ordinal' 'I' @12  0
+ - private final 'name' 'Ljava/lang/String;' @16  "OperatorPerspective"{0x00000007124479d8} (e2488f3b)
+ - public final 'value' 'I' @20  0
+R12=0x0000000000000830 is an unknown value
+R13=0x0 is NULL
+R14=0x0000000000000001 is an unknown value
+R15=0x0000000000000001 is an unknown value
+
+
+Top of Stack: (sp=0x00007fa0787fe158)
+0x00007fa0787fe158:   00007fa05effd6b2 00000007124765c0
+0x00007fa0787fe168:   8000000000000000 8000000000000000
+0x00007fa0787fe178:   8000000000000000 3fe1d2f1a9fbe76d
+0x00007fa0787fe188:   3fde28c731eb6950 0000000000000000
+0x00007fa0787fe198:   0000000000000000 00007fa0e80707d0
+0x00007fa0787fe1a8:   0000000000000000 00007fa05eff6e70
+0x00007fa0787fe1b8:   00007fa05eff74f0 00007fa11c6b62f0
+0x00007fa0787fe1c8:   0000000717038da0 00000007124796b0
+0x00007fa0787fe1d8:   0000000712400110 00000095e2480022
+0x00007fa0787fe1e8:   bb3d2381b845f700 000000000000000f
+0x00007fa0787fe1f8:   0000000000000001 00007fa0787fe280
+0x00007fa0787fe208:   0000000000000000 00000000e248e355
+0x00007fa0787fe218:   00007fa0787fe268 00007fa11c6b6040
+0x00007fa0787fe228:   00007fa10ce76179 0000000000000000
+0x00007fa0787fe238:   0000000000000000 fffffffc00000004
+0x00007fa0787fe248:   00007fa10ce96aa8 0000000712547dd8
+0x00007fa0787fe258:   00000007124777f0 0000000717038d40
+0x00007fa0787fe268:   000000071258a4a8 00000000e24a6b59
+0x00007fa0787fe278:   00007fa10ce90bc0 0000000712446960
+0x00007fa0787fe288:   00007fa10cecd518 00000007124776d8
+0x00007fa0787fe298:   00000007124777c8 e248eefee2488d2c
+0x00007fa0787fe2a8:   00000007124777e0 00000007124478f0
+0x00007fa0787fe2b8:   0000000712446960 00000007124478f0
+0x00007fa0787fe2c8:   0000000700000001 00007fa0787fe340
+0x00007fa0787fe2d8:   00000007124794a8 00000007125abba8
+0x00007fa0787fe2e8:   40e696a055757d5a 000000071247a138
+0x00007fa0787fe2f8:   0000000712477608 00007fa11c6b6040
+0x00007fa0787fe308:   0000000712477a28 0000000712547dd8
+0x00007fa0787fe318:   00007fa1222b14cb 00000000e248ed42
+0x00007fa0787fe328:   00007fa1054eca1c 00007fa0787fe3e0
+0x00007fa0787fe338:   00007fa0e8001510 00007fa11c6b62f0
+0x00007fa0787fe348:   00007fa062bd4f93 0000000000000000 
+
+Instructions: (pc=0x00007fa122e9b934)
+0x00007fa122e9b834:   ff ff 83 c2 01 89 53 04 e9 c0 f9 ff ff 4c 89 6d
+0x00007fa122e9b844:   e8 4c 89 75 f0 4c 89 7d f8 67 e8 ad 2b 09 00 48
+0x00007fa122e9b854:   8b 45 c8 64 48 2b 04 25 28 00 00 00 4c 89 75 f0
+0x00007fa122e9b864:   75 e7 48 8d 0d a3 79 12 00 ba 47 02 00 00 48 8d
+0x00007fa122e9b874:   35 df f2 11 00 48 8d 3d 03 f3 11 00 e8 2b a8 f9
+0x00007fa122e9b884:   ff 83 f8 92 0f 84 ce fe ff ff 83 f8 d9 76 17 48
+0x00007fa122e9b894:   ba 09 00 00 08 2c 00 00 00 83 c0 26 48 0f a3 c2
+0x00007fa122e9b8a4:   0f 82 b2 fe ff ff 4c 8b 6d e8 e9 30 ff ff ff 4c
+0x00007fa122e9b8b4:   8b 6d e8 e9 e3 fe ff ff 48 8b 45 c8 64 48 2b 04
+0x00007fa122e9b8c4:   25 28 00 00 00 4c 89 75 f0 4c 89 7d f8 0f 85 76
+0x00007fa122e9b8d4:   ff ff ff 48 8d 0d 32 79 12 00 ba a5 01 00 00 48
+0x00007fa122e9b8e4:   8d 35 6e f2 11 00 48 8d 3d bf 38 12 00 e8 ba a7
+0x00007fa122e9b8f4:   f9 ff 48 8b 45 c8 64 48 2b 04 25 28 00 00 00 4c
+0x00007fa122e9b904:   89 75 f0 4c 89 7d f8 0f 85 3c ff ff ff 48 8d 0d
+0x00007fa122e9b914:   f8 78 12 00 ba aa 01 00 00 48 8d 35 34 f2 11 00
+0x00007fa122e9b924:   48 8d 3d 42 f2 11 00 e8 80 a7 f9 ff f3 0f 1e fa
+0x00007fa122e9b934:   8b 57 10 90 89 d0 83 e0 7c 75 69 55 48 89 e5 48
+0x00007fa122e9b944:   83 ec 10 64 8b 0c 25 d0 02 00 00 83 e2 7f 75 5c
+0x00007fa122e9b954:   8b 77 10 81 e6 80 00 00 00 74 29 31 c0 ba 01 00
+0x00007fa122e9b964:   00 00 f0 0f b1 17 75 6c 44 8b 4f 08 45 85 c9 0f
+0x00007fa122e9b974:   85 0c 02 00 00 89 4f 08 83 47 0c 01 90 31 c0 c9
+0x00007fa122e9b984:   c3 0f 1f 00 80 3d 11 57 18 00 00 74 ce 44 8b 17
+0x00007fa122e9b994:   45 85 d2 75 c6 c7 07 01 00 00 00 eb cb 0f 1f 80
+0x00007fa122e9b9a4:   00 00 00 00 e9 63 f7 ff ff 0f 1f 00 83 fa 01 0f
+0x00007fa122e9b9b4:   85 a9 00 00 00 39 4f 08 75 32 8b 47 04 83 f8 ff
+0x00007fa122e9b9c4:   0f 84 d6 00 00 00 83 c0 01 89 47 04 31 c0 eb af
+0x00007fa122e9b9d4:   0f 1f 40 00 89 4d f4 48 89 7d f8 e8 ec 94 ff ff
+0x00007fa122e9b9e4:   8b 4d f4 48 8b 7d f8 e9 7c ff ff ff 8b 77 10 81
+0x00007fa122e9b9f4:   e6 80 00 00 00 75 45 80 3d 9e 56 18 00 00 74 3c
+0x00007fa122e9ba04:   44 8b 07 45 85 c0 75 34 c7 07 01 00 00 00 0f 1f
+0x00007fa122e9ba14:   00 66 66 2e 0f 1f 84 00 00 00 00 00 8b 57 08 85
+0x00007fa122e9ba24:   d2 0f 85 80 01 00 00 c7 47 04 01 00 00 00 e9 42 
+
+
+Stack slot to memory mapping:
+stack at sp + 0 slots: 0x00007fa05effd6b2: c_ctre_phoenix6_swerve_drivetrain_set_control_field_centric+0x0000000000000192 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007fa05ee00000
+stack at sp + 1 slots: 0x00000007124765c0 is an oop: edu.wpi.first.wpilibj.RobotController$$Lambda$9/0x00007fa0a001dab8 
+{0x00000007124765c0} - klass: 'edu/wpi/first/wpilibj/RobotController$$Lambda$9+0x00007fa0a001dab8'
+ - ---- fields (total size 2 words):
+stack at sp + 2 slots: 0x8000000000000000 is an unknown value
+stack at sp + 3 slots: 0x8000000000000000 is an unknown value
+stack at sp + 4 slots: 0x8000000000000000 is an unknown value
+stack at sp + 5 slots: 0x3fe1d2f1a9fbe76d is an unknown value
+stack at sp + 6 slots: 0x3fde28c731eb6950 is an unknown value
+stack at sp + 7 slots: 0x0 is NULL
+
+
+Compiled method (n/a)  207365 1578     n 0       com.ctre.phoenix6.swerve.jni.SwerveJNI::JNI_SetControl_FieldCentric (native)
+ total in heap  [0x00007fa10ce75e90,0x00007fa10ce76288] = 1016
+ relocation     [0x00007fa10ce75ff0,0x00007fa10ce76020] = 48
+ main code      [0x00007fa10ce76020,0x00007fa10ce76280] = 608
+ oops           [0x00007fa10ce76280,0x00007fa10ce76288] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007fa09b4e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+  # parm0:    rsi       = int
+  # parm1:    xmm0:xmm0   = double
+  # parm2:    xmm1:xmm1   = double
+  # parm3:    xmm2:xmm2   = double
+  # parm4:    xmm3:xmm3   = double
+  # parm5:    xmm4:xmm4   = double
+  # parm6:    xmm5:xmm5   = double
+  # parm7:    xmm6:xmm6   = double
+  # parm8:    rdx       = int
+  # parm9:    rcx       = int
+  # parm10:   r8        = boolean
+  # parm11:   r9        = int
+  #           [sp+0x60]  (sp of caller)
+  0x00007fa10ce76020: 448b 5608 | 49bb 0000 | 009f a07f | 0000 4d03 | d349 3bc2 | 0f84 0600 
+
+  0x00007fa10ce76038: ;   {runtime_call ic_miss_stub}
+  0x00007fa10ce76038: 0000 e941 | 9d83 ff90 
+[Verified Entry Point]
+  0x00007fa10ce76040: 8984 2400 | c0fe ff55 | 488b ec48 | 83ec 504c | 890c 244d | 8bc8 4c8b | c148 8bca 
+
+  0x00007fa10ce7605c: ;   {oop(a 'java/lang/Class'{0x000000071258a4a8} = 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007fa10ce7605c: 488b d649 | bea8 a458 | 1207 0000 | 004c 8974 | 2438 4c8d | 7424 3849 | 8bf6 c5f8 
+
+  0x00007fa10ce76078: ;   {internal_word}
+  0x00007fa10ce76078: 7749 ba76 | 60e7 0ca1 | 7f00 004d | 8997 9802 | 0000 4989 | a790 0200 
+
+  0x00007fa10ce76090: ;   {external_word}
+  0x00007fa10ce76090: 0080 3dad | 80e9 1500 | 0f84 bc00 | 0000 5652 | 4883 ec10 | c5fb 1104 | 2448 83ec | 10c5 fb11 
+  0x00007fa10ce760b0: 0c24 4883 | ec10 c5fb | 1114 2448 | 83ec 10c5 | fb11 1c24 | 4883 ec10 | c5fb 1124 | 2448 83ec 
+  0x00007fa10ce760d0: 10c5 fb11 | 2c24 4883 | ec10 c5fb | 1134 2451 | 4150 4151 
+
+  0x00007fa10ce760e4: ;   {metadata({method} {0x00007fa09b4e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007fa10ce760e4: 48be e809 | 4e9b a07f | 0000 498b | fff7 c40f | 0000 000f | 8412 0000 | 0048 83ec 

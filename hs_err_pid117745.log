@@ -1,0 +1,668 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f65d869b934, pid=117745, tid=117778
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.16+8 (17.0.16+8) (build 17.0.16+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (17.0.16+8, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F %I" (or dumping to /home/quinnj/Desktop/3424-AMES-2026/core.117745)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:34535 -Djava.library.path=/home/quinnj/Desktop/3424-AMES-2026/build/jni/release -XX:+ShowCodeDetailsInExceptionMessages frc.robot.Main
+
+Host: 13th Gen Intel(R) Core(TM) i7-13620H, 16 cores, 15G, Garuda Linux Temeraire
+Time: Sat Oct 24 22:30:48 2026 MDT elapsed time: 17.271290 seconds (0d 0h 0m 17s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f65d06be5d0):  JavaThread "robot main" daemon [_thread_in_native, id=117778, stack(0x00007f654c0b4000,0x00007f654c1b4000)]
+
+Stack: [0x00007f654c0b4000,0x00007f654c1b4000],  sp=0x00007f654c1b1e08,  free space=1015k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 1419  com.ctre.phoenix6.swerve.jni.SwerveJNI.JNI_SetControl_FieldCentric(IDDDDDDDIIZI)V (0 bytes) @ 0x00007f65c0e57076 [0x00007f65c0e57020+0x0000000000000056]
+J 1521 c1 com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric.applyNative(I)V (64 bytes) @ 0x00007f65b94e0774 [0x00007f65b94e0640+0x0000000000000134]
+J 1520 c1 com.ctre.phoenix6.swerve.SwerveDrivetrain.setControl(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V (173 bytes) @ 0x00007f65b94dfdf4 [0x00007f65b94df3c0+0x0000000000000a34]
+J 1465 c1 frc.robot.subsystems.CommandSwerveDrivetrain$$Lambda$108+0x00007f65540e11a0.run()V (12 bytes) @ 0x00007f65b94baffc [0x00007f65b94bace0+0x000000000000031c]
+J 1464 c1 edu.wpi.first.wpilibj2.command.FunctionalCommand.execute()V (10 bytes) @ 0x00007f65b94ba954 [0x00007f65b94ba840+0x0000000000000114]
+J 1490 c1 edu.wpi.first.wpilibj2.command.CommandScheduler.run()V (603 bytes) @ 0x00007f65b94d60e4 [0x00007f65b94d3ce0+0x0000000000002404]
+J 1437 c1 frc.robot.Robot.robotPeriodic()V (38 bytes) @ 0x00007f65b94b19ec [0x00007f65b94b13c0+0x000000000000062c]
+J 1434 c1 edu.wpi.first.wpilibj.IterativeRobotBase.loopFunc()V (552 bytes) @ 0x00007f65b94acddc [0x00007f65b94aada0+0x000000000000203c]
+J 1433 c1 edu.wpi.first.wpilibj.TimedRobot$$Lambda$10+0x00007f655401dcd8.run()V (8 bytes) @ 0x00007f65b94aa3c4 [0x00007f65b94aa2c0+0x0000000000000104]
+j  edu.wpi.first.wpilibj.TimedRobot.startCompetition()V+75
+j  edu.wpi.first.wpilibj.RobotBase.runRobot(Ljava/util/function/Supplier;)V+265
+j  edu.wpi.first.wpilibj.RobotBase.lambda$startRobot$1(Ljava/util/function/Supplier;)V+1
+j  edu.wpi.first.wpilibj.RobotBase$$Lambda$2+0x00007f6554011b70.run()V+4
+j  java.lang.Thread.run()V+11 java.base@17.0.16
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000840
+
+Registers:
+RAX=0x00007f65147f74f0, RBX=0x0000000000000040, RCX=0x00007f659c000030, RDX=0x00007f65149399e8
+RSP=0x00007f654c1b1e08, RBP=0x00007f651494eb50, RSI=0x00007f65147f6e70, RDI=0x0000000000000830
+R8 =0x00007f659c000030, R9 =0x0000000000000060, R10=0x0000000000000050, R11=0x00007f65d8819ac0
+R12=0x0000000000000830, R13=0x0000000000000000, R14=0x0000000000000001, R15=0x0000000000000001
+RIP=0x00007f65d869b934, EFLAGS=0x0000000000010206, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+XMM[0]=0x00007f65147f74f0 0x00007f65147f6e70
+XMM[1]=0x0000000000000000 0x8000000000000000
+XMM[2]=0x0000000000000000 0x8000000000000000
+XMM[3]=0x0000000000000000 0x3fe1d2f1a9fbe76d
+XMM[4]=0x0000000000000000 0x3fde28c731eb6950
+XMM[5]=0x0000000000000000 0x0000000000000000
+XMM[6]=0x0000000000000000 0x0000000000000000
+XMM[7]=0x0000000000000000 0x00007f65147f74f0
+XMM[8]=0x0000000000000000 0x0000087f8149c900
+XMM[9]=0x0000000000000000 0x0000000000000000
+XMM[10]=0x0000000000000000 0xb92f1976b8000000
+XMM[11]=0x0000000000000000 0x00007f659c021b50
+XMM[12]=0x0000000000000000 0x0000000000000006
+XMM[13]=0x0000000000000000 0x3ff0000000000000
+XMM[14]=0x0000000000000000 0x0000000000000000
+XMM[15]=0x0000000000000000 0x0000000000000000
+  MXCSR=0x00001fa0
+
+
+Register to memory mapping:
+
+RAX=0x00007f65147f74f0: <offset 0x00000000001f74f0> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f6514600000
+RBX=0x0000000000000040 is an unknown value
+RCX=0x00007f659c000030 points into unknown readable memory: 0x0000000200000000 | 00 00 00 00 02 00 00 00
+RDX=0x00007f65149399e8: _ZTVN4ctre8phoenix66swerve8requests12FieldCentricE+0x0000000000000010 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f6514600000
+RSP=0x00007f654c1b1e08 is pointing into the stack for thread: 0x00007f65d06be5d0
+RBP=0x00007f651494eb50: <offset 0x000000000034eb50> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f6514600000
+RSI=0x00007f65147f6e70: <offset 0x00000000001f6e70> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f6514600000
+RDI=0x0000000000000830 is an unknown value
+R8 =0x00007f659c000030 points into unknown readable memory: 0x0000000200000000 | 00 00 00 00 02 00 00 00
+R9 =0x0000000000000060 is an unknown value
+R10=0x0000000000000050 is an unknown value
+R11=0x00007f65d8819ac0: <offset 0x0000000000219ac0> in /usr/lib/libc.so.6 at 0x00007f65d8600000
+R12=0x0000000000000830 is an unknown value
+R13=0x0 is NULL
+R14=0x0000000000000001 is an unknown value
+R15=0x0000000000000001 is an unknown value
+
+
+Top of Stack: (sp=0x00007f654c1b1e08)
+0x00007f654c1b1e08:   00007f65147fd6b2 0000000718070988
+0x00007f654c1b1e18:   8000000000000000 8000000000000000
+0x00007f654c1b1e28:   8000000000000000 3fe1d2f1a9fbe76d
+0x00007f654c1b1e38:   3fde28c731eb6950 0000000000000000
+0x00007f654c1b1e48:   0000000000000000 00007f659c32daf0
+0x00007f654c1b1e58:   0000000000000000 00007f65147f6e70
+0x00007f654c1b1e68:   00007f65147f74f0 0000000002042b55
+0x00007f654c1b1e78:   0000000b17879279 0000000b17879279
+0x00007f654c1b1e88:   0000900072800000 0014175000000000
+0x00007f654c1b1e98:   abfef870880f7300 0000000000000000
+0x00007f654c1b1ea8:   00007f654f990858 00007f654c1b1f30
+0x00007f654c1b1eb8:   0000000000000000 0000000000000000
+0x00007f654c1b1ec8:   00007f654c1b1f18 00007f65d06be5d0
+0x00007f654c1b1ed8:   00007f65c0e57179 0000000000000000
+0x00007f654c1b1ee8:   0000000400000000 0000000718071ba8
+0x00007f654c1b1ef8:   0000000718071ba8 0000000000000018
+0x00007f654c1b1f08:   0000000000000019 0000004a00000019
+0x00007f654c1b1f18:   00000007180f7378 000000000000004a
+0x00007f654c1b1f28:   000000071995a518 00007f654c1b27e8
+0x00007f654c1b1f38:   00007f65b94e0774 000000000000000f
+0x00007f654c1b1f48:   0000000000000000 000000000000000f
+0x00007f654c1b1f58:   0000000000000000 000000000000001a
+0x00007f654c1b1f68:   000000000000001b 000000000000004c
+0x00007f654c1b1f78:   000000000000004c 000000071995a268
+0x00007f654c1b1f88:   00000007180791a8 00000007180791c8
+0x00007f654c1b1f98:   0000000000000011 00007f654c1b27e8
+0x00007f654c1b1fa8:   00007f65b94bc60c 0000000718071040
+0x00007f654c1b1fb8:   00007f654c1b2090 00007f654c1b1fd0
+0x00007f654c1b1fc8:   00007f65d86e49ad 00007f654c1b2000
+0x00007f654c1b1fd8:   00007f65a14dc818 000000000000ba17
+0x00007f654c1b1fe8:   00007f65540a7d30 00007f654f98b028
+0x00007f654c1b1ff8:   0000000700000001 0000000718041620 
+
+Instructions: (pc=0x00007f65d869b934)
+0x00007f65d869b834:   ff ff 83 c2 01 89 53 04 e9 c0 f9 ff ff 4c 89 6d
+0x00007f65d869b844:   e8 4c 89 75 f0 4c 89 7d f8 67 e8 ad 2b 09 00 48
+0x00007f65d869b854:   8b 45 c8 64 48 2b 04 25 28 00 00 00 4c 89 75 f0
+0x00007f65d869b864:   75 e7 48 8d 0d a3 79 12 00 ba 47 02 00 00 48 8d
+0x00007f65d869b874:   35 df f2 11 00 48 8d 3d 03 f3 11 00 e8 2b a8 f9
+0x00007f65d869b884:   ff 83 f8 92 0f 84 ce fe ff ff 83 f8 d9 76 17 48
+0x00007f65d869b894:   ba 09 00 00 08 2c 00 00 00 83 c0 26 48 0f a3 c2
+0x00007f65d869b8a4:   0f 82 b2 fe ff ff 4c 8b 6d e8 e9 30 ff ff ff 4c
+0x00007f65d869b8b4:   8b 6d e8 e9 e3 fe ff ff 48 8b 45 c8 64 48 2b 04
+0x00007f65d869b8c4:   25 28 00 00 00 4c 89 75 f0 4c 89 7d f8 0f 85 76
+0x00007f65d869b8d4:   ff ff ff 48 8d 0d 32 79 12 00 ba a5 01 00 00 48
+0x00007f65d869b8e4:   8d 35 6e f2 11 00 48 8d 3d bf 38 12 00 e8 ba a7
+0x00007f65d869b8f4:   f9 ff 48 8b 45 c8 64 48 2b 04 25 28 00 00 00 4c
+0x00007f65d869b904:   89 75 f0 4c 89 7d f8 0f 85 3c ff ff ff 48 8d 0d
+0x00007f65d869b914:   f8 78 12 00 ba aa 01 00 00 48 8d 35 34 f2 11 00
+0x00007f65d869b924:   48 8d 3d 42 f2 11 00 e8 80 a7 f9 ff f3 0f 1e fa
+0x00007f65d869b934:   8b 57 10 90 89 d0 83 e0 7c 75 69 55 48 89 e5 48
+0x00007f65d869b944:   83 ec 10 64 8b 0c 25 d0 02 00 00 83 e2 7f 75 5c
+0x00007f65d869b954:   8b 77 10 81 e6 80 00 00 00 74 29 31 c0 ba 01 00
+0x00007f65d869b964:   00 00 f0 0f b1 17 75 6c 44 8b 4f 08 45 85 c9 0f
+0x00007f65d869b974:   85 0c 02 00 00 89 4f 08 83 47 0c 01 90 31 c0 c9
+0x00007f65d869b984:   c3 0f 1f 00 80 3d 11 57 18 00 00 74 ce 44 8b 17
+0x00007f65d869b994:   45 85 d2 75 c6 c7 07 01 00 00 00 eb cb 0f 1f 80
+0x00007f65d869b9a4:   00 00 00 00 e9 63 f7 ff ff 0f 1f 00 83 fa 01 0f
+0x00007f65d869b9b4:   85 a9 00 00 00 39 4f 08 75 32 8b 47 04 83 f8 ff
+0x00007f65d869b9c4:   0f 84 d6 00 00 00 83 c0 01 89 47 04 31 c0 eb af
+0x00007f65d869b9d4:   0f 1f 40 00 89 4d f4 48 89 7d f8 e8 ec 94 ff ff
+0x00007f65d869b9e4:   8b 4d f4 48 8b 7d f8 e9 7c ff ff ff 8b 77 10 81
+0x00007f65d869b9f4:   e6 80 00 00 00 75 45 80 3d 9e 56 18 00 00 74 3c
+0x00007f65d869ba04:   44 8b 07 45 85 c0 75 34 c7 07 01 00 00 00 0f 1f
+0x00007f65d869ba14:   00 66 66 2e 0f 1f 84 00 00 00 00 00 8b 57 08 85
+0x00007f65d869ba24:   d2 0f 85 80 01 00 00 c7 47 04 01 00 00 00 e9 42 
+
+
+Stack slot to memory mapping:
+stack at sp + 0 slots: 0x00007f65147fd6b2: c_ctre_phoenix6_swerve_drivetrain_set_control_field_centric+0x0000000000000192 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f6514600000
+stack at sp + 1 slots: 0x0000000718070988 is an oop: edu.wpi.first.wpilibj2.command.button.Trigger$1 
+{0x0000000718070988} - klass: 'edu/wpi/first/wpilibj2/command/button/Trigger$1'
+ - ---- fields (total size 3 words):
+ - private 'm_previous' 'Z' @12  false
+ - final synthetic 'val$body' 'Ledu/wpi/first/wpilibj2/command/button/Trigger$BindingBody;' @16  a 'edu/wpi/first/wpilibj2/command/button/Trigger$$Lambda$112+0x00007f65540e5860'{0x00000007180709a0} (e300e134)
+ - final synthetic 'this$0' 'Ledu/wpi/first/wpilibj2/command/button/Trigger;' @20  a 'edu/wpi/first/wpilibj2/command/button/JoystickButton'{0x0000000718070a38} (e300e147)
+stack at sp + 2 slots: 0x8000000000000000 is an unknown value
+stack at sp + 3 slots: 0x8000000000000000 is an unknown value
+stack at sp + 4 slots: 0x8000000000000000 is an unknown value
+stack at sp + 5 slots: 0x3fe1d2f1a9fbe76d is an unknown value
+stack at sp + 6 slots: 0x3fde28c731eb6950 is an unknown value
+stack at sp + 7 slots: 0x0 is NULL
+
+
+Compiled method (n/a)   17287 1419     n 0       com.ctre.phoenix6.swerve.jni.SwerveJNI::JNI_SetControl_FieldCentric (native)
+ total in heap  [0x00007f65c0e56e90,0x00007f65c0e57288] = 1016
+ relocation     [0x00007f65c0e56ff0,0x00007f65c0e57020] = 48
+ main code      [0x00007f65c0e57020,0x00007f65c0e57280] = 608
+ oops           [0x00007f65c0e57280,0x00007f65c0e57288] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f654f4e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+  # parm0:    rsi       = int
+  # parm1:    xmm0:xmm0   = double
+  # parm2:    xmm1:xmm1   = double
+  # parm3:    xmm2:xmm2   = double
+  # parm4:    xmm3:xmm3   = double
+  # parm5:    xmm4:xmm4   = double
+  # parm6:    xmm5:xmm5   = double
+  # parm7:    xmm6:xmm6   = double
+  # parm8:    rdx       = int
+  # parm9:    rcx       = int
+  # parm10:   r8        = boolean
+  # parm11:   r9        = int
+  #           [sp+0x60]  (sp of caller)
+  0x00007f65c0e57020: 448b 5608 | 49bb 0000 | 0053 657f | 0000 4d03 | d349 3bc2 | 0f84 0600 
+
+  0x00007f65c0e57038: ;   {runtime_call ic_miss_stub}
+  0x00007f65c0e57038: 0000 e941 | 8d85 ff90 
+[Verified Entry Point]
+  0x00007f65c0e57040: 8984 2400 | c0fe ff55 | 488b ec48 | 83ec 504c | 890c 244d | 8bc8 4c8b | c148 8bca 
+
+  0x00007f65c0e5705c: ;   {oop(a 'java/lang/Class'{0x00000007180f7378} = 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f65c0e5705c: 488b d649 | be78 730f | 1807 0000 | 004c 8974 | 2438 4c8d | 7424 3849 | 8bf6 c5f8 
+
+  0x00007f65c0e57078: ;   {internal_word}
+  0x00007f65c0e57078: 7749 ba76 | 70e5 c065 | 7f00 004d | 8997 9802 | 0000 4989 | a790 0200 
+
+  0x00007f65c0e57090: ;   {external_word}
+  0x00007f65c0e57090: 0080 3dad | 706b 1700 | 0f84 bc00 | 0000 5652 | 4883 ec10 | c5fb 1104 | 2448 83ec | 10c5 fb11 
+  0x00007f65c0e570b0: 0c24 4883 | ec10 c5fb | 1114 2448 | 83ec 10c5 | fb11 1c24 | 4883 ec10 | c5fb 1124 | 2448 83ec 
+  0x00007f65c0e570d0: 10c5 fb11 | 2c24 4883 | ec10 c5fb | 1134 2451 | 4150 4151 
+
+  0x00007f65c0e570e4: ;   {metadata({method} {0x00007f654f4e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f65c0e570e4: 48be e809 | 4e4f 657f | 0000 498b | fff7 c40f | 0000 000f | 8412 0000 | 0048 83ec 
+
+  0x00007f65c0e57100: ;   {runtime_call SharedRuntime::dtrace_method_entry(JavaThread*, Method*)}
+  0x00007f65c0e57100: 08e8 eab4 | 0817 4883 | c408 e905 
+
+  0x00007f65c0e5710c: ;   {runtime_call SharedRuntime::dtrace_method_entry(JavaThread*, Method*)}
+  0x00007f65c0e5710c: 0000 00e8 | dcb4 0817 | 4159 4158 | 59c5 fb10 | 3424 4883 | c410 c5fb | 102c 2448 | 83c4 10c5 
+  0x00007f65c0e5712c: fb10 2424 | 4883 c410 | c5fb 101c | 2448 83c4 | 10c5 fb10 | 1424 4883 | c410 c5fb | 100c 2448 
+  0x00007f65c0e5714c: 83c4 10c5 | fb10 0424 | 4883 c410 | 5a5e 498d | bfb0 0200 | 0041 c787 | 3803 0000 | 0400 0000 
+  0x00007f65c0e5716c: ;   {runtime_call Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1SetControl_1FieldCentric}
+  0x00007f65c0e5716c: 49ba 8080 | 7c14 657f | 0000 41ff | d2c5 f877 | 41c7 8738 | 0300 0005 | 0000 00f0 | 8344 24c0 
+  0x00007f65c0e5718c: 0049 3baf | 4003 0000 | 0f87 1100 | 0000 4181 | bf28 0300 | 0000 0000 | 000f 841c | 0000 00c5 
+  0x00007f65c0e571ac: f877 498b | ff4c 8be4 | 4883 ec00 | 4883 e4f0 
+
+  0x00007f65c0e571bc: ;   {runtime_call JavaThread::check_special_condition_for_native_trans(JavaThread*)}
+  0x00007f65c0e571bc: e83f 7821 | 1749 8be4 | 4d33 e441 | c787 3803 | 0000 0800 | 0000 4181 | bfa8 0300 | 0002 0000 
+  0x00007f65c0e571dc: 000f 847c 
+
+  0x00007f65c0e571e0: ;   {external_word}
+  0x00007f65c0e571e0: 0000 0080 | 3d5b 6f6b | 1700 0f84 | 3000 0000 
+
+  0x00007f65c0e571f0: ;   {metadata({method} {0x00007f654f4e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f65c0e571f0: 48be e809 | 4e4f 657f | 0000 498b | fff7 c40f | 0000 000f | 8412 0000 | 0048 83ec 
+
+  0x00007f65c0e5720c: ;   {runtime_call SharedRuntime::dtrace_method_exit(JavaThread*, Method*)}
+  0x00007f65c0e5720c: 08e8 8eb4 | 0817 4883 | c408 e905 
+
+  0x00007f65c0e57218: ;   {runtime_call SharedRuntime::dtrace_method_exit(JavaThread*, Method*)}
+  0x00007f65c0e57218: 0000 00e8 | 80b4 0817 | 49c7 8790 | 0200 0000 | 0000 0049 | c787 9802 | 0000 0000 | 0000 c5f8 
+  0x00007f65c0e57238: 7749 8b8f | d800 0000 | c781 0001 | 0000 0000 | 0000 c949 | 817f 0800 | 0000 000f | 8501 0000 
+  0x00007f65c0e57258: ;   {runtime_call StubRoutines (1)}
+  0x00007f65c0e57258: 00c3 e9a1 | 8980 ffc5 | f877 4c8b | e448 83ec | 0048 83e4 
+
+  0x00007f65c0e5726c: ;   {runtime_call SharedRuntime::reguard_yellow_pages()}
+  0x00007f65c0e5726c: f0e8 9ec2 | 0817 498b | e44d 33e4 | e966 ffff | fff4 f4f4 
+[/MachCode]
+
+
+Compiled method (c1)   17313 1521       3       com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative (64 bytes)
+ total in heap  [0x00007f65b94e0490,0x00007f65b94e0978] = 1256
+ relocation     [0x00007f65b94e05f0,0x00007f65b94e0638] = 72
+ main code      [0x00007f65b94e0640,0x00007f65b94e0820] = 480
+ stub code      [0x00007f65b94e0820,0x00007f65b94e0860] = 64
+ oops           [0x00007f65b94e0860,0x00007f65b94e0868] = 8
+ metadata       [0x00007f65b94e0868,0x00007f65b94e0888] = 32
+ scopes data    [0x00007f65b94e0888,0x00007f65b94e08c0] = 56
+ scopes pcs     [0x00007f65b94e08c0,0x00007f65b94e0940] = 128
+ dependencies   [0x00007f65b94e0940,0x00007f65b94e0950] = 16
+ nul chk table  [0x00007f65b94e0950,0x00007f65b94e0978] = 40
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric'
+  # this:     rsi:rsi   = 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric'
+  # parm0:    rdx       = int
+  #           [sp+0xe0]  (sp of caller)
+  0x00007f65b94e0640: 448b 5608 | 49bb 0000 | 0053 657f | 0000 4d03 | d34c 3bd0 
+
+  0x00007f65b94e0654: ;   {runtime_call ic_miss_stub}
+  0x00007f65b94e0654: 0f85 26f7 | 1c07 660f | 1f44 0000 
+[Verified Entry Point]
+  0x00007f65b94e0660: 8984 2400 | c0fe ff55 | 4881 ecd0 
+
+  0x00007f65b94e066c: ;   {metadata(method data for {method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f65b94e066c: 0000 0048 | b958 0899 | 4f65 7f00 | 0044 8b81 | f400 0000 | 4183 c002 | 4489 81f4 | 0000 0041 
+  0x00007f65b94e068c: 81e0 fe07 | 0000 4183 | f800 0f84 | ee00 0000 | c5fb 1046 | 10c5 fb10 | 4e18 c5fb | 1056 20c5 
+  0x00007f65b94e06ac: fb10 5e28 | c5fb 1066 | 308b 4e38 | 48c1 e103 
+
+  0x00007f65b94e06bc: ; implicit exception: dispatches to 0x00007f65b94e07ab
+  0x00007f65b94e06bc: 483b 014c 
+
+  0x00007f65b94e06c0: ;   {metadata(method data for {method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f65b94e06c0: 8bc1 49b9 | 5808 994f | 657f 0000 
+
+  0x00007f65b94e06cc: ;   {metadata('edu/wpi/first/math/geometry/Translation2d')}
+  0x00007f65b94e06cc: 49ba 0080 | 0a54 657f | 0000 4d89 | 9148 0100 | 0049 8381 | 5001 0000 | 01c5 fb10 | 6910 4c8b 
+  0x00007f65b94e06ec: ;   {metadata(method data for {method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f65b94e06ec: c149 b958 | 0899 4f65 
+
+  0x00007f65b94e06f4: ;   {metadata('edu/wpi/first/math/geometry/Translation2d')}
+  0x00007f65b94e06f4: 7f00 0049 | ba00 800a | 5465 7f00 | 004d 8991 | 8001 0000 | 4983 8188 | 0100 0001 | c5fb 1071 
+  0x00007f65b94e0714: 188b 4e3c | 48c1 e103 
+
+  0x00007f65b94e071c: ; implicit exception: dispatches to 0x00007f65b94e07b0
+  0x00007f65b94e071c: 8b49 1444 | 8b46 4049 | c1e0 0345 | 8b40 1444 | 0fbe 4e0c | 8b7e 4448 | c1e7 038b 
+
+  0x00007f65b94e0738: ;   {metadata(method data for {method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f65b94e0738: 7f14 48bb | 5808 994f | 657f 0000 | 4883 83a8 | 0100 0001 | 4889 b424 | c000 0000 | 488b f289 
+  0x00007f65b94e0758: 9424 b800 | 0000 488b | d149 8bc8 | 4d8b c14c | 8bcf 0f1f 
+
+  0x00007f65b94e076c: ;   {static_call}
+  0x00007f65b94e076c: 4400 00e8 
+
+  0x00007f65b94e0770: ; ImmutableOopMap {[192]=Oop }
+                      ;*invokestatic JNI_SetControl_FieldCentric {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@60 (line 472)
+  0x00007f65b94e0770: cc68 9707 | 4881 c4d0 | 0000 005d 
+
+  0x00007f65b94e077c: ;   {poll_return}
+  0x00007f65b94e077c: 493b a740 | 0300 000f | 8736 0000 
+
+  0x00007f65b94e0788: ;   {metadata({method} {0x00007f654f77b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f65b94e0788: 00c3 49ba | 68b9 774f | 657f 0000 | 4c89 5424 | 0848 c704 | 24ff ffff 
+
+  0x00007f65b94e07a0: ;   {runtime_call counter_overflow Runtime1 stub}
+  0x00007f65b94e07a0: ffe8 da3e 
+
+  0x00007f65b94e07a4: ; ImmutableOopMap {rsi=Oop }
+                      ;*synchronization entry
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@-1 (line 472)
+  0x00007f65b94e07a4: 2807 e9f1 
+
+  0x00007f65b94e07a8: ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f65b94e07a8: feff ffe8 
+
+  0x00007f65b94e07ac: ; ImmutableOopMap {rsi=Oop rcx=Oop }
+                      ;*invokevirtual getX {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@25 (line 478)
+  0x00007f65b94e07ac: f0ed 2707 
+
+  0x00007f65b94e07b0: ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f65b94e07b0: e8eb ed27 
+
+  0x00007f65b94e07b4: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@39 (line 479)
+                      ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f65b94e07b4: 07e8 e6ed 
+
+  0x00007f65b94e07b8: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@46 (line 479)
+                      ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f65b94e07b8: 2707 e8e1 
+
+  0x00007f65b94e07bc: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@57 (line 479)
+                      ;   {internal_word}
+  0x00007f65b94e07bc: ed27 0749 | ba7c 074e | b965 7f00 | 004d 8997 | 5803 0000 
+
+  0x00007f65b94e07d0: ;   {runtime_call SafepointBlob}
+  0x00007f65b94e07d0: e92b 5f1d | 0790 9049 | 8b87 d003 | 0000 49c7 | 87d0 0300 | 0000 0000 | 0049 c787 | d803 0000 
+  0x00007f65b94e07f0: 0000 0000 | 4881 c4d0 | 0000 005d 
+
+  0x00007f65b94e07fc: ;   {runtime_call unwind_exception Runtime1 stub}
+  0x00007f65b94e07fc: e97f e427 | 07f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 
+  0x00007f65b94e081c: f4f4 f4f4 
+[Stub Code]
+  0x00007f65b94e0820: ;   {no_reloc}
+  0x00007f65b94e0820: 0f1f 4400 
+
+  0x00007f65b94e0824: ;   {static_stub}
+  0x00007f65b94e0824: 0048 bb00 | 0000 0000 
+
+  0x00007f65b94e082c: ;   {runtime_call}
+  0x00007f65b94e082c: 0000 00e9 | fbff ffff 
+[Exception Handler]
+  0x00007f65b94e0834: ;   {runtime_call handle_exception_from_callee Runtime1 stub}
+  0x00007f65b94e0834: e847 0b28 
+
+  0x00007f65b94e0838: ;   {external_word}
+  0x00007f65b94e0838: 0748 bf52 | 6719 d865 | 7f00 0048 
+
+  0x00007f65b94e0844: ;   {runtime_call MacroAssembler::debug64(char*, long, long*)}
+  0x00007f65b94e0844: 83e4 f0e8 | 34a5 821e 
+
+  0x00007f65b94e084c: ;   {section_word}
+  0x00007f65b94e084c: f449 ba4d | 084e b965 | 7f00 0041 
+
+  0x00007f65b94e0858: ;   {runtime_call DeoptimizationBlob}
+  0x00007f65b94e0858: 52e9 4251 | 1d07 f4f4 
+[/MachCode]
+
+
+Compiled method (c1)   17326 1520       3       com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl (173 bytes)
+ total in heap  [0x00007f65b94df110,0x00007f65b94e0458] = 4936
+ relocation     [0x00007f65b94df270,0x00007f65b94df398] = 296
+ constants      [0x00007f65b94df3a0,0x00007f65b94df3c0] = 32
+ main code      [0x00007f65b94df3c0,0x00007f65b94e0040] = 3200
+ stub code      [0x00007f65b94e0040,0x00007f65b94e00f0] = 176
+ oops           [0x00007f65b94e00f0,0x00007f65b94e0100] = 16
+ metadata       [0x00007f65b94e0100,0x00007f65b94e0120] = 32
+ scopes data    [0x00007f65b94e0120,0x00007f65b94e0288] = 360
+ scopes pcs     [0x00007f65b94e0288,0x00007f65b94e0408] = 384
+ dependencies   [0x00007f65b94e0408,0x00007f65b94e0418] = 16
+ nul chk table  [0x00007f65b94e0418,0x00007f65b94e0458] = 64
+
+
+[Constant Pool]
+             Address          hex4                    hex8      
+  0x00007f65b94df3a0:   0x00000000      0x4008000000000000      
+  0x00007f65b94df3a4:   0x40080000                              
+  0x00007f65b94df3a8:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f65b94df3ac:   0xf4f4f4f4                              
+  0x00007f65b94df3b0:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f65b94df3b4:   0xf4f4f4f4                              
+  0x00007f65b94df3b8:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f65b94df3bc:   0xf4f4f4f4                              
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain'
+  # this:     rsi:rsi   = 'com/ctre/phoenix6/swerve/SwerveDrivetrain'
+  # parm0:    rdx:rdx   = 'com/ctre/phoenix6/swerve/SwerveRequest'
+  #           [sp+0xb0]  (sp of caller)
+  0x00007f65b94df3c0: ;   {no_reloc}
+  0x00007f65b94df3c0: 448b 5608 | 49bb 0000 | 0053 657f | 0000 4d03 | d34c 3bd0 
+
+  0x00007f65b94df3d4: ;   {runtime_call ic_miss_stub}
+  0x00007f65b94df3d4: 0f85 a609 | 1d07 660f | 1f44 0000 
+[Verified Entry Point]
+  0x00007f65b94df3e0: 8984 2400 | c0fe ff55 | 4881 eca0 | 0000 0048 | 8974 2458 | 4889 5424 
+
+  0x00007f65b94df3f8: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df3f8: 6048 bf28 | b098 4f65 | 7f00 008b | 9ff4 0000 | 0083 c302 | 899f f400 | 0000 81e3 | fe07 0000 
+  0x00007f65b94df418: 83fb 000f | 84a9 0a00 | 008b 7e2c | 48c1 e703 
+
+  0x00007f65b94df428: ; implicit exception: dispatches to 0x00007f65b94dfeeb
+  0x00007f65b94df428: 817f 0c00 | 0000 000f | 86c0 0a00 | 008b 7f10 | 48c1 e703 
+
+  0x00007f65b94df43c: ; implicit exception: dispatches to 0x00007f65b94dff07
+  0x00007f65b94df43c: 0fbe 7f14 
+
+  0x00007f65b94df440: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df440: 83ff 0048 | bf28 b098 | 4f65 7f00 | 0048 c7c3 | 3801 0000 | 0f85 0700 | 0000 48c7 | c348 0100 
+  0x00007f65b94df460: 0048 8b04 | 1f48 8d40 | 0148 8904 | 1f0f 85c6 
+
+  0x00007f65b94df470: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df470: 0000 0048 | bf28 b098 | 4f65 7f00 | 0048 8387 | 5801 0000 
+
+  0x00007f65b94df484: ;   {metadata(method data for {method} {0x00007f654f4e7510} 'getCurrentTimeSeconds' '()D' in 'com/ctre/phoenix6/Utils')}
+  0x00007f65b94df484: 0148 bf18 | 2f96 4f65 | 7f00 008b | 9ff4 0000 | 0083 c302 | 899f f400 | 0000 81e3 | feff 1f00 
+  0x00007f65b94df4a4: 83fb 000f | 845f 0a00 
+
+  0x00007f65b94df4ac: ;   {metadata(method data for {method} {0x00007f654f4e7510} 'getCurrentTimeSeconds' '()D' in 'com/ctre/phoenix6/Utils')}
+  0x00007f65b94df4ac: 0048 bf18 | 2f96 4f65 | 7f00 0048 | 8387 3801 
+
+  0x00007f65b94df4bc: ;   {static_call}
+  0x00007f65b94df4bc: 0000 01e8 
+
+  0x00007f65b94df4c0: ; ImmutableOopMap {[96]=Oop [88]=Oop }
+                      ;*invokestatic getCurrentTimeSeconds {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.Utils::getCurrentTimeSeconds@0 (line 26)
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@12 (line 591)
+  0x00007f65b94df4c0: bc11 1d07 | 488b 7424 | 58c5 fb10 | 4e20 c5f9 | 28d0 c5eb 
+
+  0x00007f65b94df4d4: ;   {section_word}
+  0x00007f65b94df4d4: 5cd1 c5fb | 100d c2fe | ffff c5f9 | 2ed1 baff | ffff ff0f | 8a14 0000 | 000f 820e | 0000 00ba 
+  0x00007f65b94df4f4: 0000 0000 | 0f84 0300 | 0000 48ff | c283 fa00 
+
+  0x00007f65b94df504: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df504: 48ba 28b0 | 984f 657f | 0000 48c7 | c168 0100 | 000f 8e07 | 0000 0048 | c7c1 7801 | 0000 488b 
+  0x00007f65b94df524: 3c0a 488d | 7f01 4889 | 3c0a 0f8e | 8009 0000 | e9f7 0800 | 008b 4e44 | 48c1 e103 
+
+  0x00007f65b94df540: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df540: 483b ca48 | b928 b098 | 4f65 7f00 | 0048 c7c7 | 9801 0000 | 0f84 0700 | 0000 48c7 | c7a8 0100 
+  0x00007f65b94df560: 0048 8b1c | 3948 8d5b | 0148 891c | 390f 8466 | 0500 0041 | 0fbe 4f38 | 83f9 000f | 85ac 0900 
+  0x00007f65b94df580: 004c 8bd2 | 49c1 ea03 | 4489 5644 | 488b ce48 | 33ca 48c1 | e915 4883 | f900 0f85 | ac09 0000 
+  0x00007f65b94df5a0: 488b 7e10 | 4889 7c24 | 6848 83fa 
+
+  0x00007f65b94df5ac: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df5ac: 0048 b928 | b098 4f65 | 7f00 0048 | c7c3 b801 | 0000 0f85 | 0700 0000 | 48c7 c3c8 | 0100 0048 
+  0x00007f65b94df5cc: 8b04 1948 | 8d40 0148 | 8904 190f | 856d 0000 | 008b 5e28 | 48c1 e303 | 8b4e 0c48 | 3b03 488b 
+  0x00007f65b94df5ec: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df5ec: c349 b828 | b098 4f65 
+
+  0x00007f65b94df5f4: ;   {metadata('com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f65b94df5f4: 7f00 0049 | ba38 1202 | 5465 7f00 | 004d 8990 | e801 0000 | 4983 80f0 | 0100 0001 
+
+  0x00007f65b94df610: ;   {oop(NULL)}
+  0x00007f65b94df610: 488b d148 | b900 0000 | 0000 0000 | 0048 8bf3 | 0f1f 8000 
+
+  0x00007f65b94df624: ;   {optimized virtual_call}
+  0x00007f65b94df624: 0000 00e8 
+
+  0x00007f65b94df628: ; ImmutableOopMap {[88]=Oop [96]=Oop }
+                      ;*invokevirtual JNI_SetControl {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@74 (line 608)
+  0x00007f65b94df628: 540a 1d07 | 488b 7424 | 5848 8946 
+
+  0x00007f65b94df634: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df634: 1048 ba28 | b098 4f65 | 7f00 00ff | 8210 0200 | 00e9 2b04 | 0000 4883 | fa00 7516 
+
+  0x00007f65b94df650: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df650: 48b8 28b0 | 984f 657f | 0000 8088 | 2102 0000 | 01e9 ee00 
+
+  0x00007f65b94df664: ;   {metadata('com/ctre/phoenix6/swerve/SwerveRequest$NativeSwerveRequest')}
+  0x00007f65b94df664: 0000 48b9 | 307d 0a54 | 657f 0000 | 8b42 0849 | ba00 0000 | 5365 7f00 | 0049 03c2 | 483b 4820 
+  0x00007f65b94df684: 0f84 1b00 | 0000 483b | c10f 8412 | 0000 0050 
+
+  0x00007f65b94df694: ;   {runtime_call slow_subtype_check Runtime1 stub}
+  0x00007f65b94df694: 51e8 e628 | 2807 5858 | 83f8 000f | 8493 0000 
+
+  0x00007f65b94df6a4: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df6a4: 0048 b828 | b098 4f65 | 7f00 008b | 4a08 49ba | 0000 0053 | 657f 0000 | 4903 ca48 | 3b88 3802 
+  0x00007f65b94df6c4: 0000 750d | 4883 8040 | 0200 0001 | e984 0000 | 0048 3b88 | 4802 0000 | 750d 4883 | 8050 0200 
+  0x00007f65b94df6e4: 0001 e96e | 0000 0048 | 81b8 3802 | 0000 0000 | 0000 7517 | 4889 8838 | 0200 0048 | c780 4002 
+  0x00007f65b94df704: 0000 0100 | 0000 e94a | 0000 0048 | 81b8 4802 | 0000 0000 | 0000 7517 | 4889 8848 | 0200 0048 
+  0x00007f65b94df724: c780 5002 | 0000 0100 | 0000 e926 | 0000 00e9 | 2100 0000 
+
+  0x00007f65b94df738: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df738: 48b8 28b0 | 984f 657f | 0000 4883 | a828 0200 | 0001 e905 | 0000 00e9 | 0500 0000 | 4833 ffeb 
+  0x00007f65b94df758: 0a48 bf01 | 0000 0000 | 0000 0083 
+
+  0x00007f65b94df764: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df764: ff00 48bf | 28b0 984f | 657f 0000 | 48c7 c360 | 0200 000f | 8407 0000 | 0048 c7c3 | 7002 0000 
+  0x00007f65b94df784: 488b 041f | 488d 4001 | 4889 041f | 0f84 eb01 | 0000 4883 | fa00 7516 
+
+  0x00007f65b94df79c: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df79c: 48b8 28b0 | 984f 657f | 0000 8088 | 7902 0000 | 01e9 ee00 
+
+  0x00007f65b94df7b0: ;   {metadata('com/ctre/phoenix6/swerve/SwerveRequest$NativeSwerveRequest')}
+  0x00007f65b94df7b0: 0000 48b9 | 307d 0a54 | 657f 0000 | 8b42 0849 | ba00 0000 | 5365 7f00 | 0049 03c2 | 483b 4820 
+  0x00007f65b94df7d0: 0f84 1b00 | 0000 483b | c10f 8412 | 0000 0050 
+
+  0x00007f65b94df7e0: ;   {runtime_call slow_subtype_check Runtime1 stub}
+  0x00007f65b94df7e0: 51e8 9a27 | 2807 5858 | 83f8 000f | 8493 0000 
+
+  0x00007f65b94df7f0: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df7f0: 0048 b828 | b098 4f65 | 7f00 008b | 4a08 49ba | 0000 0053 | 657f 0000 | 4903 ca48 | 3b88 9002 
+  0x00007f65b94df810: 0000 750d | 4883 8098 | 0200 0001 | e97f 0000 | 0048 3b88 | a002 0000 | 750d 4883 | 80a8 0200 
+  0x00007f65b94df830: 0001 e969 | 0000 0048 | 81b8 9002 | 0000 0000 | 0000 7517 | 4889 8890 | 0200 0048 | c780 9802 
+  0x00007f65b94df850: 0000 0100 | 0000 e945 | 0000 0048 | 81b8 a002 | 0000 0000 | 0000 7517 | 4889 88a0 | 0200 0048 
+  0x00007f65b94df870: c780 a802 | 0000 0100 | 0000 e921 | 0000 00e9 | 1c00 0000 
+
+  0x00007f65b94df884: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df884: 48b8 28b0 | 984f 657f | 0000 4883 | a880 0200 | 0001 e9ce | 0600 00e9 | 0000 0000 | 488b fa8b 
+  0x00007f65b94df8a4: 5e0c 483b | 0748 8bc7 
+
+  0x00007f65b94df8ac: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df8ac: 48b9 28b0 | 984f 657f | 0000 8b40 | 0849 ba00 | 0000 5365 | 7f00 0049 | 03c2 483b | 81c8 0200 
+  0x00007f65b94df8cc: 0075 0d48 | 8381 d002 | 0000 01e9 | 6600 0000 | 483b 81d8 | 0200 0075 | 0d48 8381 | e002 0000 
+  0x00007f65b94df8ec: 01e9 5000 | 0000 4881 | b9c8 0200 | 0000 0000 | 0075 1748 | 8981 c802 | 0000 48c7 | 81d0 0200 
+  0x00007f65b94df90c: 0001 0000 | 00e9 2c00 | 0000 4881 | b9d8 0200 | 0000 0000 | 0075 1748 | 8981 d802 | 0000 48c7 
+  0x00007f65b94df92c: 81e0 0200 | 0001 0000 | 00e9 0800 | 0000 4883 | 81b8 0200 | 0001 488b | d348 8bf7 | 4889 7c24 
+  0x00007f65b94df94c: 7048 b8ff | ffff ffff 
+
+  0x00007f65b94df954: ;   {virtual_call}
+  0x00007f65b94df954: ffff ffe8 
+
+  0x00007f65b94df958: ; ImmutableOopMap {[88]=Oop [96]=Oop [112]=Oop }
+                      ;*invokeinterface applyNative {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@102 (line 610)
+  0x00007f65b94df958: 240a 1d07 | 488b 7424 | 5849 c7c2 | 0000 0000 | 4c89 5610 
+
+  0x00007f65b94df96c: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df96c: 48ba 28b0 | 984f 657f | 0000 ff82 | f002 0000 | e9f4 0000 | 008b 7e28 | 48c1 e703 | 8b5e 0c0f 
+  0x00007f65b94df98c: 1f44 0000 
+
+  0x00007f65b94df990: ;   {no_reloc}
+  0x00007f65b94df990: e9f1 0500 | 0090 9090 | 9090 488b | c648 8bf0 | 488b 5424 | 6089 9c24 | 8000 0000 | 4889 7c24 
+  0x00007f65b94df9b0: 7866 0f1f 
+
+  0x00007f65b94df9b4: ;   {static_call}
+  0x00007f65b94df9b4: 4400 00e8 
+
+  0x00007f65b94df9b8: ; ImmutableOopMap {[96]=Oop [88]=Oop [120]=Oop }
+                      ;*invokedynamic {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@126 (line 613)
+  0x00007f65b94df9b8: c40c 1d07 
+
+  0x00007f65b94df9bc: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94df9bc: 48ba 28b0 | 984f 657f | 0000 488d | 9238 0300 | 0048 85c0 | 7510 48f7 | 0201 0000 | 0075 50f0 
+  0x00007f65b94df9dc: 4883 0a01 | eb49 8b48 | 0849 ba00 | 0000 5365 | 7f00 0049 | 03ca 4c8b | d148 330a | 48f7 c1fc 
+  0x00007f65b94df9fc: ffff ff74 | 2a48 f7c1 | 0200 0000 | 7521 48f7 | 02fe ffff | ff74 1549 | 8bca 4833 | 0a48 f7c1 
+  0x00007f65b94dfa1c: fcff ffff | 7409 4883 | 0a02 eb03 | 4889 0a48 | 8b7c 2478 
+
+  0x00007f65b94dfa30: ; implicit exception: dispatches to 0x00007f65b94dff90
+  0x00007f65b94dfa30: 483b 0748 
+
+  0x00007f65b94dfa34: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfa34: 8bd7 48b9 | 28b0 984f | 657f 0000 
+
+  0x00007f65b94dfa40: ;   {metadata('com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f65b94dfa40: 49ba 3812 | 0254 657f | 0000 4c89 | 9158 0300 | 0048 8381 | 6003 0000 | 018b 9424 | 8000 0000 
+  0x00007f65b94dfa60: 488b c848 
+
+  0x00007f65b94dfa64: ;   {optimized virtual_call}
+  0x00007f65b94dfa64: 8bf7 90e8 
+
+  0x00007f65b94dfa68: ; ImmutableOopMap {[96]=Oop [88]=Oop }
+                      ;*invokevirtual JNI_SetControl {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@131 (line 613)
+  0x00007f65b94dfa68: 1406 1d07 | 488b 7424 | 5848 8946 | 1048 8b7c | 2468 4883 
+
+  0x00007f65b94dfa7c: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfa7c: ff00 48bf | 28b0 984f | 657f 0000 | 48c7 c380 | 0300 000f | 8407 0000 | 0048 c7c3 | 9003 0000 
+  0x00007f65b94dfa9c: 488b 041f | 488d 4001 | 4889 041f | 0f84 5c03 | 0000 488b 
+
+  0x00007f65b94dfab0: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfab0: 7c24 6848 | bb28 b098 | 4f65 7f00 | 0048 8383 | a003 0000 | 0148 8bf7 | 0f1f 8000 
+
+  0x00007f65b94dfacc: ;   {static_call}
+  0x00007f65b94dfacc: 0000 00e8 
+
+  0x00007f65b94dfad0: ; ImmutableOopMap {[96]=Oop [88]=Oop }
+                      ;*invokestatic JNI_DestroyControl {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@144 (line 620)
+  0x00007f65b94dfad0: ac0b 1d07 | e931 0300 | 0048 83fa 
+
+  0x00007f65b94dfadc: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfadc: 0075 1648 | bb28 b098 | 4f65 7f00 | 0080 8bc1 | 0300 0001 | e9ee 0000 
+
+  0x00007f65b94dfaf4: ;   {metadata('com/ctre/phoenix6/swerve/SwerveRequest$NativeSwerveRequest')}
+  0x00007f65b94dfaf4: 0048 b830 | 7d0a 5465 | 7f00 008b | 5a08 49ba | 0000 0053 | 657f 0000 | 4903 da48 | 3b43 200f 
+  0x00007f65b94dfb14: 841b 0000 | 0048 3bd8 | 0f84 1200 | 0000 5350 
+
+  0x00007f65b94dfb24: ;   {runtime_call slow_subtype_check Runtime1 stub}
+  0x00007f65b94dfb24: e857 2428 | 075b 5b83 | fb00 0f84 | 9300 0000 
+
+  0x00007f65b94dfb34: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfb34: 48bb 28b0 | 984f 657f | 0000 8b42 | 0849 ba00 | 0000 5365 | 7f00 0049 | 03c2 483b | 83d8 0300 
+  0x00007f65b94dfb54: 0075 0d48 | 8383 e003 | 0000 01e9 | 8400 0000 | 483b 83e8 | 0300 0075 | 0d48 8383 | f003 0000 
+  0x00007f65b94dfb74: 01e9 6e00 | 0000 4881 | bbd8 0300 | 0000 0000 | 0075 1748 | 8983 d803 | 0000 48c7 | 83e0 0300 
+  0x00007f65b94dfb94: 0001 0000 | 00e9 4a00 | 0000 4881 | bbe8 0300 | 0000 0000 | 0075 1748 | 8983 e803 | 0000 48c7 
+  0x00007f65b94dfbb4: 83f0 0300 | 0001 0000 | 00e9 2600 | 0000 e921 
+
+  0x00007f65b94dfbc4: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfbc4: 0000 0048 | bb28 b098 | 4f65 7f00 | 0048 83ab | c803 0000 | 01e9 0500 | 0000 e905 | 0000 0048 
+  0x00007f65b94dfbe4: 33f6 eb0a | 48be 0100 | 0000 0000 | 0000 83fe 
+
+  0x00007f65b94dfbf4: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfbf4: 0048 be28 | b098 4f65 | 7f00 0048 | c7c7 0004 | 0000 0f84 | 0700 0000 | 48c7 c710 | 0400 0048 
+  0x00007f65b94dfc14: 8b1c 3e48 | 8d5b 0148 | 891c 3e0f | 84f5 0100 | 0048 8b74 | 2458 4883 | fa00 7516 
+
+  0x00007f65b94dfc30: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfc30: 48b8 28b0 | 984f 657f | 0000 8088 | 1904 0000 | 01e9 ee00 
+
+  0x00007f65b94dfc44: ;   {metadata('com/ctre/phoenix6/swerve/SwerveRequest$NativeSwerveRequest')}
+  0x00007f65b94dfc44: 0000 48b9 | 307d 0a54 | 657f 0000 | 8b42 0849 | ba00 0000 | 5365 7f00 | 0049 03c2 | 483b 4820 
+  0x00007f65b94dfc64: 0f84 1b00 | 0000 483b | c10f 8412 | 0000 0050 
+
+  0x00007f65b94dfc74: ;   {runtime_call slow_subtype_check Runtime1 stub}
+  0x00007f65b94dfc74: 51e8 0623 | 2807 5858 | 83f8 000f | 8493 0000 
+
+  0x00007f65b94dfc84: ;   {metadata(method data for {method} {0x00007f654f792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f65b94dfc84: 0048 b828 | b098 4f65 | 7f00 008b | 4a08 49ba | 0000 0053 | 657f 0000 | 4903 ca48 | 3b88 3004 
+  0x00007f65b94dfca4: 0000 750d | 4883 8038 | 04

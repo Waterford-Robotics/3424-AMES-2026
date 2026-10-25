@@ -1,0 +1,483 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f0bd0a9b934, pid=117085, tid=117128
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.16+8 (17.0.16+8) (build 17.0.16+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (17.0.16+8, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F %I" (or dumping to /home/quinnj/Desktop/3424-AMES-2026/core.117085)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:46761 -Djava.library.path=/home/quinnj/Desktop/3424-AMES-2026/build/jni/release -XX:+ShowCodeDetailsInExceptionMessages frc.robot.Main
+
+Host: 13th Gen Intel(R) Core(TM) i7-13620H, 16 cores, 15G, Garuda Linux Temeraire
+Time: Sat Oct 24 22:29:45 2026 MDT elapsed time: 45.306833 seconds (0d 0h 0m 45s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f0bc82394f0):  JavaThread "robot main" daemon [_thread_in_native, id=117128, stack(0x00007f0b27f00000,0x00007f0b28000000)]
+
+Stack: [0x00007f0b27f00000,0x00007f0b28000000],  sp=0x00007f0b27ffde08,  free space=1015k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x9b934]  pthread_mutex_lock+0x4
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 1418  com.ctre.phoenix6.swerve.jni.SwerveJNI.JNI_SetControl_FieldCentric(IDDDDDDDIIZI)V (0 bytes) @ 0x00007f0bb8e44bf6 [0x00007f0bb8e44ba0+0x0000000000000056]
+J 1524 c1 com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric.applyNative(I)V (64 bytes) @ 0x00007f0bb14e0ef4 [0x00007f0bb14e0dc0+0x0000000000000134]
+J 1523 c1 com.ctre.phoenix6.swerve.SwerveDrivetrain.setControl(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V (173 bytes) @ 0x00007f0bb14e0574 [0x00007f0bb14dfb40+0x0000000000000a34]
+J 1468 c1 frc.robot.subsystems.CommandSwerveDrivetrain$$Lambda$108+0x00007f0b4c0e0f08.run()V (12 bytes) @ 0x00007f0bb14b9c7c [0x00007f0bb14b9960+0x000000000000031c]
+J 1467 c1 edu.wpi.first.wpilibj2.command.FunctionalCommand.execute()V (10 bytes) @ 0x00007f0bb14b95d4 [0x00007f0bb14b94c0+0x0000000000000114]
+J 1490 c1 edu.wpi.first.wpilibj2.command.CommandScheduler.run()V (603 bytes) @ 0x00007f0bb14d5764 [0x00007f0bb14d3360+0x0000000000002404]
+J 1442 c1 frc.robot.Robot.robotPeriodic()V (38 bytes) @ 0x00007f0bb14aab6c [0x00007f0bb14aa540+0x000000000000062c]
+J 1439 c1 edu.wpi.first.wpilibj.IterativeRobotBase.loopFunc()V (552 bytes) @ 0x00007f0bb14af75c [0x00007f0bb14ad720+0x000000000000203c]
+J 1438 c1 edu.wpi.first.wpilibj.TimedRobot$$Lambda$10+0x00007f0b4c01dcd8.run()V (8 bytes) @ 0x00007f0bb14a96c4 [0x00007f0bb14a95c0+0x0000000000000104]
+j  edu.wpi.first.wpilibj.TimedRobot.startCompetition()V+75
+j  edu.wpi.first.wpilibj.RobotBase.runRobot(Ljava/util/function/Supplier;)V+265
+j  edu.wpi.first.wpilibj.RobotBase.lambda$startRobot$1(Ljava/util/function/Supplier;)V+1
+j  edu.wpi.first.wpilibj.RobotBase$$Lambda$2+0x00007f0b4c011b70.run()V+4
+j  java.lang.Thread.run()V+11 java.base@17.0.16
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000840
+
+Registers:
+RAX=0x00007f0b0cbf74f0, RBX=0x0000000000000040, RCX=0x00007f0b94000f20, RDX=0x00007f0b0cd399e8
+RSP=0x00007f0b27ffde08, RBP=0x00007f0b0cd4eb50, RSI=0x00007f0b0cbf6e70, RDI=0x0000000000000830
+R8 =0x0000000000000000, R9 =0x0000000000000001, R10=0x00007f0b0cbc8080, R11=0x00007f0b4b000000
+R12=0x0000000000000830, R13=0x0000000000000000, R14=0x0000000000000001, R15=0x0000000000000001
+RIP=0x00007f0bd0a9b934, EFLAGS=0x0000000000010206, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+XMM[0]=0x00007f0b0cbf74f0 0x00007f0b0cbf6e70
+XMM[1]=0x0000000000000000 0x8000000000000000
+XMM[2]=0x0000000000000000 0x8000000000000000
+XMM[3]=0x0000000000000000 0x3fe1d2f1a9fbe76d
+XMM[4]=0x0000000000000000 0x3fde28c731eb6950
+XMM[5]=0x0000000000000000 0x0000000000000000
+XMM[6]=0x0000000000000000 0x0000000000000000
+XMM[7]=0x0000000000000000 0x00007f0b0cbf74f0
+XMM[8]=0x0000000000000000 0x8b486824548b4860
+XMM[9]=0x0000000000000000 0x0000000000000000
+XMM[10]=0x0000000000000000 0xb92f1976b8000000
+XMM[11]=0x0000000000000000 0x00007f0b94021b90
+XMM[12]=0x0000000000000000 0x0000000000000006
+XMM[13]=0x0000000000000000 0x3ff0000000000000
+XMM[14]=0x0000000000000000 0x0000000000000000
+XMM[15]=0x0000000000000000 0x0000000000000000
+  MXCSR=0x00001fa0
+
+
+Register to memory mapping:
+
+RAX=0x00007f0b0cbf74f0: <offset 0x00000000001f74f0> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+RBX=0x0000000000000040 is an unknown value
+RCX=0x00007f0b94000f20 points into unknown readable memory: 0x000f000f000f0010 | 10 00 0f 00 0f 00 0f 00
+RDX=0x00007f0b0cd399e8: _ZTVN4ctre8phoenix66swerve8requests12FieldCentricE+0x0000000000000010 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+RSP=0x00007f0b27ffde08 is pointing into the stack for thread: 0x00007f0bc82394f0
+RBP=0x00007f0b0cd4eb50: <offset 0x000000000034eb50> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+RSI=0x00007f0b0cbf6e70: <offset 0x00000000001f6e70> in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+RDI=0x0000000000000830 is an unknown value
+R8 =0x0 is NULL
+R9 =0x0000000000000001 is an unknown value
+R10=0x00007f0b0cbc8080: Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1SetControl_1FieldCentric+0x0000000000000000 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+R11=0x00007f0b4b000000 is pointing into metadata
+R12=0x0000000000000830 is an unknown value
+R13=0x0 is NULL
+R14=0x0000000000000001 is an unknown value
+R15=0x0000000000000001 is an unknown value
+
+
+Top of Stack: (sp=0x00007f0b27ffde08)
+0x00007f0b27ffde08:   00007f0b0cbfd6b2 000000000000b9d8
+0x00007f0b27ffde18:   8000000000000000 8000000000000000
+0x00007f0b27ffde28:   8000000000000000 3fe1d2f1a9fbe76d
+0x00007f0b27ffde38:   3fde28c731eb6950 0000000000000000
+0x00007f0b27ffde48:   0000000000000000 00007f0b94564210
+0x00007f0b27ffde58:   0000000000000000 00007f0b0cbf6e70
+0x00007f0b27ffde68:   00007f0b0cbf74f0 00000000c82397a0
+0x00007f0b27ffde78:   e2328e416e13f500 00007f0b27ffded0
+0x00007f0b27ffde88:   00007f0bb8df6fd7 0014175000000000
+0x00007f0b27ffde98:   e2328e416e13f500 0000000000000000
+0x00007f0b27ffdea8:   00007f0b47990a00 00007f0b27ffdf30
+0x00007f0b27ffdeb8:   0000000000000000 0000000000000000
+0x00007f0b27ffdec8:   00007f0b27ffdf18 00007f0bc82394f0
+0x00007f0b27ffded8:   00007f0bb8e44cf9 0000000000000000
+0x00007f0b27ffdee8:   000000071a378458 600000010000004a
+0x00007f0b27ffdef8:   0000000000000018 000000071222a500
+0x00007f0b27ffdf08:   00007f0be24454a0 0000000000000019
+0x00007f0b27ffdf18:   00000007123cc398 000000071a3783f8
+0x00007f0b27ffdf28:   000000071a3782b0 00007f0b27ffe7e8
+0x00007f0b27ffdf38:   00007f0bb14e0ef4 00007f0bc9d4b000
+0x00007f0b27ffdf48:   e2328e41e24454a0 0000000000000019
+0x00007f0b27ffdf58:   000000000000000f 0000000000000000
+0x00007f0b27ffdf68:   fffffffc00000004 00007f0b00000019
+0x00007f0b27ffdf78:   0000000002aa51e1 00007f0bc9d4b000
+0x00007f0b27ffdf88:   000000071a3783f8 00000007122d3db0
+0x00007f0b27ffdf98:   00007f0b998df9ae 00007f0b27ffe7e8
+0x00007f0b27ffdfa8:   00007f0bb14bb28c 000000071224ce20
+0x00007f0b27ffdfb8:   00007f0b27ffe090 00007f0b27ffdfd0
+0x00007f0b27ffdfc8:   00007f0bd0ae49ad 00007f0b27ffe000
+0x00007f0b27ffdfd8:   00007f0b998dc818 000000000000b9d8
+0x00007f0b27ffdfe8:   00007f0b4c0a5348 00007f0b4798a8e8
+0x00007f0b27ffdff8:   0000000700000001 0000000712214350 
+
+Instructions: (pc=0x00007f0bd0a9b934)
+0x00007f0bd0a9b834:   ff ff 83 c2 01 89 53 04 e9 c0 f9 ff ff 4c 89 6d
+0x00007f0bd0a9b844:   e8 4c 89 75 f0 4c 89 7d f8 67 e8 ad 2b 09 00 48
+0x00007f0bd0a9b854:   8b 45 c8 64 48 2b 04 25 28 00 00 00 4c 89 75 f0
+0x00007f0bd0a9b864:   75 e7 48 8d 0d a3 79 12 00 ba 47 02 00 00 48 8d
+0x00007f0bd0a9b874:   35 df f2 11 00 48 8d 3d 03 f3 11 00 e8 2b a8 f9
+0x00007f0bd0a9b884:   ff 83 f8 92 0f 84 ce fe ff ff 83 f8 d9 76 17 48
+0x00007f0bd0a9b894:   ba 09 00 00 08 2c 00 00 00 83 c0 26 48 0f a3 c2
+0x00007f0bd0a9b8a4:   0f 82 b2 fe ff ff 4c 8b 6d e8 e9 30 ff ff ff 4c
+0x00007f0bd0a9b8b4:   8b 6d e8 e9 e3 fe ff ff 48 8b 45 c8 64 48 2b 04
+0x00007f0bd0a9b8c4:   25 28 00 00 00 4c 89 75 f0 4c 89 7d f8 0f 85 76
+0x00007f0bd0a9b8d4:   ff ff ff 48 8d 0d 32 79 12 00 ba a5 01 00 00 48
+0x00007f0bd0a9b8e4:   8d 35 6e f2 11 00 48 8d 3d bf 38 12 00 e8 ba a7
+0x00007f0bd0a9b8f4:   f9 ff 48 8b 45 c8 64 48 2b 04 25 28 00 00 00 4c
+0x00007f0bd0a9b904:   89 75 f0 4c 89 7d f8 0f 85 3c ff ff ff 48 8d 0d
+0x00007f0bd0a9b914:   f8 78 12 00 ba aa 01 00 00 48 8d 35 34 f2 11 00
+0x00007f0bd0a9b924:   48 8d 3d 42 f2 11 00 e8 80 a7 f9 ff f3 0f 1e fa
+0x00007f0bd0a9b934:   8b 57 10 90 89 d0 83 e0 7c 75 69 55 48 89 e5 48
+0x00007f0bd0a9b944:   83 ec 10 64 8b 0c 25 d0 02 00 00 83 e2 7f 75 5c
+0x00007f0bd0a9b954:   8b 77 10 81 e6 80 00 00 00 74 29 31 c0 ba 01 00
+0x00007f0bd0a9b964:   00 00 f0 0f b1 17 75 6c 44 8b 4f 08 45 85 c9 0f
+0x00007f0bd0a9b974:   85 0c 02 00 00 89 4f 08 83 47 0c 01 90 31 c0 c9
+0x00007f0bd0a9b984:   c3 0f 1f 00 80 3d 11 57 18 00 00 74 ce 44 8b 17
+0x00007f0bd0a9b994:   45 85 d2 75 c6 c7 07 01 00 00 00 eb cb 0f 1f 80
+0x00007f0bd0a9b9a4:   00 00 00 00 e9 63 f7 ff ff 0f 1f 00 83 fa 01 0f
+0x00007f0bd0a9b9b4:   85 a9 00 00 00 39 4f 08 75 32 8b 47 04 83 f8 ff
+0x00007f0bd0a9b9c4:   0f 84 d6 00 00 00 83 c0 01 89 47 04 31 c0 eb af
+0x00007f0bd0a9b9d4:   0f 1f 40 00 89 4d f4 48 89 7d f8 e8 ec 94 ff ff
+0x00007f0bd0a9b9e4:   8b 4d f4 48 8b 7d f8 e9 7c ff ff ff 8b 77 10 81
+0x00007f0bd0a9b9f4:   e6 80 00 00 00 75 45 80 3d 9e 56 18 00 00 74 3c
+0x00007f0bd0a9ba04:   44 8b 07 45 85 c0 75 34 c7 07 01 00 00 00 0f 1f
+0x00007f0bd0a9ba14:   00 66 66 2e 0f 1f 84 00 00 00 00 00 8b 57 08 85
+0x00007f0bd0a9ba24:   d2 0f 85 80 01 00 00 c7 47 04 01 00 00 00 e9 42 
+
+
+Stack slot to memory mapping:
+stack at sp + 0 slots: 0x00007f0b0cbfd6b2: c_ctre_phoenix6_swerve_drivetrain_set_control_field_centric+0x0000000000000192 in /home/quinnj/Desktop/3424-AMES-2026/build/jni/release/libCTRE_Phoenix6_Sim.so at 0x00007f0b0ca00000
+stack at sp + 1 slots: 0x000000000000b9d8 is an unknown value
+stack at sp + 2 slots: 0x8000000000000000 is an unknown value
+stack at sp + 3 slots: 0x8000000000000000 is an unknown value
+stack at sp + 4 slots: 0x8000000000000000 is an unknown value
+stack at sp + 5 slots: 0x3fe1d2f1a9fbe76d is an unknown value
+stack at sp + 6 slots: 0x3fde28c731eb6950 is an unknown value
+stack at sp + 7 slots: 0x0 is NULL
+
+
+Compiled method (n/a)   45323 1418     n 0       com.ctre.phoenix6.swerve.jni.SwerveJNI::JNI_SetControl_FieldCentric (native)
+ total in heap  [0x00007f0bb8e44a10,0x00007f0bb8e44e08] = 1016
+ relocation     [0x00007f0bb8e44b70,0x00007f0bb8e44ba0] = 48
+ main code      [0x00007f0bb8e44ba0,0x00007f0bb8e44e00] = 608
+ oops           [0x00007f0bb8e44e00,0x00007f0bb8e44e08] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f0b474e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI'
+  # parm0:    rsi       = int
+  # parm1:    xmm0:xmm0   = double
+  # parm2:    xmm1:xmm1   = double
+  # parm3:    xmm2:xmm2   = double
+  # parm4:    xmm3:xmm3   = double
+  # parm5:    xmm4:xmm4   = double
+  # parm6:    xmm5:xmm5   = double
+  # parm7:    xmm6:xmm6   = double
+  # parm8:    rdx       = int
+  # parm9:    rcx       = int
+  # parm10:   r8        = boolean
+  # parm11:   r9        = int
+  #           [sp+0x60]  (sp of caller)
+  0x00007f0bb8e44ba0: 448b 5608 | 49bb 0000 | 004b 0b7f | 0000 4d03 | d349 3bc2 | 0f84 0600 
+
+  0x00007f0bb8e44bb8: ;   {runtime_call ic_miss_stub}
+  0x00007f0bb8e44bb8: 0000 e9c1 | b186 ff90 
+[Verified Entry Point]
+  0x00007f0bb8e44bc0: 8984 2400 | c0fe ff55 | 488b ec48 | 83ec 504c | 890c 244d | 8bc8 4c8b | c148 8bca 
+
+  0x00007f0bb8e44bdc: ;   {oop(a 'java/lang/Class'{0x00000007123cc398} = 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f0bb8e44bdc: 488b d649 | be98 c33c | 1207 0000 | 004c 8974 | 2438 4c8d | 7424 3849 | 8bf6 c5f8 
+
+  0x00007f0bb8e44bf8: ;   {internal_word}
+  0x00007f0bb8e44bf8: 7749 baf6 | 4be4 b80b | 7f00 004d | 8997 9802 | 0000 4989 | a790 0200 
+
+  0x00007f0bb8e44c10: ;   {external_word}
+  0x00007f0bb8e44c10: 0080 3d2d | 95ac 1700 | 0f84 bc00 | 0000 5652 | 4883 ec10 | c5fb 1104 | 2448 83ec | 10c5 fb11 
+  0x00007f0bb8e44c30: 0c24 4883 | ec10 c5fb | 1114 2448 | 83ec 10c5 | fb11 1c24 | 4883 ec10 | c5fb 1124 | 2448 83ec 
+  0x00007f0bb8e44c50: 10c5 fb11 | 2c24 4883 | ec10 c5fb | 1134 2451 | 4150 4151 
+
+  0x00007f0bb8e44c64: ;   {metadata({method} {0x00007f0b474e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f0bb8e44c64: 48be e809 | 4e47 0b7f | 0000 498b | fff7 c40f | 0000 000f | 8412 0000 | 0048 83ec 
+
+  0x00007f0bb8e44c80: ;   {runtime_call SharedRuntime::dtrace_method_entry(JavaThread*, Method*)}
+  0x00007f0bb8e44c80: 08e8 6ad9 | 4917 4883 | c408 e905 
+
+  0x00007f0bb8e44c8c: ;   {runtime_call SharedRuntime::dtrace_method_entry(JavaThread*, Method*)}
+  0x00007f0bb8e44c8c: 0000 00e8 | 5cd9 4917 | 4159 4158 | 59c5 fb10 | 3424 4883 | c410 c5fb | 102c 2448 | 83c4 10c5 
+  0x00007f0bb8e44cac: fb10 2424 | 4883 c410 | c5fb 101c | 2448 83c4 | 10c5 fb10 | 1424 4883 | c410 c5fb | 100c 2448 
+  0x00007f0bb8e44ccc: 83c4 10c5 | fb10 0424 | 4883 c410 | 5a5e 498d | bfb0 0200 | 0041 c787 | 3803 0000 | 0400 0000 
+  0x00007f0bb8e44cec: ;   {runtime_call Java_com_ctre_phoenix6_swerve_jni_SwerveJNI_JNI_1SetControl_1FieldCentric}
+  0x00007f0bb8e44cec: 49ba 8080 | bc0c 0b7f | 0000 41ff | d2c5 f877 | 41c7 8738 | 0300 0005 | 0000 00f0 | 8344 24c0 
+  0x00007f0bb8e44d0c: 0049 3baf | 4003 0000 | 0f87 1100 | 0000 4181 | bf28 0300 | 0000 0000 | 000f 841c | 0000 00c5 
+  0x00007f0bb8e44d2c: f877 498b | ff4c 8be4 | 4883 ec00 | 4883 e4f0 
+
+  0x00007f0bb8e44d3c: ;   {runtime_call JavaThread::check_special_condition_for_native_trans(JavaThread*)}
+  0x00007f0bb8e44d3c: e8bf 9c62 | 1749 8be4 | 4d33 e441 | c787 3803 | 0000 0800 | 0000 4181 | bfa8 0300 | 0002 0000 
+  0x00007f0bb8e44d5c: 000f 847c 
+
+  0x00007f0bb8e44d60: ;   {external_word}
+  0x00007f0bb8e44d60: 0000 0080 | 3ddb 93ac | 1700 0f84 | 3000 0000 
+
+  0x00007f0bb8e44d70: ;   {metadata({method} {0x00007f0b474e09e8} 'JNI_SetControl_FieldCentric' '(IDDDDDDDIIZI)V' in 'com/ctre/phoenix6/swerve/jni/SwerveJNI')}
+  0x00007f0bb8e44d70: 48be e809 | 4e47 0b7f | 0000 498b | fff7 c40f | 0000 000f | 8412 0000 | 0048 83ec 
+
+  0x00007f0bb8e44d8c: ;   {runtime_call SharedRuntime::dtrace_method_exit(JavaThread*, Method*)}
+  0x00007f0bb8e44d8c: 08e8 0ed9 | 4917 4883 | c408 e905 
+
+  0x00007f0bb8e44d98: ;   {runtime_call SharedRuntime::dtrace_method_exit(JavaThread*, Method*)}
+  0x00007f0bb8e44d98: 0000 00e8 | 00d9 4917 | 49c7 8790 | 0200 0000 | 0000 0049 | c787 9802 | 0000 0000 | 0000 c5f8 
+  0x00007f0bb8e44db8: 7749 8b8f | d800 0000 | c781 0001 | 0000 0000 | 0000 c949 | 817f 0800 | 0000 000f | 8501 0000 
+  0x00007f0bb8e44dd8: ;   {runtime_call StubRoutines (1)}
+  0x00007f0bb8e44dd8: 00c3 e921 | ae81 ffc5 | f877 4c8b | e448 83ec | 0048 83e4 
+
+  0x00007f0bb8e44dec: ;   {runtime_call SharedRuntime::reguard_yellow_pages()}
+  0x00007f0bb8e44dec: f0e8 1ee7 | 4917 498b | e44d 33e4 | e966 ffff | fff4 f4f4 
+[/MachCode]
+
+
+Compiled method (c1)   45347 1524       3       com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative (64 bytes)
+ total in heap  [0x00007f0bb14e0c10,0x00007f0bb14e10f8] = 1256
+ relocation     [0x00007f0bb14e0d70,0x00007f0bb14e0db8] = 72
+ main code      [0x00007f0bb14e0dc0,0x00007f0bb14e0fa0] = 480
+ stub code      [0x00007f0bb14e0fa0,0x00007f0bb14e0fe0] = 64
+ oops           [0x00007f0bb14e0fe0,0x00007f0bb14e0fe8] = 8
+ metadata       [0x00007f0bb14e0fe8,0x00007f0bb14e1008] = 32
+ scopes data    [0x00007f0bb14e1008,0x00007f0bb14e1040] = 56
+ scopes pcs     [0x00007f0bb14e1040,0x00007f0bb14e10c0] = 128
+ dependencies   [0x00007f0bb14e10c0,0x00007f0bb14e10d0] = 16
+ nul chk table  [0x00007f0bb14e10d0,0x00007f0bb14e10f8] = 40
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric'
+  # this:     rsi:rsi   = 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric'
+  # parm0:    rdx       = int
+  #           [sp+0xe0]  (sp of caller)
+  0x00007f0bb14e0dc0: 448b 5608 | 49bb 0000 | 004b 0b7f | 0000 4d03 | d34c 3bd0 
+
+  0x00007f0bb14e0dd4: ;   {runtime_call ic_miss_stub}
+  0x00007f0bb14e0dd4: 0f85 a6ef | 1c07 660f | 1f44 0000 
+[Verified Entry Point]
+  0x00007f0bb14e0de0: 8984 2400 | c0fe ff55 | 4881 ecd0 
+
+  0x00007f0bb14e0dec: ;   {metadata(method data for {method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f0bb14e0dec: 0000 0048 | b900 0a99 | 470b 7f00 | 0044 8b81 | f400 0000 | 4183 c002 | 4489 81f4 | 0000 0041 
+  0x00007f0bb14e0e0c: 81e0 fe07 | 0000 4183 | f800 0f84 | ee00 0000 | c5fb 1046 | 10c5 fb10 | 4e18 c5fb | 1056 20c5 
+  0x00007f0bb14e0e2c: fb10 5e28 | c5fb 1066 | 308b 4e38 | 48c1 e103 
+
+  0x00007f0bb14e0e3c: ; implicit exception: dispatches to 0x00007f0bb14e0f2b
+  0x00007f0bb14e0e3c: 483b 014c 
+
+  0x00007f0bb14e0e40: ;   {metadata(method data for {method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f0bb14e0e40: 8bc1 49b9 | 000a 9947 | 0b7f 0000 
+
+  0x00007f0bb14e0e4c: ;   {metadata('edu/wpi/first/math/geometry/Translation2d')}
+  0x00007f0bb14e0e4c: 49ba 0080 | 0a4c 0b7f | 0000 4d89 | 9148 0100 | 0049 8381 | 5001 0000 | 01c5 fb10 | 6910 4c8b 
+  0x00007f0bb14e0e6c: ;   {metadata(method data for {method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f0bb14e0e6c: c149 b900 | 0a99 470b 
+
+  0x00007f0bb14e0e74: ;   {metadata('edu/wpi/first/math/geometry/Translation2d')}
+  0x00007f0bb14e0e74: 7f00 0049 | ba00 800a | 4c0b 7f00 | 004d 8991 | 8001 0000 | 4983 8188 | 0100 0001 | c5fb 1071 
+  0x00007f0bb14e0e94: 188b 4e3c | 48c1 e103 
+
+  0x00007f0bb14e0e9c: ; implicit exception: dispatches to 0x00007f0bb14e0f30
+  0x00007f0bb14e0e9c: 8b49 1444 | 8b46 4049 | c1e0 0345 | 8b40 1444 | 0fbe 4e0c | 8b7e 4448 | c1e7 038b 
+
+  0x00007f0bb14e0eb8: ;   {metadata(method data for {method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f0bb14e0eb8: 7f14 48bb | 000a 9947 | 0b7f 0000 | 4883 83a8 | 0100 0001 | 4889 b424 | c000 0000 | 488b f289 
+  0x00007f0bb14e0ed8: 9424 b800 | 0000 488b | d149 8bc8 | 4d8b c14c | 8bcf 0f1f 
+
+  0x00007f0bb14e0eec: ;   {static_call}
+  0x00007f0bb14e0eec: 4400 00e8 
+
+  0x00007f0bb14e0ef0: ; ImmutableOopMap {[192]=Oop }
+                      ;*invokestatic JNI_SetControl_FieldCentric {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@60 (line 472)
+  0x00007f0bb14e0ef0: cc3c 9607 | 4881 c4d0 | 0000 005d 
+
+  0x00007f0bb14e0efc: ;   {poll_return}
+  0x00007f0bb14e0efc: 493b a740 | 0300 000f | 8736 0000 
+
+  0x00007f0bb14e0f08: ;   {metadata({method} {0x00007f0b4777b968} 'applyNative' '(I)V' in 'com/ctre/phoenix6/swerve/SwerveRequest$FieldCentric')}
+  0x00007f0bb14e0f08: 00c3 49ba | 68b9 7747 | 0b7f 0000 | 4c89 5424 | 0848 c704 | 24ff ffff 
+
+  0x00007f0bb14e0f20: ;   {runtime_call counter_overflow Runtime1 stub}
+  0x00007f0bb14e0f20: ffe8 5a43 
+
+  0x00007f0bb14e0f24: ; ImmutableOopMap {rsi=Oop }
+                      ;*synchronization entry
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@-1 (line 472)
+  0x00007f0bb14e0f24: 2807 e9f1 
+
+  0x00007f0bb14e0f28: ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f0bb14e0f28: feff ffe8 
+
+  0x00007f0bb14e0f2c: ; ImmutableOopMap {rsi=Oop rcx=Oop }
+                      ;*invokevirtual getX {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@25 (line 478)
+  0x00007f0bb14e0f2c: 70e6 2707 
+
+  0x00007f0bb14e0f30: ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f0bb14e0f30: e86b e627 
+
+  0x00007f0bb14e0f34: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@39 (line 479)
+                      ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f0bb14e0f34: 07e8 66e6 
+
+  0x00007f0bb14e0f38: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@46 (line 479)
+                      ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007f0bb14e0f38: 2707 e861 
+
+  0x00007f0bb14e0f3c: ; ImmutableOopMap {rsi=Oop }
+                      ;*getfield value {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) com.ctre.phoenix6.swerve.SwerveRequest$FieldCentric::applyNative@57 (line 479)
+                      ;   {internal_word}
+  0x00007f0bb14e0f3c: e627 0749 | bafc 0e4e | b10b 7f00 | 004d 8997 | 5803 0000 
+
+  0x00007f0bb14e0f50: ;   {runtime_call SafepointBlob}
+  0x00007f0bb14e0f50: e9ab 571d | 0790 9049 | 8b87 d003 | 0000 49c7 | 87d0 0300 | 0000 0000 | 0049 c787 | d803 0000 
+  0x00007f0bb14e0f70: 0000 0000 | 4881 c4d0 | 0000 005d 
+
+  0x00007f0bb14e0f7c: ;   {runtime_call unwind_exception Runtime1 stub}
+  0x00007f0bb14e0f7c: e97f 061f | 07f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 | f4f4 f4f4 
+  0x00007f0bb14e0f9c: f4f4 f4f4 
+[Stub Code]
+  0x00007f0bb14e0fa0: ;   {no_reloc}
+  0x00007f0bb14e0fa0: 0f1f 4400 
+
+  0x00007f0bb14e0fa4: ;   {static_stub}
+  0x00007f0bb14e0fa4: 0048 bb00 | 0000 0000 
+
+  0x00007f0bb14e0fac: ;   {runtime_call}
+  0x00007f0bb14e0fac: 0000 00e9 | fbff ffff 
+[Exception Handler]
+  0x00007f0bb14e0fb4: ;   {runtime_call handle_exception_from_callee Runtime1 stub}
+  0x00007f0bb14e0fb4: e8c7 0928 
+
+  0x00007f0bb14e0fb8: ;   {external_word}
+  0x00007f0bb14e0fb8: 0748 bf52 | 6759 d00b | 7f00 0048 
+
+  0x00007f0bb14e0fc4: ;   {runtime_call MacroAssembler::debug64(char*, long, long*)}
+  0x00007f0bb14e0fc4: 83e4 f0e8 | b49d c21e 
+
+  0x00007f0bb14e0fcc: ;   {section_word}
+  0x00007f0bb14e0fcc: f449 bacd | 0f4e b10b | 7f00 0041 
+
+  0x00007f0bb14e0fd8: ;   {runtime_call DeoptimizationBlob}
+  0x00007f0bb14e0fd8: 52e9 c249 | 1d07 f4f4 
+[/MachCode]
+
+
+Compiled method (c1)   45361 1523       3       com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl (173 bytes)
+ total in heap  [0x00007f0bb14df890,0x00007f0bb14e0bd8] = 4936
+ relocation     [0x00007f0bb14df9f0,0x00007f0bb14dfb18] = 296
+ constants      [0x00007f0bb14dfb20,0x00007f0bb14dfb40] = 32
+ main code      [0x00007f0bb14dfb40,0x00007f0bb14e07c0] = 3200
+ stub code      [0x00007f0bb14e07c0,0x00007f0bb14e0870] = 176
+ oops           [0x00007f0bb14e0870,0x00007f0bb14e0880] = 16
+ metadata       [0x00007f0bb14e0880,0x00007f0bb14e08a0] = 32
+ scopes data    [0x00007f0bb14e08a0,0x00007f0bb14e0a08] = 360
+ scopes pcs     [0x00007f0bb14e0a08,0x00007f0bb14e0b88] = 384
+ dependencies   [0x00007f0bb14e0b88,0x00007f0bb14e0b98] = 16
+ nul chk table  [0x00007f0bb14e0b98,0x00007f0bb14e0bd8] = 64
+
+
+[Constant Pool]
+             Address          hex4                    hex8      
+  0x00007f0bb14dfb20:   0x00000000      0x4008000000000000      
+  0x00007f0bb14dfb24:   0x40080000                              
+  0x00007f0bb14dfb28:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f0bb14dfb2c:   0xf4f4f4f4                              
+  0x00007f0bb14dfb30:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f0bb14dfb34:   0xf4f4f4f4                              
+  0x00007f0bb14dfb38:   0xf4f4f4f4      0xf4f4f4f4f4f4f4f4      
+  0x00007f0bb14dfb3c:   0xf4f4f4f4                              
+
+[MachCode]
+[Entry Point]
+  # {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain'
+  # this:     rsi:rsi   = 'com/ctre/phoenix6/swerve/SwerveDrivetrain'
+  # parm0:    rdx:rdx   = 'com/ctre/phoenix6/swerve/SwerveRequest'
+  #           [sp+0xb0]  (sp of caller)
+  0x00007f0bb14dfb40: ;   {no_reloc}
+  0x00007f0bb14dfb40: 448b 5608 | 49bb 0000 | 004b 0b7f | 0000 4d03 | d34c 3bd0 
+
+  0x00007f0bb14dfb54: ;   {runtime_call ic_miss_stub}
+  0x00007f0bb14dfb54: 0f85 2602 | 1d07 660f | 1f44 0000 
+[Verified Entry Point]
+  0x00007f0bb14dfb60: 8984 2400 | c0fe ff55 | 4881 eca0 | 0000 0048 | 8974 2458 | 4889 5424 
+
+  0x00007f0bb14dfb78: ;   {metadata(method data for {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f0bb14dfb78: 6048 bfe8 | a898 470b | 7f00 008b | 9ff4 0000 | 0083 c302 | 899f f400 | 0000 81e3 | fe07 0000 
+  0x00007f0bb14dfb98: 83fb 000f | 84a9 0a00 | 008b 7e2c | 48c1 e703 
+
+  0x00007f0bb14dfba8: ; implicit exception: dispatches to 0x00007f0bb14e066b
+  0x00007f0bb14dfba8: 817f 0c00 | 0000 000f | 86c0 0a00 | 008b 7f10 | 48c1 e703 
+
+  0x00007f0bb14dfbbc: ; implicit exception: dispatches to 0x00007f0bb14e0687
+  0x00007f0bb14dfbbc: 0fbe 7f14 
+
+  0x00007f0bb14dfbc0: ;   {metadata(method data for {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f0bb14dfbc0: 83ff 0048 | bfe8 a898 | 470b 7f00 | 0048 c7c3 | 3801 0000 | 0f85 0700 | 0000 48c7 | c348 0100 
+  0x00007f0bb14dfbe0: 0048 8b04 | 1f48 8d40 | 0148 8904 | 1f0f 85c6 
+
+  0x00007f0bb14dfbf0: ;   {metadata(method data for {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f0bb14dfbf0: 0000 0048 | bfe8 a898 | 470b 7f00 | 0048 8387 | 5801 0000 
+
+  0x00007f0bb14dfc04: ;   {metadata(method data for {method} {0x00007f0b474e7510} 'getCurrentTimeSeconds' '()D' in 'com/ctre/phoenix6/Utils')}
+  0x00007f0bb14dfc04: 0148 bf18 | 2f96 470b | 7f00 008b | 9ff4 0000 | 0083 c302 | 899f f400 | 0000 81e3 | feff 1f00 
+  0x00007f0bb14dfc24: 83fb 000f | 845f 0a00 
+
+  0x00007f0bb14dfc2c: ;   {metadata(method data for {method} {0x00007f0b474e7510} 'getCurrentTimeSeconds' '()D' in 'com/ctre/phoenix6/Utils')}
+  0x00007f0bb14dfc2c: 0048 bf18 | 2f96 470b | 7f00 0048 | 8387 3801 
+
+  0x00007f0bb14dfc3c: ;   {static_call}
+  0x00007f0bb14dfc3c: 0000 01e8 
+
+  0x00007f0bb14dfc40: ; ImmutableOopMap {[96]=Oop [88]=Oop }
+                      ;*invokestatic getCurrentTimeSeconds {reexecute=0 rethrow=0 return_oop=0}
+                      ; - com.ctre.phoenix6.Utils::getCurrentTimeSeconds@0 (line 26)
+                      ; - com.ctre.phoenix6.swerve.SwerveDrivetrain::setControl@12 (line 591)
+  0x00007f0bb14dfc40: 3c0a 1d07 | 488b 7424 | 58c5 fb10 | 4e20 c5f9 | 28d0 c5eb 
+
+  0x00007f0bb14dfc54: ;   {section_word}
+  0x00007f0bb14dfc54: 5cd1 c5fb | 100d c2fe | ffff c5f9 | 2ed1 baff | ffff ff0f | 8a14 0000 | 000f 820e | 0000 00ba 
+  0x00007f0bb14dfc74: 0000 0000 | 0f84 0300 | 0000 48ff | c283 fa00 
+
+  0x00007f0bb14dfc84: ;   {metadata(method data for {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f0bb14dfc84: 48ba e8a8 | 9847 0b7f | 0000 48c7 | c168 0100 | 000f 8e07 | 0000 0048 | c7c1 7801 | 0000 488b 
+  0x00007f0bb14dfca4: 3c0a 488d | 7f01 4889 | 3c0a 0f8e | 8009 0000 | e9f7 0800 | 008b 4e44 | 48c1 e103 
+
+  0x00007f0bb14dfcc0: ;   {metadata(method data for {method} {0x00007f0b47792600} 'setControl' '(Lcom/ctre/phoenix6/swerve/SwerveRequest;)V' in 'com/ctre/phoenix6/swerve/SwerveDrivetrain')}
+  0x00007f0bb14dfcc0: 483b ca48 | b9e8 a898 | 470b 7f00 | 0048 c7c7 | 9801 0000 | 0f84 0700 | 0000 48c7 | c7a8 0100 
+  0x00007f0bb14dfce0: 0048 8b1c | 3948 8d5b | 0148 891c | 390f 8466 | 0500 0041 | 0fbe 4f38 | 83f9 000f | 85ac 0900 
+  0x00007f0bb14dfd00: 004c 8bd2 | 49c1 ea03 | 4489 5644 | 488b ce48 | 33ca 48c1 | e915 4883
