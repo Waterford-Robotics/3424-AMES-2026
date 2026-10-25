@@ -3,13 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+
 
 public class Constants {
 
   public static final class ControllerConstants {
     
-    public static final int scoreManualButton=1;
-    public static final int scoreAutoButton=2;
+    
+    public static final int scoreHLButton=1;
+    public static final int scorePB1=2;
+    public static final int scorePB2=3;
+    public static final int scorePB3=4;
+    public static int k_rightTrigger = Axis.kRightTrigger.value;
+    public static final int k_leftTrigger = Axis.kLeftTrigger.value;
+    public static final int scoreShelf = 6;
+    public static final int autoAlign = 7;
   }  
 
 
@@ -33,6 +42,7 @@ public class Constants {
     public static final double targetRotPB2=10;
     public static final double targetRotPB3=15;
     public static final double targetRotShelf=5;
+    public static final double elavatorSpeed=0.2;
   }
 
   

@@ -18,13 +18,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.elavatorLevelHL;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
 import frc.robot.subsystems.Elavator;
 
@@ -66,10 +71,51 @@ public class RobotContainer {
 					)
 			);
 			
-		new JoystickButton(m_devController.getHID(), ControllerConstants.scoreManualButton)
+	//HL Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
     .onTrue(
-        new elavatorLevelHL(m_elevator, 10) // Runs the command for 2.0 seconds
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
     );
+	//PB1 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+    );
+	//PB2 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+    );
+	//PB3 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+    );
+	//Shelf Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreShelf)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+    );
+	//Auto Align Button
+	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+    );
+	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
+		.whileTrue(
+				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
+		)
+		.onFalse(
+				new RunCommand(() -> m_elevator.stopElavator())
+		);
+	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.0314159)
+		.whileTrue(
+				new RunCommand(() -> m_elevator.elavatorDown(Constants.ElavatorConstants.elavatorSpeed))
+		)
+		.onFalse(
+				new RunCommand(() -> m_elevator.stopElavator())
+		);
+		
 
 			// m_drivetrain.setDefaultCommand(
 			// 		// Drivetrain will execute this command periodically
