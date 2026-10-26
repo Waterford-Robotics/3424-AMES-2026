@@ -94,23 +94,49 @@ public class AlignCommand extends Command{
     getTargetAlign();
     double rotationSpeed;
      double distance=0;
-     double[] xconstants = { };
-     double[] yconstants = { };
-     double [] radconstants={};
-    double radDifference=drivetrain.getPose().getRotation().getRadians()-radconstants[getTargetAlign()];
+     double[] xconstants = {AlignmentConstants.x1 };
+     double[] yconstants = {AlignmentConstants.y1 };
+     double [] radconstants={AlignmentConstants.rad1};
+    double radDifference=drivetrain.getPose().getRotation().getRadians();
+    radDifference=radDifference = MathUtil.angleModulus(radconstants[getTargetAlign()] - radDifference);
     double velocityX=drivetrain.getPose().getX();
     double velocityY=drivetrain.getPose().getY();
-    distance= Math.sqrt(Math.pow((velocityX-xconstants[getTargetAlign()]),2)+Math.pow((velocityY-yconstants[getTargetAlign()]),2));
-    velocityX=velocityX-xconstants[getTargetAlign()];
-    velocityY= velocityY-yconstants[getTargetAlign()];
+    
+    velocityX = xconstants[getTargetAlign()] - drivetrain.getPose().getX();
+    velocityY = yconstants[getTargetAlign()] - drivetrain.getPose().getY();
+    distance = Math.hypot(velocityX, velocityY);
+
+    
+
+// Cap speed while maintaining direction ratio
+   if (distance > TunerConstants.kSpeedAt12Volts.in(MetersPerSecond)) {
+    double scaleFactor = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) / distance;
+      velocityX *= scaleFactor;
+      velocityY *= scaleFactor;
+    }
+    if(velocityX<0){
+      velocityX=MathUtil.clamp(velocityX,  -TunerConstants.kSpeedAt12Volts.in(MetersPerSecond),-0.1);
+    }
+    if(velocityX>0){
+      velocityX=MathUtil.clamp(velocityX, 0.1, TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
+    }
+    if(velocityY<0){
+      velocityY=MathUtil.clamp(velocityY,  -TunerConstants.kSpeedAt12Volts.in(MetersPerSecond),-0.1);
+    }
+
+    if(velocityY>0){
+      velocityY=MathUtil.clamp(velocityY, 0.1, TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
+    }
+    
+    
+      
 
     
     
    
     
     
-    rotationSpeed=distance/TunerConstants.kSpeedAt12Volts.in(MetersPerSecond)/radDifference;
-    rotationSpeed=MathUtil.clamp(rotationSpeed,0.1,1);
+    rotationSpeed=radDifference*2;
     drivetrain.setControl(drive.withRotationalRate(rotationSpeed).withVelocityX(velocityX).withVelocityY(velocityY));
     
     
