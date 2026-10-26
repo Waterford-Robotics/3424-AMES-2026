@@ -1,16 +1,27 @@
 package frc.robot.commands;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
+import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AlignmentConstants;
 
 
 public class AlignCommand extends Command{
     
   CommandSwerveDrivetrain drivetrain;
   DashboardConfigsSubsystem dashboard;
+  
   double m_seconds;
   Timer m_timer = new Timer();
+  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric();
   
 
   // Constructor
@@ -19,6 +30,7 @@ public class AlignCommand extends Command{
     drivetrain = m_swerveSubsystem;
     dashboard = m_dashboard;
     m_seconds = seconds;
+    
   }
 
 
@@ -26,9 +38,12 @@ public class AlignCommand extends Command{
   public void initialize() {
     m_timer.start();
     m_timer.reset();
+    addRequirements(drivetrain);
+    
   }
   public int getTargetAlign(){
     int alignTarget=0;
+    
 
 
     //Add auto logic to find proper align target
@@ -77,8 +92,26 @@ public class AlignCommand extends Command{
   // Actual command
   public void execute() {
     getTargetAlign();
+    double rotationSpeed;
+     double distance=0;
+     double[] xconstants = { };
+     double[] yconstants = { };
+     double [] radconstants={};
+    double radDifference=drivetrain.getPose().getRotation().getRadians()-radconstants[getTargetAlign()];
+    double velocityX=drivetrain.getPose().getX();
+    double velocityY=drivetrain.getPose().getY();
+    distance= Math.sqrt(Math.pow((velocityX-xconstants[getTargetAlign()]),2)+Math.pow((velocityY-yconstants[getTargetAlign()]),2));
+    velocityX=velocityX-xconstants[getTargetAlign()];
+    velocityY= velocityY-yconstants[getTargetAlign()];
+
     
-    drivetrain.getPose();
+    
+   
+    
+    
+    rotationSpeed=distance/TunerConstants.kSpeedAt12Volts.in(MetersPerSecond)/radDifference;
+    rotationSpeed=MathUtil.clamp(rotationSpeed,0.1,1);
+    drivetrain.setControl(drive.withRotationalRate(rotationSpeed).withVelocityX(velocityX).withVelocityY(velocityY));
     
     
       

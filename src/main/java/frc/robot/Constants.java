@@ -44,6 +44,13 @@ public class Constants {
     public static final double targetRotShelf=70;
     public static final double elavatorSpeed=0.2;
   }
+  public static final class AlignmentConstants {
+    public static final double x1 = 0;
+    public static final double y1 = 0;
+    public static final double rad1 = 0;
+  
+    
+  }
 
   
      public static final class VisionConstants{
