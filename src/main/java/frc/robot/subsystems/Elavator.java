@@ -21,6 +21,8 @@ public class Elavator extends SubsystemBase{
 
   
   }
+  public void random(){}
+  //was made to allow me to commoit
   
 
   public void elavatorUp(double speed) {

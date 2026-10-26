@@ -42,16 +42,16 @@ import frc.robot.subsystems.Elavator;
 
 
 public class RobotContainer extends SubsystemBase{
-	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+	// private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+	// private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
-	/* Setting up bindings for necessary control of the swerve drive platform */
-	private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-					.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-					.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+	// /* Setting up bindings for necessary control of the swerve drive platform */
+	// private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+	// 				.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+	// 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	
-	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-	//private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
+	// public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
+	 //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
 	final Elavator m_elevator = new Elavator();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -70,14 +70,14 @@ public class RobotContainer extends SubsystemBase{
 
 			// Note that X is defined as forward according to WPILib convention,
 			// and Y is defined as to the left according to WPILib convention.
-			m_drivetrain.setDefaultCommand(
-					// Drivetrain will execute this command periodically
-					m_drivetrain.applyRequest(() ->
-						drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-					)
-			);
+			// m_drivetrain.setDefaultCommand(
+			// 		// Drivetrain will execute this command periodically
+			// 		m_drivetrain.applyRequest(() ->
+			// 			drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+			// 		)
+			// );
 			
 	//HL Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
@@ -105,10 +105,10 @@ public class RobotContainer extends SubsystemBase{
         new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//Auto Align Button
-	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
-    .whileTrue(
-        new AlignCommand(m_drivetrain, .5,m_dashboard) 
-    );
+	// new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
+    // .whileTrue(
+    //     new AlignCommand(m_drivetrain, .5,m_dashboard) 
+    // );
 	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
 		.whileTrue(
 				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
@@ -170,9 +170,9 @@ public class RobotContainer extends SubsystemBase{
 		// Idle while the robot is disabled. This ensures the configured
 		// neutral mode is applied to the drive motors while disabled.
 		final var idle = new SwerveRequest.Idle();
-		RobotModeTriggers.disabled().whileTrue(
-				m_drivetrain.applyRequest(() -> idle).ignoringDisable(true)
-		);
+		// RobotModeTriggers.disabled().whileTrue(
+		// 		m_drivetrain.applyRequest(() -> idle).ignoringDisable(true)
+		// );
 
 		// m_driverController.b().whileTrue(drivetrain.applyRequest(() ->
 		//     point.withModuleDirection(new Rotation2d(-m_driverController.getLeftY(), -m_driverController.getLeftX()))
