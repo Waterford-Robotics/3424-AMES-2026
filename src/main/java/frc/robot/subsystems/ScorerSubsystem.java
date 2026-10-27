@@ -22,14 +22,14 @@ public class ScorerSubsystem {
   }
   
 
-  public void elavatorUp() {
+  public void score() {
     m_socrer.set(Constants.ScorerConstants.scoreSpeed); 
     
     
   }
   
 
-  public void stopIndex() {
+  public void stopscore() {
     m_socrer.set(0);
    
   }

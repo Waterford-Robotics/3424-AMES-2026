@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs.ElavatorConfigs;
 import frc.robot.Constants.MotorIDConstants;
 
-public class Elavator {
+public class Elavator extends SubsystemBase{
   
   private TalonFX m_elavatorLeft;
   private TalonFX m_elavatorRight;
@@ -20,6 +21,7 @@ public class Elavator {
 
   
   }
+ 
   
 
   public void elavatorUp(double speed) {

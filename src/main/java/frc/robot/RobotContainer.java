@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.lang.ModuleLayer.Controller;
+
 import javax.swing.text.ElementIterator;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -19,14 +21,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.AlignCommand;
 import frc.robot.commands.elavatorLevelHL;
+import frc.robot.commands.elavatorLevelPB1;
+import frc.robot.commands.elavatorLevelPB2;
+import frc.robot.commands.elavatorLevelPB3;
+import frc.robot.commands.elavatorLevelShelf;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AlignSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.DashboardConfigsSubsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.events.EventTrigger;
@@ -34,7 +44,7 @@ import com.pathplanner.lib.events.EventTrigger;
 import frc.robot.subsystems.Elavator;
 
 
-public class RobotContainer {
+public class RobotContainer extends SubsystemBase{
 	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
 	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -44,14 +54,16 @@ public class RobotContainer {
 					.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-	//private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
+	 
 	final Elavator m_elevator = new Elavator();
+	final AlignSubsystem m_align = new AlignSubsystem();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
 	private final CommandXboxController m_driverController = new CommandXboxController(0);
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
 	private final CommandXboxController m_devController = new CommandXboxController(2);
+	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
 
 	
 
@@ -62,45 +74,51 @@ public class RobotContainer {
 
 			// Note that X is defined as forward according to WPILib convention,
 			// and Y is defined as to the left according to WPILib convention.
-			m_drivetrain.setDefaultCommand(
-					// Drivetrain will execute this command periodically
-					m_drivetrain.applyRequest(() ->
-						drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-					)
-			);
+			// m_drivetrain.setDefaultCommand(
+			// 		// Drivetrain will execute this command periodically
+			// 		m_drivetrain.applyRequest(() ->
+			// 			drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+			// 		)
+			// );
 			
 	//HL Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//PB1 Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//PB2 Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//PB3 Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//Shelf Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreShelf)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
-	//Auto Align Button
+	//Aign Code
+	
 	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
     .onTrue(
-        new elavatorLevelHL(m_elevator, .5) // Runs the command for 2.0 seconds
+        new RunCommand(() -> m_align.startPathing())
     );
+	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
+	.onFalse(
+		new RunCommand(() -> m_align.stopPathing())
+	);
+	//Manual Elavtor
 	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
 		.whileTrue(
 				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
@@ -162,9 +180,9 @@ public class RobotContainer {
 		// Idle while the robot is disabled. This ensures the configured
 		// neutral mode is applied to the drive motors while disabled.
 		final var idle = new SwerveRequest.Idle();
-		RobotModeTriggers.disabled().whileTrue(
-				m_drivetrain.applyRequest(() -> idle).ignoringDisable(true)
-		);
+		// RobotModeTriggers.disabled().whileTrue(
+		// 		m_drivetrain.applyRequest(() -> idle).ignoringDisable(true)
+		// );
 
 		// m_driverController.b().whileTrue(drivetrain.applyRequest(() ->
 		//     point.withModuleDirection(new Rotation2d(-m_driverController.getLeftY(), -m_driverController.getLeftX()))

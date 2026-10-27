@@ -2,10 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElavatorConstants;
 import frc.robot.subsystems.Elavator;
-
-public class elavatorLevelShelf {
+import edu.wpi.first.wpilibj2.command.Command;
+public class elavatorLevelShelf extends Command{
     Elavator m_Elavator;
   double m_seconds;
   Timer m_timer = new Timer();
@@ -18,6 +19,7 @@ public class elavatorLevelShelf {
    
     m_Elavator = elavatorSubsystem;
     m_seconds = seconds;
+    addRequirements(elavatorSubsystem);
   }
 
 
