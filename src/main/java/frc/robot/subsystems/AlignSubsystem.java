@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -55,7 +57,7 @@ public class AlignSubsystem extends SubsystemBase{
     boolean[] pegboard = {pb1,pb2,pb3,pb4,pb5,pb6,pb7,pb8,pb9,pb10,pb11,pb12};
 
 
-    for (int i = 0; i < shelfSlots.length; i++) {
+    for (int i = 0; i < (shelfSlots.length); i++) {
         if (shelfSlots[i]) {
             alignTarget=(i);
             break;
@@ -80,7 +82,7 @@ public class AlignSubsystem extends SubsystemBase{
         List<Pose2d> poses = List.of(swerveDrive.getPose(), targetPose);
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(poses);
         PathConstraints constraints = new PathConstraints(
-            3.0, // Max Vel (m/s)
+            TunerConstants.kSpeedAt12Volts.in(MetersPerSecond), // Max Vel (m/s)
             4.0, // Max Accel (m/s^2)
             Units.degreesToRadians(540), 
             Units.degreesToRadians(720)

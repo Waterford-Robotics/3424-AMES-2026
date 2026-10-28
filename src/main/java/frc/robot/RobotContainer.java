@@ -62,7 +62,7 @@ public class RobotContainer extends SubsystemBase{
 
 	private final CommandXboxController m_driverController = new CommandXboxController(0);
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
-	private final CommandXboxController m_devController = new CommandXboxController(2);
+	
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
 
 	
