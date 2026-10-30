@@ -33,9 +33,9 @@ import frc.robot.commands.elavatorLevelPB1;
 import frc.robot.commands.elavatorLevelPB2;
 import frc.robot.commands.elavatorLevelPB3;
 import frc.robot.commands.elavatorLevelShelf;
-// import frc.robot.generated.TunerConstants;
-// import frc.robot.subsystems.AlignSubsystem;
-// import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.generated.TunerConstants;
+
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -46,7 +46,7 @@ import frc.robot.subsystems.Elavator;
 
 public class RobotContainer extends SubsystemBase{
 	// private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+	// private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
 	/* Setting up bindings for necessary control of the swerve drive platform */
 	// private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -56,9 +56,9 @@ public class RobotContainer extends SubsystemBase{
 	// public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	 
 	final Elavator m_elevator = new Elavator();
-	// final AlignSubsystem m_align = new AlignSubsystem();
+	
 
-	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+	// private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
 	private final CommandXboxController m_driverController = new CommandXboxController(0);
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
@@ -108,16 +108,7 @@ public class RobotContainer extends SubsystemBase{
     .onTrue(
         new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
-	//Aign Code
 	
-	// new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
-    // .onTrue(
-    //     new RunCommand(() -> m_align.startPathing())
-    // );
-	// new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
-	// .onFalse(
-	// 	new RunCommand(() -> m_align.stopPathing())
-	// );
 	//Manual Elavtor
 	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
 		.whileTrue(

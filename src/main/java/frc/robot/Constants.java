@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 
 
@@ -45,9 +46,7 @@ public class Constants {
     public static final double elavatorSpeed=0.2;
   }
   public static final class AlignmentConstants {
-    public static final double x1 = 0;
-    public static final double y1 = 0;
-    public static final double rad1 = 0;
+    public static Pose2d shelf1 = new Pose2d();
   
     
   }
