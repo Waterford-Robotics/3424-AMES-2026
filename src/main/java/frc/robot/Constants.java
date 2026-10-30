@@ -11,10 +11,10 @@ public class Constants {
   public static final class ControllerConstants {
     
     
-    public static final int scoreHLButton=1;
-    public static final int scorePB1=2;
+    public static final int scoreHLButton=4;
+    public static final int scorePB1=1;
     public static final int scorePB2=3;
-    public static final int scorePB3=4;
+    public static final int scorePB3=2;
     public static int k_rightTrigger = Axis.kRightTrigger.value;
     public static final int k_leftTrigger = Axis.kLeftTrigger.value;
     public static final int scoreShelf = 6;
@@ -34,7 +34,7 @@ public class Constants {
         
   }
   public static final class ElavatorConstants{
-    public static final double kI=0;
+    public static final double kI=0.1;
     public static final double kP=0.1;
     public static final double kD=0;
     public static final double targetRotHL=14;

@@ -81,25 +81,25 @@ public class RobotContainer extends SubsystemBase{
 			// );
 			
 	//HL Button
-	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
-    // .onTrue(
-    //     new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    // );
-	// //PB1 Button
-	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
-    // .onTrue(
-    //     new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    // );
-	// //PB2 Button
-	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
-    // .onTrue(
-    //     new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    // );
-	// //PB3 Button
-	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
-    // .onTrue(
-    //     new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    // );
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
+    .onTrue(
+        new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    );
+	//PB1 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
+    .onTrue(
+        new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    );
+	//PB2 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
+    .onTrue(
+        new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    );
+	//PB3 Button
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
+    .onTrue(
+        new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    );
 	//Shelf Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreShelf)
     .onTrue(
