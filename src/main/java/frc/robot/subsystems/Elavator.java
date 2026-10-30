@@ -21,8 +21,6 @@ public class Elavator extends SubsystemBase{
 
   
   }
-  public void random(){}
-  //was made to allow me to commoit
   
 
   public void elavatorUp(double speed) {
@@ -30,11 +28,7 @@ public class Elavator extends SubsystemBase{
     m_elavatorRight.set(speed); 
     
   }
-   public void elavatorDown(double speed) {
-    m_elavatorLeft.set(speed); 
-    m_elavatorRight.set(speed*-1); 
-    
-  }
+   
   public double getPositionLeft() {
         return -m_elavatorLeft.getPosition().getValueAsDouble();
     }

@@ -25,18 +25,19 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.AlignCommand;
+// import frc.robot.commands.AlignCommand;
 import frc.robot.commands.elavatorLevelHL;
 import frc.robot.commands.elavatorLevelPB1;
 import frc.robot.commands.elavatorLevelPB2;
 import frc.robot.commands.elavatorLevelPB3;
 import frc.robot.commands.elavatorLevelShelf;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.commands.restElavator;
+// import frc.robot.generated.TunerConstants;
+// import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import com.pathplanner.lib.events.EventTrigger;
+// import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
 import frc.robot.subsystems.Elavator;
 
@@ -80,45 +81,49 @@ public class RobotContainer extends SubsystemBase{
 			// );
 			
 	//HL Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
-    .onTrue(
-        new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB1 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
-    .onTrue(
-        new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB2 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
-    .onTrue(
-        new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB3 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
-    .onTrue(
-        new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
+    // .onTrue(
+    //     new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    // );
+	// //PB1 Button
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
+    // .onTrue(
+    //     new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    // );
+	// //PB2 Button
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
+    // .onTrue(
+    //     new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    // );
+	// //PB3 Button
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
+    // .onTrue(
+    //     new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    // );
 	//Shelf Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreShelf)
     .onTrue(
         new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
+    );
+	new JoystickButton(m_operatorController.getHID(), 5)
+    .onTrue(
+        new restElavator(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
 	//Auto Align Button
 	// new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
     // .whileTrue(
     //     new AlignCommand(m_drivetrain, .5,m_dashboard) 
     // );
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
+	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.314159)
 		.whileTrue(
 				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
 		)
 		.onFalse(
 				new RunCommand(() -> m_elevator.stopElavator())
 		);
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.0314159)
+	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.314159)
 		.whileTrue(
-				new RunCommand(() -> m_elevator.elavatorDown(Constants.ElavatorConstants.elavatorSpeed))
+				new RunCommand(() -> m_elevator.elavatorUp(-Constants.ElavatorConstants.elavatorSpeed))
 		)
 		.onFalse(
 				new RunCommand(() -> m_elevator.stopElavator())

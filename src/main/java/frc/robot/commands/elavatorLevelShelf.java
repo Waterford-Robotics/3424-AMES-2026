@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,7 +32,8 @@ public class elavatorLevelShelf extends Command{
  
   // Actual command
   public void execute() {
-      m_Elavator.elavatorUp(pid.calculate(((m_Elavator.getPositionRight()+m_Elavator.getPositionLeft())/2), ElavatorConstants.targetRotShelf));
+    double elavatorPID =pid.calculate(((m_Elavator.getPositionRight()+m_Elavator.getPositionLeft())/2), ElavatorConstants.targetRotShelf);
+      m_Elavator.elavatorUp(elavatorPID);
   }
 
 

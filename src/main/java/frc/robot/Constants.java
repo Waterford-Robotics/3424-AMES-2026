@@ -35,13 +35,13 @@ public class Constants {
   }
   public static final class ElavatorConstants{
     public static final double kI=0;
-    public static final double kP=0.4;
+    public static final double kP=0.1;
     public static final double kD=0;
-    public static final double targetRotHL=1;
-    public static final double targetRotPB1=5;
-    public static final double targetRotPB2=20;
-    public static final double targetRotPB3=50;
-    public static final double targetRotShelf=70;
+    public static final double targetRotHL=14;
+    public static final double targetRotPB1=3;
+    public static final double targetRotPB2=8;
+    public static final double targetRotPB3=16;
+    public static final double targetRotShelf=4.67211914;
     public static final double elavatorSpeed=0.2;
   }
   public static final class AlignmentConstants {
