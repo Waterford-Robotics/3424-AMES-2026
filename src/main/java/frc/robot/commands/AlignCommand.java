@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.Limelight.LimelightHelpers.LimelightTarget_Retro;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
 import frc.robot.Constants.AlignmentConstants;
+import frc.robot.Constants.ElavatorConstants;
 
 
 public class AlignCommand extends Command{
@@ -27,6 +29,9 @@ public class AlignCommand extends Command{
   
   double m_seconds;
   Timer m_timer = new Timer();
+  PIDController drivexPID = new PIDController(AlignmentConstants.pxDrive, AlignmentConstants.ixDrive, AlignmentConstants.dxDrive);
+  PIDController driveyPID = new PIDController(AlignmentConstants.pyDrive, AlignmentConstants.iyDrive, AlignmentConstants.dyDrive);
+  PIDController rotPID = new PIDController(AlignmentConstants.pRot, AlignmentConstants.iRot, AlignmentConstants.dRot);
   
   
   
@@ -46,6 +51,7 @@ public class AlignCommand extends Command{
   public void initialize() {
     m_timer.start();
     m_timer.reset();
+    
     
     
   }
@@ -101,18 +107,47 @@ public class AlignCommand extends Command{
  
   // Actual command
   public void execute() {
-    Pose3d poseBlue = LimelightHelpers.getBotPose3d_TargetSpace("blue");
-    Pose3d poseGreen =LimelightHelpers.getBotPose3d_TargetSpace("green");
-    Pose2d poses[]={Constants.AlignmentConstants.shelf1};
+    //drive x and y
+    Pose3d botPose = new Pose3d();
+    Pose3d poses[]={Constants.AlignmentConstants.shelf1};
+
+    Pose3d targetPose = poses[getTargetAlign()];
+    double maxSpeed = 4.0;
     
     
 
-    double x = (poseBlue.getX()+poseGreen.getX())/2;
-    double y = (poseBlue.getY()+poseGreen.getY())/2;
-    double z = (poseBlue.getZ()+poseGreen.getX())/2;
-    double xvel=x-poses[getTargetAlign()].getX();
+    double x = drivexPID.calculate(botPose.getX(),targetPose.getX());
+    double y = driveyPID.calculate(botPose.getY(),targetPose.getY());
+
     
-  }
+    double ratioDrive=0;
+    double speed = Math.hypot(x, y);
+
+    if (speed > maxSpeed) {
+     ratioDrive = speed / maxSpeed;
+
+     x /= ratioDrive;
+     y /= ratioDrive;
+    }
+
+     //Time for rotation
+
+     double currentRot=0;
+     double targetRot=0.1;
+     double maxAngularSpeed=2;
+     double angularspeed = rotPID.calculate(currentRot,targetRot);
+     angularspeed = MathUtil.clamp(angularspeed,-maxAngularSpeed,maxAngularSpeed);
+   
+
+
+    
+    
+
+    
+}
+    
+    
+  
 
 
   // Stuff that happens when command is over

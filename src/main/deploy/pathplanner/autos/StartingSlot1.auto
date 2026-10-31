@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HL Station"
+            "pathName": "SL1-HL1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HL-HL"
+            "pathName": "HL1-HL2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HL-Score"
+            "pathName": "HL2-SS1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Score H2"
+            "pathName": "SS1-HL1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H2-HL"
+            "pathName": "HL1-HL2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "HL2-SS1"
           }
         }
       ]

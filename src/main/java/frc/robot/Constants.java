@@ -4,6 +4,7 @@
 
 package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 
 
@@ -46,8 +47,19 @@ public class Constants {
     public static final double elavatorSpeed=0.2;
   }
   public static final class AlignmentConstants {
-    public static Pose2d shelf1 = new Pose2d();
-  
+    public static Pose3d shelf1 = new Pose3d();
+    public static double pxDrive = 2.0;
+    public static double ixDrive = 0.1;
+    public static double dxDrive = 0.1;
+
+    public static double pyDrive = 2.0;
+    public static double iyDrive = 0.1;
+    public static double dyDrive = 0.1;
+
+
+    public static double pRot = 2.0;
+    public static double iRot = 0.1;
+    public static double dRot = 0.1;
     
   }
 
