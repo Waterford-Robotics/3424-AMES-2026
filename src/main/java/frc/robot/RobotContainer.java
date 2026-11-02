@@ -195,6 +195,14 @@ public class RobotContainer extends SubsystemBase{
 	// 	new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
 	// 	);
 	// }
-	
-	
+	boolean tolerant;
+	public static boolean tolerant(double input,double tolerance,double targetNumber){
+		return Math.abs(input - targetNumber) <= tolerance;
+	}	
 }
+
+		
+	
+	
+	
+

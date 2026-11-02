@@ -20,9 +20,12 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants;
 import frc.robot.Constants.AlignmentConstants;
 import frc.robot.Constants.ElavatorConstants;
+import frc.robot.RobotContainer;
 
 
 public class AlignCommand extends Command{
+  CommandSwerveDrivetrain swerveSubsystem;
+  private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric();
     
  
   DashboardConfigsSubsystem dashboard;
@@ -38,11 +41,13 @@ public class AlignCommand extends Command{
 
   // Constructor
   CommandSwerveDrivetrain m_swerveSubsystem;
-  public AlignCommand(double seconds,DashboardConfigsSubsystem m_dashboard,CommandSwerveDrivetrain drivetrain) {
+  public AlignCommand(double seconds,DashboardConfigsSubsystem m_dashboard,CommandSwerveDrivetrain m_swerveSubsystem) {
        
     
     dashboard = m_dashboard;
     m_seconds = seconds;
+    swerveSubsystem = m_swerveSubsystem;
+    addRequirements(swerveSubsystem);
     
   }
 
@@ -104,7 +109,7 @@ public class AlignCommand extends Command{
   }
  
   
- 
+ @Override
   // Actual command
   public void execute() {
     //drive x and y
@@ -137,13 +142,17 @@ public class AlignCommand extends Command{
      double maxAngularSpeed=2;
      double angularspeed = rotPID.calculate(currentRot,targetRot);
      angularspeed = MathUtil.clamp(angularspeed,-maxAngularSpeed,maxAngularSpeed);
-   
+     if(!(RobotContainer.tolerant(currentRot,0.1,targetRot))){
 
+      swerveSubsystem.setControl(drive.withRotationalRate(angularspeed));
 
-    
-    
+     }
+     if(RobotContainer.tolerant(currentRot,0.05,targetRot)){
 
-    
+      swerveSubsystem.setControl(drive.withVelocityX(x).withVelocityY(y));
+
+     }
+     
 }
     
     
