@@ -33,6 +33,7 @@ import frc.robot.commands.elavatorLevelPB1;
 import frc.robot.commands.elavatorLevelPB2;
 import frc.robot.commands.elavatorLevelPB3;
 import frc.robot.commands.elavatorLevelShelf;
+import frc.robot.commands.restElavator;
 import frc.robot.generated.TunerConstants;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -108,6 +109,12 @@ public class RobotContainer extends SubsystemBase{
     .onTrue(
         new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
     );
+	new JoystickButton(m_operatorController.getHID(), 5)
+    .onTrue(
+        new restElavator(m_elevator, 1.5) 
+    );
+        
+        
 	
 	//Manual Elavtor
 	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.0314159)
@@ -153,12 +160,13 @@ public class RobotContainer extends SubsystemBase{
 			
 			
 			//autos!! (only one works)
-				// m_chooser.addOption("Shoot", Shoot);
-				
-
 			// new EventTrigger("intakeRollers")
 			// .whileTrue(new RunCommand(
 			// 		() -> m_intakeSubsystem.intake(),m_intakeSubsystem));
+			// 	m_chooser.addOption("Shoot", intakeRollers);
+				
+
+			
 // I thought lines above might be useful 
 			SmartDashboard.putData("Automode", m_chooser);
 			
