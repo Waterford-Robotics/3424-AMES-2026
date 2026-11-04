@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.lang.ModuleLayer.Controller;
 
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.text.ElementIterator;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.AilgnShelf2;
 // import frc.robot.commands.AlignCommand;
 import frc.robot.commands.elavatorLevelHL;
 import frc.robot.commands.elavatorLevelPB1;
@@ -46,15 +48,15 @@ import frc.robot.subsystems.Elavator;
 
 
 public class RobotContainer extends SubsystemBase{
-	// private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-	// private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
 	/* Setting up bindings for necessary control of the swerve drive platform */
-	// private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-	// 				.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-	// 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+	private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+					.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+					.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	
-	// public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
+	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	 
 	final Elavator m_elevator = new Elavator();
 	
@@ -63,6 +65,7 @@ public class RobotContainer extends SubsystemBase{
 
 	private final CommandXboxController m_driverController = new CommandXboxController(0);
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
+	private final CommandXboxController m_devController = new CommandXboxController(2);
 	
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
 
@@ -75,14 +78,14 @@ public class RobotContainer extends SubsystemBase{
 
 			// Note that X is defined as forward according to WPILib convention,
 			// and Y is defined as to the left according to WPILib convention.
-			// m_drivetrain.setDefaultCommand(
-			// 		// Drivetrain will execute this command periodically
-			// 		m_drivetrain.applyRequest(() ->
-			// 			drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-			// 		)
-			// );
+			m_drivetrain.setDefaultCommand(
+					// Drivetrain will execute this command periodically
+					m_drivetrain.applyRequest(() ->
+						drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+					)
+			);
 			
 	//HL Button
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
@@ -131,7 +134,12 @@ public class RobotContainer extends SubsystemBase{
 		.onFalse(
 				new RunCommand(() -> m_elevator.stopElavator())
 		);
-		
+		//used for testing
+
+	new Trigger(() -> m_devController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.0314159)
+		.onTrue(
+				new AilgnShelf2(2,m_dashboard,m_drivetrain)
+		);
 
 			// m_drivetrain.setDefaultCommand(
 			// 		// Drivetrain will execute this command periodically
