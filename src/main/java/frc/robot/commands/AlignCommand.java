@@ -169,7 +169,7 @@ public class AlignCommand extends Command{
   public boolean isFinished() {
     // Am I done?  Am I done? Am I finally done?
     
-    return m_timer.hasElapsed(m_seconds);
+    return m_timer.hasElapsed(m_seconds)||((!(RobotContainer.tolerant(currentRot,0.1,targetRot)))&&(RobotContainer.tolerant(currentRot,0.05,targetRot)));
   }
 }
     
