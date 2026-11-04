@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 
 
@@ -11,10 +13,10 @@ public class Constants {
   public static final class ControllerConstants {
     
     
-    public static final int scoreHLButton=4;
-    public static final int scorePB1=1;
+    public static final int scoreHLButton=1;
+    public static final int scorePB1=2;
     public static final int scorePB2=3;
-    public static final int scorePB3=2;
+    public static final int scorePB3=4;
     public static int k_rightTrigger = Axis.kRightTrigger.value;
     public static final int k_leftTrigger = Axis.kLeftTrigger.value;
     public static final int scoreShelf = 6;
@@ -26,6 +28,7 @@ public class Constants {
     public static final int k_elavatorLeftKrakenID = 21;
     public static final int k_elavatorRightKrakenID = 22;
     public static final int k_scorerKrakenID = 23;
+    public static final int k_indererKrakenID=24;
    
 
   }
@@ -37,18 +40,28 @@ public class Constants {
     public static final double kI=0.1;
     public static final double kP=0.1;
     public static final double kD=0;
-    public static final double targetRotHL=14;
-    public static final double targetRotPB1=3;
-    public static final double targetRotPB2=8;
-    public static final double targetRotPB3=16;
-    public static final double targetRotShelf=4.67211914;
+    public static final double targetRotHL=1;
+    public static final double targetRotPB1=5;
+    public static final double targetRotPB2=10;
+    public static final double targetRotPB3=14;
+    public static final double targetRotShelf=16;
     public static final double elavatorSpeed=0.2;
+    public static final double targetRotHL2=10;
   }
   public static final class AlignmentConstants {
-    public static final double x1 = 0;
-    public static final double y1 = 0;
-    public static final double rad1 = 0;
-  
+    public static Pose3d shelf1 = new Pose3d();
+    public static double pxDrive = 2.0;
+    public static double ixDrive = 0.1;
+    public static double dxDrive = 0.1;
+
+    public static double pyDrive = 2.0;
+    public static double iyDrive = 0.1;
+    public static double dyDrive = 0.1;
+
+
+    public static double pRot = 2.0;
+    public static double iRot = 0.1;
+    public static double dRot = 0.1;
     
   }
 

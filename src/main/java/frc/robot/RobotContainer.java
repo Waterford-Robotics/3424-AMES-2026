@@ -82,22 +82,9 @@ public class RobotContainer {
 	// Auto Align Button
 	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
     .whileTrue(
-        new AlignCommand(m_drivetrain, .5,m_dashboard) 
+        new AlignCommand(1,m_dashboard,m_drivetrain) 
     );
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.314159)
-		.whileTrue(
-				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
-		)
-		.onFalse(
-				new RunCommand(() -> m_elevator.stopElavator())
-		);
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.314159)
-		.whileTrue(
-				new RunCommand(() -> m_elevator.elavatorUp(-Constants.ElavatorConstants.elavatorSpeed))
-		)
-		.onFalse(
-				new RunCommand(() -> m_elevator.stopElavator())
-		);
+	
 		
 
 			
@@ -156,6 +143,9 @@ public class RobotContainer {
 	// 	new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
 	// 	);
 	// }
-	
+	boolean tolerant;
+	public static boolean tolerant(double input,double tolerance,double targetNumber){
+		return Math.abs(input - targetNumber) <= tolerance;
+	}	
 	
 }
