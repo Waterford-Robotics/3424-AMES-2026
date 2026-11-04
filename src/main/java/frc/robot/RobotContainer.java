@@ -32,12 +32,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 // import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
 import frc.robot.subsystems.Elavator;
 
 
-public class RobotContainer extends SubsystemBase{
+public class RobotContainer {
 	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
 	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -56,6 +57,7 @@ public class RobotContainer extends SubsystemBase{
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
 	private final CommandXboxController m_devController = new CommandXboxController(2);
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
+	
 
 	
 
@@ -98,20 +100,7 @@ public class RobotContainer extends SubsystemBase{
 		);
 		
 
-			m_drivetrain.setDefaultCommand(
-					// Drivetrain will execute this command periodically
-					m_drivetrain.applyRequest(() -> (
-						if (new JoystickButton(m_driverController.getHID(), ControllerConstants.k_Start) || JoystickButton(m_operatorController.getHID(), ControllerConstants.k_Start)){
-							return m_drivetrain.XWheels();
-						}
-						else {
-							drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
-						}
-					)
-					)
-			);
+			
 
 
 			SignalLogger.enableAutoLogging(false);
