@@ -62,5 +62,6 @@ public class Constants {
   
      public static final class VisionConstants{
      //see 3424 Rebuilt for what was here
+     public static double targetAngle[]={0.76};
   }
 }

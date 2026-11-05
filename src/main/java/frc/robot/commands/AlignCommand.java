@@ -32,9 +32,6 @@ public class AlignCommand extends Command{
   
   double m_seconds;
   Timer m_timer = new Timer();
-  PIDController drivexPID = new PIDController(AlignmentConstants.pxDrive, AlignmentConstants.ixDrive, AlignmentConstants.dxDrive);
-  PIDController driveyPID = new PIDController(AlignmentConstants.pyDrive, AlignmentConstants.iyDrive, AlignmentConstants.dyDrive);
-  PIDController rotPID = new PIDController(AlignmentConstants.pRot, AlignmentConstants.iRot, AlignmentConstants.dRot);
   
   
   
@@ -112,12 +109,10 @@ public class AlignCommand extends Command{
  @Override
   // Actual command
   public void execute() {
-    //drive x and y
-    double errorRotation=swerveSubsystem.getGyro();
-    double targetRotSpeed=errorRotation*0.3;
-    targetRotSpeed=MathUtil.clamp(targetRotSpeed, -1, 1);
     
-    swerveSubsystem.setControl(drive.withVelocityY(0.1).withRotationalRate(targetRotSpeed));
+    
+    
+    swerveSubsystem.setControl(drive.withVelocityY(0.1));
      
 }
     
