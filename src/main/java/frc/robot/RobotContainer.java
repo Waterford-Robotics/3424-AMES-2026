@@ -35,7 +35,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 // import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
-import frc.robot.subsystems.Elavator;
+// import frc.robot.subsystems.Elavator;
+import frc.robot.subsystems.ScorerSubsystem;
 
 
 public class RobotContainer {
@@ -49,7 +50,7 @@ public class RobotContainer {
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	 
-	final Elavator m_elevator = new Elavator();
+	// final Elavator m_elevator = new Elavator();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -57,6 +58,7 @@ public class RobotContainer {
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
 	private final CommandXboxController m_devController = new CommandXboxController(2);
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
+	private final ScorerSubsystem m_scorerSubsystem = new ScorerSubsystem();
 	
 
 	
@@ -79,11 +81,6 @@ public class RobotContainer {
 			
 	
 	
-	// Auto Align Button
-	new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
-    .whileTrue(
-        new AlignCommand(1,m_dashboard,m_drivetrain) 
-    );
 	
 		
 
@@ -115,6 +112,50 @@ public class RobotContainer {
 
 	}
 	private void configureBindings() {
+		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
+    .onTrue(
+       new RunCommand(() -> m_scorerSubsystem.score())
+	).onFalse(
+		new RunCommand(()-> m_scorerSubsystem.stopIndex())
+	);
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
+    // .onTrue(
+    //    new RunCommand(() -> m_scorerSubsystem.pegboard1())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
+    // .onTrue(
+    //    new RunCommand(() -> m_scorerSubsystem.pegboard2())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard3)
+    // .onTrue(
+    //    new RunCommand(() -> m_scorerSubsystem.pegboard3())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.shelf)
+    // .onTrue(
+    //    new RunCommand(() -> m_scorerSubsystem.shelf())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	//    new JoystickButton(m_operatorController.getHID(), ControllerConstants.cell)
+    //     .onTrue(
+    //        new RunCommand(() -> m_scorerSubsystem.cell())
+	//     ).onFalse(
+	//  	   new RunCommand(()-> m_elevator.rest())
+	//     );
+	// 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.shell)
+    //     .onTrue(
+    //        new RunCommand(() -> m_scorerSubsystem.shell())
+	//     ).onFalse(
+	//  	   new RunCommand(()-> m_elevator.rest())
+	//     );
+	
+	
 			
 		// Idle while the robot is disabled. This ensures the configured
 		// neutral mode is applied to the drive motors while disabled.

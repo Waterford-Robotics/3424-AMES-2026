@@ -113,45 +113,11 @@ public class AlignCommand extends Command{
   // Actual command
   public void execute() {
     //drive x and y
-    Pose3d botPose = new Pose3d();
-    Pose3d poses[]={Constants.AlignmentConstants.shelf1};
-
-    Pose3d targetPose = poses[getTargetAlign()];
-    double maxSpeed = 4.0;
+    double errorRotation=swerveSubsystem.getGyro();
+    double targetRotSpeed=errorRotation*0.3;
+    targetRotSpeed=MathUtil.clamp(targetRotSpeed, -1, 1);
     
-    
-
-    double x = drivexPID.calculate(botPose.getX(),targetPose.getX());
-    double y = driveyPID.calculate(botPose.getY(),targetPose.getY());
-
-    
-    double ratioDrive=0;
-    double speed = Math.hypot(x, y);
-
-    if (speed > maxSpeed) {
-     ratioDrive = speed / maxSpeed;
-
-     x /= ratioDrive;
-     y /= ratioDrive;
-    }
-
-     //Time for rotation
-
-     double currentRot=0;
-     double targetRot=0.1;
-     double maxAngularSpeed=2;
-     double angularspeed = rotPID.calculate(currentRot,targetRot);
-     angularspeed = MathUtil.clamp(angularspeed,-maxAngularSpeed,maxAngularSpeed);
-     if(!(RobotContainer.tolerant(currentRot,0.1,targetRot))){
-
-      swerveSubsystem.setControl(drive.withRotationalRate(angularspeed));
-
-     }
-     if(RobotContainer.tolerant(currentRot,0.05,targetRot)){
-
-      swerveSubsystem.setControl(drive.withVelocityX(x).withVelocityY(y));
-
-     }
+    swerveSubsystem.setControl(drive.withVelocityY(0.1).withRotationalRate(targetRotSpeed));
      
 }
     
@@ -169,7 +135,7 @@ public class AlignCommand extends Command{
   public boolean isFinished() {
     // Am I done?  Am I done? Am I finally done?
     
-    return m_timer.hasElapsed(m_seconds)||((!(RobotContainer.tolerant(currentRot,0.1,targetRot)))&&(RobotContainer.tolerant(currentRot,0.05,targetRot)));
+    return m_timer.hasElapsed(m_seconds);
   }
 }
     

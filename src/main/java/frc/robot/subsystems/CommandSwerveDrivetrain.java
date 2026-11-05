@@ -365,6 +365,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         // }
     }
+    public double getGyro(){
+        return this.getPigeon2().getRoll().getValueAsDouble();
+    }
     
     // Function to X Wheels
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
