@@ -14,6 +14,7 @@ import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.AlignmentConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.AlignCommand;
 
@@ -37,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
 // import frc.robot.subsystems.Elavator;
 import frc.robot.subsystems.ScorerSubsystem;
+import frc.robot.subsystems.Limelight.AlignSubsystem;
 
 
 public class RobotContainer {
@@ -59,6 +62,11 @@ public class RobotContainer {
 	private final CommandXboxController m_devController = new CommandXboxController(2);
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
 	private final ScorerSubsystem m_scorerSubsystem = new ScorerSubsystem();
+	private final AlignSubsystem m_alignSubsystem = new AlignSubsystem();
+	PIDController drivexPID = new PIDController(AlignmentConstants.pxDrive, AlignmentConstants.ixDrive, AlignmentConstants.dxDrive);
+    PIDController driveyPID = new PIDController(AlignmentConstants.pyDrive, AlignmentConstants.iyDrive, AlignmentConstants.dyDrive);
+    PIDController rotPID = new PIDController(AlignmentConstants.pRot, AlignmentConstants.iRot, AlignmentConstants.dRot);
+  
 	
 
 	
@@ -118,39 +126,46 @@ public class RobotContainer {
 	).onFalse(
 		new RunCommand(()-> m_scorerSubsystem.stopIndex())
 	);
+	
+		// new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftTrigger)
+    // .whileTrue(
+    //    new RunCommand(() -> m_alignSubsystem.Align(m_drivetrain, drivexPID, driveyPID, rotPID))
+	// ).onFalse(
+	// 	new RunCommand(()-> m_scorerSubsystem.stopIndex())
+	// );
 	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
     // .onTrue(
-    //    new RunCommand(() -> m_scorerSubsystem.pegboard1())
+    //    new RunCommand(() -> m_elevator.pegboard1())
 	// ).onFalse(
 	// 	new RunCommand(()-> m_elevator.rest())
 	// );
 	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
     // .onTrue(
-    //    new RunCommand(() -> m_scorerSubsystem.pegboard2())
+    //    new RunCommand(() -> m_elevator.pegboard2())
 	// ).onFalse(
 	// 	new RunCommand(()-> m_elevator.rest())
 	// );
 	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard3)
     // .onTrue(
-    //    new RunCommand(() -> m_scorerSubsystem.pegboard3())
+    //    new RunCommand(() -> m_elevator.pegboard3())
 	// ).onFalse(
 	// 	new RunCommand(()-> m_elevator.rest())
 	// );
 	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.shelf)
     // .onTrue(
-    //    new RunCommand(() -> m_scorerSubsystem.shelf())
+    //    new RunCommand(() -> m_elevator.shelf())
 	// ).onFalse(
 	// 	new RunCommand(()-> m_elevator.rest())
 	// );
 	//    new JoystickButton(m_operatorController.getHID(), ControllerConstants.cell)
     //     .onTrue(
-    //        new RunCommand(() -> m_scorerSubsystem.cell())
+    //        new RunCommand(() -> m_elevator.cell())
 	//     ).onFalse(
 	//  	   new RunCommand(()-> m_elevator.rest())
 	//     );
 	// 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.shell)
     //     .onTrue(
-    //        new RunCommand(() -> m_scorerSubsystem.shell())
+    //        new RunCommand(() -> m_elevator.shell())
 	//     ).onFalse(
 	//  	   new RunCommand(()-> m_elevator.rest())
 	//     );

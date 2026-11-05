@@ -16,10 +16,7 @@ public class AlignSubsystem extends SubsystemBase{
 
     
     static CommandSwerveDrivetrain swerveSubsystem;
-    PIDController drivexPID = new PIDController(AlignmentConstants.pxDrive, AlignmentConstants.ixDrive, AlignmentConstants.dxDrive);
-    PIDController driveyPID = new PIDController(AlignmentConstants.pyDrive, AlignmentConstants.iyDrive, AlignmentConstants.dyDrive);
-    PIDController rotPID = new PIDController(AlignmentConstants.pRot, AlignmentConstants.iRot, AlignmentConstants.dRot);
-  
+    
     
 
 
@@ -34,6 +31,11 @@ public class AlignSubsystem extends SubsystemBase{
         double rotationSpeed=rotPID.calculate(m_swerve.getGyro(),VisionConstants.targetAngle[1]);
         x=drivexPID.calculate(VisionSubsystem.getBotPose().getX(),target.getX());
         y=driveyPID.calculate(VisionSubsystem.getBotPose().getY(),target.getY());
+        double ratio = 4/Math.hypot(x, y);
+        if (Math.hypot(x, y)>4){
+            x*=ratio;
+            y*=ratio;
+        }
         if(RobotContainer.tolerant(m_swerve.getGyro(), 0.05, VisionConstants.targetAngle[1]))
         {
 
