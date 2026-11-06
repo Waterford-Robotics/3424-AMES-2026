@@ -1,0 +1,42 @@
+package frc.robot.subsystems;
+import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Configs.ElavatorConfigs;
+import frc.robot.Constants.MotorIDConstants;
+
+public class Elevator extends SubsystemBase{
+  
+  private TalonFX m_elavatorLeft;
+  private TalonFX m_elavatorRight;
+  
+
+  public Elevator() {
+    m_elavatorLeft = new TalonFX(MotorIDConstants.k_elavatorLeftKrakenID);
+    m_elavatorRight = new TalonFX(MotorIDConstants.k_elavatorRightKrakenID);    
+  
+   
+    m_elavatorLeft.getConfigurator().apply(ElavatorConfigs.ELAVATOR_LEFT_TALON_FX_CONFIGURATION, 0.5);
+    m_elavatorRight.getConfigurator().apply(ElavatorConfigs.ELAVATOR_Right_TALON_FX_CONFIGURATION, 0.5);
+
+  
+  }
+  
+
+  public void elavatorGo(double speed) {
+    m_elavatorLeft.set(speed*-1); 
+    m_elavatorRight.set(speed); 
+    
+  }
+   
+  public double getPosition() {
+        return (-m_elavatorLeft.getPosition().getValueAsDouble()+m_elavatorRight.getPosition().getValueAsDouble()/2);
+    }
+  
+  
+
+  public void stopElevator() {
+    m_elavatorLeft.set(0);
+    m_elavatorRight.set(0);
+  }
+}

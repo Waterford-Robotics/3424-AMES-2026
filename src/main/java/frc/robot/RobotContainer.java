@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.lang.ModuleLayer.Controller;
+
 import javax.swing.text.ElementIterator;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -37,7 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 // import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
-// import frc.robot.subsystems.Elavator;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ScorerSubsystem;
 import frc.robot.subsystems.Limelight.AlignSubsystem;
 
@@ -53,7 +55,8 @@ public class RobotContainer {
 	
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	 
-	// final Elavator m_elevator = new Elavator();
+	final Elevator m_elevator = new Elevator();
+	final ScorerSubsystem m_Scorer = new ScorerSubsystem();
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -120,12 +123,31 @@ public class RobotContainer {
 
 	}
 	private void configureBindings() {
-		new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
+	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
     .onTrue(
        new RunCommand(() -> m_scorerSubsystem.score())
 	).onFalse(
 		new RunCommand(()-> m_scorerSubsystem.stopIndex())
 	);
+	new JoystickButton(m_driverController.getHID(), 7)
+    .onTrue(
+       new RunCommand(() -> m_drivetrain.resetGyro())
+	);
+	//Elevator Code
+	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
+    .onTrue(
+       new RunCommand(() -> m_elevator.elavatorGo(.3))
+	).onFalse(
+		new RunCommand(()-> m_elevator.stopElevator())
+	);
+	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftTrigger)
+    .onTrue(
+       new RunCommand(() -> m_elevator.elavatorGo(-.3))
+	).onFalse(
+		new RunCommand(()-> m_elevator.stopElevator())
+	);
+	
+	
 	
 		// new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftTrigger)
     // .whileTrue(
