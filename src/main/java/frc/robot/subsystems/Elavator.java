@@ -21,6 +21,11 @@ public class Elavator extends SubsystemBase{
 
   
   }
+  public double calculate(double error){
+    int calculate;
+
+    return calculate;
+  }
   
 
   public void elavatorUp(double speed) {
