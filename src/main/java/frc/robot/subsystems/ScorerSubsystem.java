@@ -12,7 +12,7 @@ public class ScorerSubsystem extends SubsystemBase{
     private TalonFX m_socrer;
     private TalonFX m_indexer;
   
-  public void ElavatorSubsystem() {
+  public void ScorerSubsystem() {
     m_socrer = new TalonFX(MotorIDConstants.k_scorerKrakenID,"drivebase");
     m_indexer = new TalonFX(MotorIDConstants.k_indererKrakenID,"drivebase");
     
@@ -37,6 +37,7 @@ public class ScorerSubsystem extends SubsystemBase{
 
   public void stopIndex() {
     m_socrer.set(0);
+     m_indexer.set(0);
    
   }
 }

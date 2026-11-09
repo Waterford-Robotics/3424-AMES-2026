@@ -56,7 +56,7 @@ public class RobotContainer {
 	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
 	 
 	final Elevator m_elevator = new Elevator();
-	final ScorerSubsystem m_Scorer = new ScorerSubsystem();
+	
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -66,12 +66,7 @@ public class RobotContainer {
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
 	private final ScorerSubsystem m_scorerSubsystem = new ScorerSubsystem();
 	private final AlignSubsystem m_alignSubsystem = new AlignSubsystem();
-	PIDController drivexPID = new PIDController(AlignmentConstants.pxDrive, AlignmentConstants.ixDrive, AlignmentConstants.dxDrive);
-    PIDController driveyPID = new PIDController(AlignmentConstants.pyDrive, AlignmentConstants.iyDrive, AlignmentConstants.dyDrive);
-    PIDController rotPID = new PIDController(AlignmentConstants.pRot, AlignmentConstants.iRot, AlignmentConstants.dRot);
-  
 	
-
 	
 
 	private SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -123,29 +118,46 @@ public class RobotContainer {
 
 	}
 	private void configureBindings() {
+	//score
 	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
     .onTrue(
        new RunCommand(() -> m_scorerSubsystem.score())
 	).onFalse(
 		new RunCommand(()-> m_scorerSubsystem.stopIndex())
 	);
+	//reset gyro
 	new JoystickButton(m_driverController.getHID(), 7)
     .onTrue(
        new RunCommand(() -> m_drivetrain.resetGyro())
 	);
-	//Elevator Code
-	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_rightTrigger)
+	//manual elevator
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_rightTrigger)
     .onTrue(
        new RunCommand(() -> m_elevator.elavatorGo(.3))
 	).onFalse(
 		new RunCommand(()-> m_elevator.stopElevator())
 	);
-	new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftTrigger)
+	//pid control for elevator pegboard 1
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.k_leftTrigger)
     .onTrue(
        new RunCommand(() -> m_elevator.elavatorGo(-.3))
 	).onFalse(
 		new RunCommand(()-> m_elevator.stopElevator())
 	);
+	//pegbaord 2 hold down
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
+    .whileTrue(
+       new RunCommand(() -> m_elevator.pidElevatorGo(0))
+	).onFalse(
+		new RunCommand(()-> m_elevator.stopElevator())
+	);
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
+    .whileTrue(
+       new RunCommand(() -> m_elevator.pidElevatorGo(1))
+	).onFalse(
+		new RunCommand(()-> m_elevator.stopElevator())
+	);
+
 	
 	
 	

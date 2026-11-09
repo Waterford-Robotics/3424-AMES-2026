@@ -49,13 +49,11 @@ public class Constants {
   }
   public static final class AlignmentConstants {
     public static Pose3d shelf1 = new Pose3d();
-    public static double pxDrive = 2.0;
-    public static double ixDrive = 0.1;
-    public static double dxDrive = 0.1;
+    public static double pDrive = 0.1;
+    public static double iDrive = 0.1;
+    public static double dDrive = 0.1;
 
-    public static double pyDrive = 2.0;
-    public static double iyDrive = 0.1;
-    public static double dyDrive = 0.1;
+   
 
 
     public static double pRot = 2.0;
@@ -66,7 +64,9 @@ public class Constants {
 
   
      public static final class VisionConstants{
-     //see 3424 Rebuilt for what was here
+     
      public static double targetAngle[]={0.76};
+     public static double targetX[]={0.76,1};
+     public static double targetY[]={0.76,1};
   }
 }
