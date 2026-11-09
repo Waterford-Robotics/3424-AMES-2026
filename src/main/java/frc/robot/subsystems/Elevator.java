@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.pathplanner.lib.config.PIDConstants;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Configs.ElavatorConfigs;
 import frc.robot.Constants.MotorIDConstants;
 
@@ -9,12 +12,14 @@ public class Elevator extends SubsystemBase{
   
   private TalonFX m_elavatorLeft;
   private TalonFX m_elavatorRight;
+  private PIDController pid = new PIDController(Constants.ElavatorConstants.kP, Constants.ElavatorConstants.kI, Constants.ElavatorConstants.kD);
+  
   
 
   public Elevator() {
     m_elavatorLeft = new TalonFX(MotorIDConstants.k_elavatorLeftKrakenID);
-    m_elavatorRight = new TalonFX(MotorIDConstants.k_elavatorRightKrakenID);    
-  
+    m_elavatorRight = new TalonFX(MotorIDConstants.k_elavatorRightKrakenID);   
+    
    
     m_elavatorLeft.getConfigurator().apply(ElavatorConfigs.ELAVATOR_LEFT_TALON_FX_CONFIGURATION, 0.5);
     m_elavatorRight.getConfigurator().apply(ElavatorConfigs.ELAVATOR_Right_TALON_FX_CONFIGURATION, 0.5);
@@ -28,9 +33,12 @@ public class Elevator extends SubsystemBase{
     m_elavatorRight.set(speed); 
     
   }
-   
+  public void pidElevatorGo(int indexHeight) {
+    
+    elavatorGo((pid.calculate(getPosition(), Constants.ElavatorConstants.elevatorHeights[indexHeight])));
+  }
   public double getPosition() {
-        return (-m_elavatorLeft.getPosition().getValueAsDouble()+m_elavatorRight.getPosition().getValueAsDouble()/2);
+        return ((-m_elavatorLeft.getPosition().getValueAsDouble()+m_elavatorRight.getPosition().getValueAsDouble())/2);
     }
   
   

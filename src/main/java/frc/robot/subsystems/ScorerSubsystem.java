@@ -13,8 +13,8 @@ public class ScorerSubsystem extends SubsystemBase{
     private TalonFX m_indexer;
   
   public void ElavatorSubsystem() {
-    m_socrer = new TalonFX(MotorIDConstants.k_scorerKrakenID);
-    m_indexer = new TalonFX(MotorIDConstants.k_indererKrakenID);
+    m_socrer = new TalonFX(MotorIDConstants.k_scorerKrakenID,"drivebase");
+    m_indexer = new TalonFX(MotorIDConstants.k_indererKrakenID,"drivebase");
     
   
    

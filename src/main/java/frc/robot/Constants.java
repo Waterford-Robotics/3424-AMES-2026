@@ -41,6 +41,10 @@ public class Constants {
         
   }
   public static final class ElavatorConstants{
+    public static final double kP=0.1;
+    public static final double kI=0;
+    public static final double kD=0.1;
+    public static final double elevatorHeights []={4,7};
     
   }
   public static final class AlignmentConstants {

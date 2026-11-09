@@ -12,15 +12,16 @@ public class Configs {
       
     static{
       ELAVATOR_Right_TALON_FX_CONFIGURATION.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
-      ELAVATOR_Right_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle = 0.95;
-      ELAVATOR_Right_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.95;
+      ELAVATOR_Right_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle = 0.5;
+      ELAVATOR_Right_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.5;
       ELAVATOR_Right_TALON_FX_CONFIGURATION.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       ELAVATOR_Right_TALON_FX_CONFIGURATION.CurrentLimits.SupplyCurrentLimit = 50;
       ELAVATOR_LEFT_TALON_FX_CONFIGURATION.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
-      ELAVATOR_LEFT_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle = 0.95;
-      ELAVATOR_LEFT_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.95;
+      ELAVATOR_LEFT_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle = 0.5;
+      ELAVATOR_LEFT_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.5;
       ELAVATOR_LEFT_TALON_FX_CONFIGURATION.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       ELAVATOR_LEFT_TALON_FX_CONFIGURATION.CurrentLimits.SupplyCurrentLimit = 50;
+      
       
     }
   }
@@ -30,7 +31,7 @@ public class Configs {
       SCORER_TALON_FX_CONFIGURATION.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
       SCORER_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle =0.95;
       SCORER_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.95;
-      SCORER_TALON_FX_CONFIGURATION.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+      SCORER_TALON_FX_CONFIGURATION.MotorOutput.NeutralMode = NeutralModeValue.Coast;
       SCORER_TALON_FX_CONFIGURATION.CurrentLimits.SupplyCurrentLimit = 40;
     }
   
@@ -38,7 +39,5 @@ public class Configs {
   }
 
 
-  //this was a important class but needs to be rewritten by Q 
-  //Used for kraken configs
   
 }
