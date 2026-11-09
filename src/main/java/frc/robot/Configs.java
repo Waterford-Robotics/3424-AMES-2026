@@ -26,8 +26,14 @@ public class Configs {
     }
   }
   public static final class ScorerConfigs {
-    public static final TalonFXConfiguration SCORER_TALON_FX_CONFIGURATION = new TalonFXConfiguration();
+    public static final TalonFXConfiguration INDEXER_TALON_FX_CONFIGURATION = new TalonFXConfiguration();
+    public static final TalonFXConfiguration SCORER_TALON_FX_CONFIGURATION=new TalonFXConfiguration();
     static{
+      INDEXER_TALON_FX_CONFIGURATION.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
+      INDEXER_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle =0.95;
+      INDEXER_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.95;
+      INDEXER_TALON_FX_CONFIGURATION.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+      INDEXER_TALON_FX_CONFIGURATION.CurrentLimits.SupplyCurrentLimit = 40;
       SCORER_TALON_FX_CONFIGURATION.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
       SCORER_TALON_FX_CONFIGURATION.MotorOutput.PeakForwardDutyCycle =0.95;
       SCORER_TALON_FX_CONFIGURATION.MotorOutput.PeakReverseDutyCycle = -0.95;

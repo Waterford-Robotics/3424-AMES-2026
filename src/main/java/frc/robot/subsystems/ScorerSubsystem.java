@@ -12,14 +12,15 @@ public class ScorerSubsystem extends SubsystemBase{
     private TalonFX m_socrer;
     private TalonFX m_indexer;
   
-  public void ScorerSubsystem() {
+  public ScorerSubsystem() {
     m_socrer = new TalonFX(MotorIDConstants.k_scorerKrakenID,"drivebase");
     m_indexer = new TalonFX(MotorIDConstants.k_indererKrakenID,"drivebase");
     
   
    
     m_socrer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
-    m_indexer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
+    m_indexer.getConfigurator().apply(ScorerConfigs.INDEXER_TALON_FX_CONFIGURATION, 0.05);
+    
     
 
   
