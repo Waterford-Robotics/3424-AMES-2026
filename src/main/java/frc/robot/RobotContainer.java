@@ -8,12 +8,15 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.lang.ModuleLayer.Controller;
+
 import javax.swing.text.ElementIterator;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,36 +27,36 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.AlignmentConstants;
 import frc.robot.Constants.ControllerConstants;
-// import frc.robot.commands.AlignCommand;
-import frc.robot.commands.elavatorLevelHL;
-import frc.robot.commands.elavatorLevelPB1;
-import frc.robot.commands.elavatorLevelPB2;
-import frc.robot.commands.elavatorLevelPB3;
-import frc.robot.commands.elavatorLevelShelf;
-import frc.robot.commands.restElavator;
-// import frc.robot.generated.TunerConstants;
-// import frc.robot.subsystems.CommandSwerveDrivetrain;
+
+
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 // import com.pathplanner.lib.events.EventTrigger;
 // import frc.robot.subsystems.IntakeSubsystem; how to import
-import frc.robot.subsystems.Elavator;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ScorerSubsystem;
+import frc.robot.subsystems.Limelight.AlignSubsystem;
 
 
-public class RobotContainer extends SubsystemBase{
-	// private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-	// private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+public class RobotContainer {
+	private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+	private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
 	// /* Setting up bindings for necessary control of the swerve drive platform */
-	// private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-	// 				.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-	// 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+	private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+					.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+					.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	
-	// public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-	 //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(); this is what you need to do for each subsystem
-	final Elavator m_elevator = new Elavator();
+	public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
+	 
+	final Elevator m_elevator = new Elevator();
+	
 
 	private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
@@ -61,7 +64,9 @@ public class RobotContainer extends SubsystemBase{
 	private final CommandXboxController m_operatorController = new CommandXboxController(1);
 	private final CommandXboxController m_devController = new CommandXboxController(2);
 	private final DashboardConfigsSubsystem m_dashboard = new DashboardConfigsSubsystem();
-
+	private final ScorerSubsystem m_scorerSubsystem = new ScorerSubsystem();
+	private final AlignSubsystem m_alignSubsystem = new AlignSubsystem();
+	
 	
 
 	private SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -71,79 +76,21 @@ public class RobotContainer extends SubsystemBase{
 
 			// Note that X is defined as forward according to WPILib convention,
 			// and Y is defined as to the left according to WPILib convention.
-			// m_drivetrain.setDefaultCommand(
-			// 		// Drivetrain will execute this command periodically
-			// 		m_drivetrain.applyRequest(() ->
-			// 			drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-			// 		)
-			// );
+			m_drivetrain.setDefaultCommand(
+					// Drivetrain will execute this command periodically
+					m_drivetrain.applyRequest(() ->
+						drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+					)
+			);
 			
-	//HL Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreHLButton)
-    .onTrue(
-        new elavatorLevelHL(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB1 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB1)
-    .onTrue(
-        new elavatorLevelPB1(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB2 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB2)
-    .onTrue(
-        new elavatorLevelPB2(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//PB3 Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scorePB3)
-    .onTrue(
-        new elavatorLevelPB3(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//Shelf Button
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.scoreShelf)
-    .onTrue(
-        new elavatorLevelShelf(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	new JoystickButton(m_operatorController.getHID(), 5)
-    .onTrue(
-        new restElavator(m_elevator, 1.5) // Runs the command for 2.0 seconds
-    );
-	//Auto Align Button
-	// new JoystickButton(m_driverController.getHID(), ControllerConstants.autoAlign)
-    // .whileTrue(
-    //     new AlignCommand(m_drivetrain, .5,m_dashboard) 
-    // );
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.314159)
-		.whileTrue(
-				new RunCommand(() -> m_elevator.elavatorUp(Constants.ElavatorConstants.elavatorSpeed))
-		)
-		.onFalse(
-				new RunCommand(() -> m_elevator.stopElavator())
-		);
-	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.314159)
-		.whileTrue(
-				new RunCommand(() -> m_elevator.elavatorUp(-Constants.ElavatorConstants.elavatorSpeed))
-		)
-		.onFalse(
-				new RunCommand(() -> m_elevator.stopElavator())
-		);
+	
+	
+	
 		
 
-			// m_drivetrain.setDefaultCommand(
-			// 		// Drivetrain will execute this command periodically
-			// 		m_drivetrain.applyRequest(() -> (
-			// 			if (new JoystickButton(m_driverController.getHID(), ControllerConstants.k_Start) || JoystickButton(m_operatorController.getHID(), ControllerConstants.k_Start)){
-			// 				return m_drivetrain.XWheels();
-			// 			}
-			// 			else {
-			// 				drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-			// 				.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-			// 				.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
-			// 			}
-			// 		)
-			// 		)
-			// );
+			
 
 
 			SignalLogger.enableAutoLogging(false);
@@ -171,6 +118,105 @@ public class RobotContainer extends SubsystemBase{
 
 	}
 	private void configureBindings() {
+	//score
+	new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.05)
+		.whileTrue(
+				new InstantCommand(() -> m_scorerSubsystem.score())
+		)
+		.onFalse(
+				new InstantCommand(() -> m_scorerSubsystem.stopIndex())
+
+
+		);
+
+//align
+	new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
+		.whileTrue(
+				new RunCommand(() ->m_alignSubsystem.align(m_drivetrain,2),  m_drivetrain)
+		)
+		.onFalse(
+				new InstantCommand(() -> m_alignSubsystem.swerveStop(m_drivetrain))
+		);
+	//reset gyro
+	new JoystickButton(m_driverController.getHID(), 7)
+    .onTrue(
+       new InstantCommand(() -> m_drivetrain.resetGyro())
+	);
+	//manual elevator
+	new JoystickButton(m_operatorController.getHID(), 5)
+    .onTrue(
+       new InstantCommand(() -> m_elevator.elavatorGo(.3))
+	).onFalse(
+		new InstantCommand(()-> m_elevator.stopElevator())
+	);
+	//pid control for elevator pegboard 1
+	new JoystickButton(m_operatorController.getHID(), 6)
+    .onTrue(
+       new InstantCommand(() -> m_elevator.elavatorGo(-.3))
+	).onFalse(
+		new InstantCommand(()-> m_elevator.stopElevator())
+	);
+	//pegbaord 2 hold down
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
+    .whileTrue(
+       new InstantCommand(() -> m_elevator.pidElevatorGo(0))
+	).onFalse(
+		new InstantCommand(()-> m_elevator.stopElevator())
+	);
+	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
+    .whileTrue(
+       new InstantCommand(() -> m_elevator.pidElevatorGo(1))
+	).onFalse(
+		new InstantCommand(()-> m_elevator.stopElevator())
+	);
+
+	
+	
+	
+		// new JoystickButton(m_driverController.getHID(), ControllerConstants.k_leftTrigger)
+    // .whileTrue(
+    //    new RunCommand(() -> m_alignSubsystem.Align(m_drivetrain, drivexPID, driveyPID, rotPID))
+	// ).onFalse(
+	// 	new RunCommand(()-> m_scorerSubsystem.stopIndex())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
+    // .onTrue(
+    //    new RunCommand(() -> m_elevator.pegboard1())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
+    // .onTrue(
+    //    new RunCommand(() -> m_elevator.pegboard2())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard3)
+    // .onTrue(
+    //    new RunCommand(() -> m_elevator.pegboard3())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	// new JoystickButton(m_operatorController.getHID(), ControllerConstants.shelf)
+    // .onTrue(
+    //    new RunCommand(() -> m_elevator.shelf())
+	// ).onFalse(
+	// 	new RunCommand(()-> m_elevator.rest())
+	// );
+	//    new JoystickButton(m_operatorController.getHID(), ControllerConstants.cell)
+    //     .onTrue(
+    //        new RunCommand(() -> m_elevator.cell())
+	//     ).onFalse(
+	//  	   new RunCommand(()-> m_elevator.rest())
+	//     );
+	// 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.shell)
+    //     .onTrue(
+    //        new RunCommand(() -> m_elevator.shell())
+	//     ).onFalse(
+	//  	   new RunCommand(()-> m_elevator.rest())
+	//     );
+	
+	
 			
 		// Idle while the robot is disabled. This ensures the configured
 		// neutral mode is applied to the drive motors while disabled.
@@ -199,6 +245,9 @@ public class RobotContainer extends SubsystemBase{
 	// 	new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
 	// 	);
 	// }
-	
+	boolean tolerant;
+	public static boolean tolerant(double input,double tolerance,double targetNumber){
+		return Math.abs(input - targetNumber) <= tolerance;
+	}	
 	
 }

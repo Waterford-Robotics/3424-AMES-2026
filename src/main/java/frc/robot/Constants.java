@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 
 
@@ -11,14 +13,17 @@ public class Constants {
   public static final class ControllerConstants {
     
     
-    public static final int scoreHLButton=4;
-    public static final int scorePB1=1;
-    public static final int scorePB2=3;
-    public static final int scorePB3=2;
+    public static final int shell=1;
+    public static final int cell=1;
+    public static final int score=1;
+    public static final int pegboard1=2;
+    public static final int pegboard2=3;
+    public static final int pegboard3=4;
     public static int k_rightTrigger = Axis.kRightTrigger.value;
     public static final int k_leftTrigger = Axis.kLeftTrigger.value;
-    public static final int scoreShelf = 6;
-    public static final int autoAlign = 7;
+    public static final int shelf = 6;
+    
+    
   }  
 
 
@@ -26,34 +31,44 @@ public class Constants {
     public static final int k_elavatorLeftKrakenID = 21;
     public static final int k_elavatorRightKrakenID = 22;
     public static final int k_scorerKrakenID = 23;
+    public static final int k_indererKrakenID=24;
    
 
   }
   public static final class ScorerConstants {
-    public static final double scoreSpeed=0.2;
+    public static final double scoreSpeed=0.7;
+    public static final double indexSpeed=0.7;
         
   }
   public static final class ElavatorConstants{
-    public static final double kI=0.1;
     public static final double kP=0.1;
-    public static final double kD=0;
-    public static final double targetRotHL=14;
-    public static final double targetRotPB1=3;
-    public static final double targetRotPB2=8;
-    public static final double targetRotPB3=16;
-    public static final double targetRotShelf=4.67211914;
-    public static final double elavatorSpeed=0.2;
+    public static final double kI=0;
+    public static final double kD=0.1;
+    public static final double elevatorHeights []={4,7};
+    
   }
   public static final class AlignmentConstants {
-    public static final double x1 = 0;
-    public static final double y1 = 0;
-    public static final double rad1 = 0;
-  
+   
+    public static double pDrive = 0.1;
+    public static double iDrive = 0.1;
+    public static double dDrive = 0.1;
+
+   
+
+
+    public static double pRot = 2.0;
+    public static double iRot = 0.1;
+    public static double dRot = 0.1;
     
   }
 
   
      public static final class VisionConstants{
-     //see 3424 Rebuilt for what was here
+     
+     public static double xModifier=0;
+     public static double yModifier=0;
+     public static double targetAngle[]={0,0,0,0,0,0,0,0,0,45,45,45,45,45,45,45,45,45,45,45,45};
+     public static double targetX[]={-1.6+xModifier,-1.2952+xModifier,-0.9904+xModifier,-0.6856+xModifier,-0.3808+xModifier,-0.076+xModifier,0.2288+xModifier,0.5336+xModifier,0.8384+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier};
+     public static double targetY[]={1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier};
   }
 }
