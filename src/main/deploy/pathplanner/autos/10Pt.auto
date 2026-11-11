@@ -33,6 +33,18 @@
           "data": {
             "pathName": "HL1-PB1"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PB1-HL1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HL1-PB1"
+          }
         }
       ]
     }
