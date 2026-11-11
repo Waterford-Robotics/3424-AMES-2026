@@ -176,17 +176,11 @@ public class RobotContainer {
 	);
 	//pegbaord 2 hold down
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
-    .whileTrue(
-       new InstantCommand(() -> m_elevator.pidElevatorGo(0))
-	).onFalse(
-		new InstantCommand(()-> m_elevator.stopElevator())
-	);
+		.whileTrue(m_elevator.run(() -> m_elevator.pidElevatorGo(0))
+				.finallyDo(interrupted -> m_elevator.stopElevator()));
 	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
-    .whileTrue(
-       new InstantCommand(() -> m_elevator.pidElevatorGo(1))
-	).onFalse(
-		new InstantCommand(()-> m_elevator.stopElevator())
-	);
+		.whileTrue(m_elevator.run(() -> m_elevator.pidElevatorGo(1))
+				.finallyDo(interrupted -> m_elevator.stopElevator()));
 
 	
 	

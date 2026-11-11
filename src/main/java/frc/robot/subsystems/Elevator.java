@@ -3,6 +3,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Configs.ElavatorConfigs;
@@ -24,7 +25,9 @@ public class Elevator extends SubsystemBase{
     m_elavatorLeft.getConfigurator().apply(ElavatorConfigs.ELAVATOR_LEFT_TALON_FX_CONFIGURATION, 0.5);
     m_elavatorRight.getConfigurator().apply(ElavatorConfigs.ELAVATOR_Right_TALON_FX_CONFIGURATION, 0.5);
 
-  
+    SmartDashboard.putNumber("Elevator/P", Constants.ElavatorConstants.kP);
+    SmartDashboard.putNumber("Elevator/I", Constants.ElavatorConstants.kI);
+    SmartDashboard.putNumber("Elevator/D", Constants.ElavatorConstants.kD);
   }
   
 
@@ -34,7 +37,10 @@ public class Elevator extends SubsystemBase{
     
   }
   public void pidElevatorGo(int indexHeight) {
-    
+    pid.setPID(
+        SmartDashboard.getNumber("Elevator/P", Constants.ElavatorConstants.kP),
+        SmartDashboard.getNumber("Elevator/I", Constants.ElavatorConstants.kI),
+        SmartDashboard.getNumber("Elevator/D", Constants.ElavatorConstants.kD));
     elavatorGo((pid.calculate(getPosition(), Constants.ElavatorConstants.elevatorHeights[indexHeight])));
   }
   public double getPosition() {

@@ -67,7 +67,8 @@ public class Constants {
      
      public static double xModifier=0;
      public static double yModifier=0;
-     public static double targetAngle[]={0,0,0,0,0,0,0,0,0,45,45,45,45,45,45,45,45,45,45,45,45};
+     // Desired face-parallel angular error in degrees; 0 means square to the tag face.
+     public static double targetAngle[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
      public static double targetX[]={-1.6+xModifier,-1.2952+xModifier,-0.9904+xModifier,-0.6856+xModifier,-0.3808+xModifier,-0.076+xModifier,0.2288+xModifier,0.5336+xModifier,0.8384+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier};
      public static double targetY[]={1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier};
   }
