@@ -15,30 +15,23 @@ import javax.swing.text.ElementIterator;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.AlignmentConstants;
 import frc.robot.Constants.ControllerConstants;
-
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
-import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-// import com.pathplanner.lib.events.EventTrigger;
-// import frc.robot.subsystems.IntakeSubsystem; how to import
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ScorerSubsystem;
 import frc.robot.subsystems.Limelight.AlignSubsystem;
@@ -77,12 +70,14 @@ public class RobotContainer {
 			// Note that X is defined as forward according to WPILib convention,
 			// and Y is defined as to the left according to WPILib convention.
 			m_drivetrain.setDefaultCommand(
-					// Drivetrain will execute this command periodically
-					m_drivetrain.applyRequest(() ->
-						drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-							.withVelocityY(-m_driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-							.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-					)
+					m_drivetrain.applyRequest(() -> {
+						if (!DriverStation.isTeleopEnabled()) {
+							return new SwerveRequest.Idle();
+						}
+						return drive.withVelocityX(-m_driverController.getLeftY() * MaxSpeed)
+								.withVelocityY(-m_driverController.getLeftX() * MaxSpeed)
+								.withRotationalRate(-m_driverController.getRightX() * MaxAngularRate);
+					})
 			);
 			
 	
@@ -103,20 +98,43 @@ public class RobotContainer {
 			//shootAndFlipoutCommandGroup()== a sequential group
 			
 			
-			//autos!! (only one works)
-				// m_chooser.addOption("Shoot", Shoot);
-				
-
-			// new EventTrigger("intakeRollers")
-			// .whileTrue(new RunCommand(
-			// 		() -> m_intakeSubsystem.intake(),m_intakeSubsystem));
-// I thought lines above might be useful 
-			SmartDashboard.putData("Automode", m_chooser);
+			configureAutonomousChooser();
 			
 
 
 
 	}
+
+	private void configureAutonomousChooser() {
+		SwerveRequest.Idle idle = new SwerveRequest.Idle();
+		m_chooser.setDefaultOption("Do Nothing", m_drivetrain.applyRequest(() -> idle));
+
+		// Add every PathPlanner auto file found under src/main/deploy/pathplanner/autos.
+		for (String autoName : AutoBuilder.getAllAutoNames()) {
+			m_chooser.addOption(autoName, m_drivetrain.getAutonomousCommand(autoName));
+		}
+
+		// This project currently has a standalone path, but no PathPlanner .auto files.
+		try {
+			PathPlannerPath testPath = PathPlannerPath.fromPathFile("New Path");
+			Command pathCommand = AutoBuilder.followPath(testPath);
+			if (testPath.getStartingHolonomicPose().isPresent()) {
+				pathCommand = AutoBuilder.resetOdom(testPath.getStartingHolonomicPose().get())
+						.andThen(pathCommand);
+			}
+			m_chooser.addOption("Path: New Path", pathCommand);
+		} catch (Exception e) {
+			DriverStation.reportError(
+					"Could not load PathPlanner path 'New Path': " + e.getMessage(), e.getStackTrace());
+		}
+
+		SmartDashboard.putData("Automode", m_chooser);
+	}
+
+	public Command getAutonomousCommand() {
+		return m_chooser.getSelected();
+	}
+
 	private void configureBindings() {
 	//score
 	new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.05)
