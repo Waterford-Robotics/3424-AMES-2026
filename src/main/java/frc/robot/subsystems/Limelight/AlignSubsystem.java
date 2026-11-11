@@ -73,14 +73,21 @@ public class AlignSubsystem extends SubsystemBase {
 
         boolean hasFiducial = LimelightHelpers.getTV("limelight")
                 && LimelightHelpers.getFiducialID("limelight") >= 0;
+        boolean hasValidFieldPose = false;
         double xSpeed = 0;
         double ySpeed = 0;
         double rotationSpeed = 0;
         double tagAngleError = 0;
         if (hasFiducial) {
-            var botPose = VisionSubsystem.getBotPose();
-            xSpeed = driveXPID.calculate(botPose.getX(), VisionConstants.targetX[targetIndex]);
-            ySpeed = driveYPID.calculate(botPose.getY(), VisionConstants.targetY[targetIndex]);
+            var poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+            hasValidFieldPose = LimelightHelpers.validPoseEstimate(poseEstimate);
+            if (hasValidFieldPose) {
+                xSpeed = driveXPID.calculate(poseEstimate.pose.getX(), VisionConstants.targetX[targetIndex]);
+                ySpeed = driveYPID.calculate(poseEstimate.pose.getY(), VisionConstants.targetY[targetIndex]);
+            } else {
+                driveXPID.reset();
+                driveYPID.reset();
+            }
 
             var targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight");
             var tagNormalRobotSpace = new Translation3d(0, 0, 1)
@@ -98,7 +105,7 @@ public class AlignSubsystem extends SubsystemBase {
         double maxRotation = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
         rotationSpeed = MathUtil.clamp(rotationSpeed, -maxRotation, maxRotation);
 
-        if (hasFiducial && Math.abs(tagAngleError) <= 0.05) {
+        if (hasFiducial && hasValidFieldPose && Math.abs(tagAngleError) <= 0.05) {
             Pose2d velocity = xySpeed(xSpeed, ySpeed, MaxSpeed);
             swerve.setControl(drive.withVelocityX(velocity.getX())
                     .withVelocityY(velocity.getY())
