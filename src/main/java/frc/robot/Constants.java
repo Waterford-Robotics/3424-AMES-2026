@@ -36,19 +36,19 @@ public class Constants {
 
   }
   public static final class ScorerConstants {
-    public static final double scoreSpeed=0.7;
-    public static final double indexSpeed=0.7;
+    public static final double scoreSpeed=0.15;
+    public static final double indexSpeed=0.6;
         
   }
   public static final class ElavatorConstants{
     public static final double kP=0.1;
     public static final double kI=0;
     public static final double kD=0.1;
-    public static final double elevatorHeights []={4,7};
+    public static final double elevatorHeights []={5,5,5,5,5,5};
     
   }
   public static final class AlignmentConstants {
-    public static Pose3d shelf1 = new Pose3d();
+   
     public static double pDrive = 0.1;
     public static double iDrive = 0.1;
     public static double dDrive = 0.1;
@@ -56,17 +56,21 @@ public class Constants {
    
 
 
-    public static double pRot = 2.0;
-    public static double iRot = 0.1;
-    public static double dRot = 0.1;
+    public static double pRot = 0.1;
+    public static double iRot = 0;
+    public static double dRot = 0;
     
   }
 
   
      public static final class VisionConstants{
      
-     public static double targetAngle[]={0.76};
-     public static double targetX[]={0.76,1};
-     public static double targetY[]={0.76,1};
+     public static double xModifier=0;
+     public static double yModifier=2;
+     // Desired face-parallel angular error in degrees; 0 means square to the tag face.
+     public static double targetAngle[]={0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+     public static double targetX[]={-1.6+xModifier,-1.2952+xModifier,-0.9904+xModifier,-0.6856+xModifier,-0.3808+xModifier,-0.076+xModifier,0.2288+xModifier,0.5336+xModifier,0.8384+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier,-1.5+xModifier,-0.75+xModifier,0.75+xModifier,1.5+xModifier};
+     public static double targetY[]={1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier,1+yModifier};
   }
 }
+

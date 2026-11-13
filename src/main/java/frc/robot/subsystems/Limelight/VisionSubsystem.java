@@ -12,8 +12,16 @@ public class VisionSubsystem {
     
 
     public static Pose3d getBotPose(){
-        Pose3d targetPosition= new Pose3d();
-        return targetPosition;
+                return LimelightHelpers.getBotPose3d_wpiBlue("limelight");
+
+    }
+    public static int getTargetAlign(){
+        int target=0;
+        
+        
+        
+        
+        return target;
     }
 
 

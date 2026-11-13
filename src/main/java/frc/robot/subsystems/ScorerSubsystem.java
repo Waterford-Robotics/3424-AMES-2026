@@ -19,20 +19,25 @@ public class ScorerSubsystem extends SubsystemBase{
   
    
     m_socrer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
-    m_indexer.getConfigurator().apply(ScorerConfigs.INDEXER_TALON_FX_CONFIGURATION, 0.05);
-    
+    m_indexer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
     
 
   
+  }
+  public void scoreinverse(){
+     m_indexer.set(-Constants.ScorerConstants.indexSpeed);
   }
   
 
   public void score() {
     m_socrer.set(Constants.ScorerConstants.scoreSpeed);
-    m_indexer.set(Constants.ScorerConstants.indexSpeed);
+
 
     
     
+  }
+  public void index(){
+    m_indexer.set(Constants.ScorerConstants.indexSpeed);
   }
   
 

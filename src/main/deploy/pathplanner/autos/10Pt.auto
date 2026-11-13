@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1-HL1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HL1-HL2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HL2-Shelf"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shelf-HL1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HL1-PB1"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
