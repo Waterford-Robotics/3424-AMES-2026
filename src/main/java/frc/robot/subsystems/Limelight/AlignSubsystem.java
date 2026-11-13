@@ -10,11 +10,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.RobotContainer;
 
 public class AlignSubsystem extends SubsystemBase {
     private final PIDController rotPID = new PIDController(Constants.AlignmentConstants.pRot,
@@ -30,9 +32,46 @@ public class AlignSubsystem extends SubsystemBase {
         rotPID.enableContinuousInput(-Math.PI, Math.PI);
     }
 
-    /** targetIndex is the zero-based index derived from AlignCommand.getTargetAlign(). */
+
     public void align(CommandSwerveDrivetrain swerve, int targetIndex) {
-        // The target arrays currently contain only placeholder values. Never index past
+        
+        double tagYaw = LimelightHelpers
+        .getTargetPose3d_RobotSpace("limelight")
+        .getRotation()
+        .getZ();
+        double robotX=-LimelightHelpers.getTargetPose3d_RobotSpace("limelight").getX();
+        double robotY=-LimelightHelpers.getTargetPose3d_RobotSpace("limelight").getY();
+        SmartDashboard.putNumber("robotX", robotX);
+        SmartDashboard.putNumber("robotY", robotY);
+        SmartDashboard.putNumber("Rotation", tagYaw);
+        if(!(LimelightHelpers.getTV("limelight"))||(targetIndex==-1)||!(Math.hypot(robotY, robotX)<=3)){
+            swerveStop(swerve);
+            return;
+        }
+        
+        // if(RobotContainer.tolerant(tagYaw, 0.1, 0)){
+        //     swerve.setControl(drive
+        //     .withVelocityX(driveXPID.calculate(robotX,Constants.VisionConstants.targetX[targetIndex]))
+        //     .withVelocityY(driveYPID.calculate(robotY,Constants.VisionConstants.targetY[targetIndex]))
+        //     .withRotationalRate(MathUtil.clamp(rotPID.calculate(tagYaw,0), -1, 1)));
+        //     swerve.setControl(drive);
+        // }else{
+            
+        // } 
+        swerve.setControl(drive.withRotationalRate(MathUtil.clamp(rotPID.calculate(tagYaw,0), -1, 1)));
+    }
+
+    public void swerveStop(CommandSwerveDrivetrain swerve) {
+        if (swerve != null) {
+            swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
+        }
+    }
+
+   
+}
+
+/*
+// The target arrays currently contain only placeholder values. Never index past
         // configured data or drive toward an unrelated target when a slot is unconfigured.
         if (swerve == null || targetIndex < 0 || targetIndex >= VisionConstants.targetX.length
                 || targetIndex >= VisionConstants.targetY.length
@@ -72,21 +111,4 @@ public class AlignSubsystem extends SubsystemBase {
         } else {
             swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(rotationSpeed));
         }
-    }
-
-    public void swerveStop(CommandSwerveDrivetrain swerve) {
-        if (swerve != null) {
-            swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
-        }
-    }
-
-    public static Pose2d xySpeed(double x, double y, double maxSpeed) {
-        double currentSpeed = Math.hypot(x, y);
-        if (currentSpeed > maxSpeed && currentSpeed > 0) {
-            double scale = maxSpeed / currentSpeed;
-            x *= scale;
-            y *= scale;
-        }
-        return new Pose2d(x, y, new Rotation2d());
-    }
-}
+ */

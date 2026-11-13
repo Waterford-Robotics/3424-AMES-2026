@@ -35,6 +35,7 @@ import frc.robot.subsystems.DashboardConfigsSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ScorerSubsystem;
 import frc.robot.subsystems.Limelight.AlignSubsystem;
+import frc.robot.subsystems.Limelight.VisionSubsystem;
 
 
 public class RobotContainer {
@@ -150,7 +151,7 @@ public class RobotContainer {
 //align
 	new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
 		.whileTrue(
-				new RunCommand(() ->m_alignSubsystem.align(m_drivetrain,2),  m_drivetrain)
+				new RunCommand(() ->m_alignSubsystem.align(m_drivetrain,VisionSubsystem.getTargetAlign()))
 		)
 		.onFalse(
 				new InstantCommand(() -> m_alignSubsystem.swerveStop(m_drivetrain))
@@ -167,21 +168,21 @@ public class RobotContainer {
 	).onFalse(
 		new InstantCommand(()-> m_elevator.stopElevator())
 	);
-	//pid control for elevator pegboard 1
-	new JoystickButton(m_operatorController.getHID(), 6)
+	new JoystickButton(m_operatorController.getHID(), 5)
     .onTrue(
-       new InstantCommand(() -> m_elevator.elavatorGo(-.3))
+       new InstantCommand(() -> m_elevator.elavatorGo(.3))
 	).onFalse(
 		new InstantCommand(()-> m_elevator.stopElevator())
 	);
-	//pegbaord 2 hold down
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard1)
-		.whileTrue(m_elevator.run(() -> m_elevator.pidElevatorGo(0))
-				.finallyDo(interrupted -> m_elevator.stopElevator()));
-	new JoystickButton(m_operatorController.getHID(), ControllerConstants.pegboard2)
-		.whileTrue(m_elevator.run(() -> m_elevator.pidElevatorGo(1))
-				.finallyDo(interrupted -> m_elevator.stopElevator()));
-
+	//pid control for elevator pegboard 1
+	new Trigger(() -> m_operatorController.getRawAxis(ControllerConstants.k_rightTrigger) > 0.05)
+		.whileTrue(
+				new RunCommand(() ->m_elevator.pidElevatorGo(VisionSubsystem.getTargetAlign()))
+		)
+		.onFalse(
+			new InstantCommand(() ->m_elevator.stopElevator())
+		);
+	
 	
 	
 	
@@ -257,7 +258,7 @@ public class RobotContainer {
 	// 	new SetIntakeFlipoutCommand(m_intakeFlipoutSubsystem, "INTAKE")
 	// 	);
 	// }
-	boolean tolerant;
+
 	public static boolean tolerant(double input,double tolerance,double targetNumber){
 		return Math.abs(input - targetNumber) <= tolerance;
 	}	

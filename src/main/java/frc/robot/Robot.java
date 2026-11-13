@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Limelight.VisionSubsystem;
 
 
 
@@ -19,6 +20,7 @@ import frc.robot.subsystems.Elevator;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+  
   
   private Command m_autonomousCommand;
 
@@ -53,9 +55,10 @@ public class Robot extends TimedRobot {
     DashboardConfigsSubsystem.set("Peg Board Slot 10", false);
     DashboardConfigsSubsystem.set("Peg Board Slot 11", false);
     DashboardConfigsSubsystem.set("Peg Board Slot 12", false);
-    DashboardConfigsSubsystem.set("Status of Inventory Cell", false);
-    DashboardConfigsSubsystem.set("Status of Inventory Shell",false);
+    
+    DashboardConfigsSubsystem.set("Shell", false);
 
+    DashboardConfigsSubsystem.set("cell", false);
 
   }
 
@@ -73,6 +76,18 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Elevator Postion", m_robotContainer.m_elevator.getPosition());
+    SmartDashboard.putNumber("Alignment", VisionSubsystem.getTargetAlign());
+    
+    if(DashboardConfigsSubsystem.get("shell")){
+      //make elevator command
+      DashboardConfigsSubsystem.set("shell", false);
+    }
+    if(DashboardConfigsSubsystem.get("cell")){
+      //make elevator command
+      DashboardConfigsSubsystem.set("cell", false);
+    }
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
