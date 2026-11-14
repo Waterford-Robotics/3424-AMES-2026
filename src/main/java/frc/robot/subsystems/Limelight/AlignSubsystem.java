@@ -64,6 +64,15 @@ public class AlignSubsystem extends SubsystemBase {
 
         
         swerve.setControl(drive.withRotationalRate(-MathUtil.clamp(1, -1, rotPID.calculate(VisionSubsystem.getBotPose().getRotation().getZ(),0))));
+        double errorX=VisionSubsystem.getBotPose().getX()-Constants.VisionConstants.targetX[VisionSubsystem.getTargetAlign()];
+        double errorY=VisionSubsystem.getBotPose().getY()-Constants.VisionConstants.targetY[VisionSubsystem.getTargetAlign()];
+        double xP=0.1;
+        double yP=0.1;
+        errorX*=xP;
+        errorY*=yP;
+        if(Math.abs(Yaw) <=(Yaw+ 0.1)||Math.abs(Yaw) <=(Yaw- 0.1)){
+            swerve.setControl(drive.withVelocityX(errorX).withVelocityY(errorY));
+        }
         
     }
      
