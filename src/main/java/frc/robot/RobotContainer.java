@@ -125,8 +125,7 @@ public class RobotContainer {
 			}
 			m_chooser.addOption("Path: New Path", pathCommand);
 		} catch (Exception e) {
-			DriverStation.reportError(
-					"Could not load PathPlanner path 'New Path': " + e.getMessage(), e.getStackTrace());
+			
 		}
 
 		SmartDashboard.putData("Automode", m_chooser);
