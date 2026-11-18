@@ -28,14 +28,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.AlignCommand;
+//import frc.robot.commands.AlignCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ScorerSubsystem;
 import frc.robot.subsystems.Limelight.AlignSubsystem;
-import frc.robot.commands.AlignCommand;
+
 
 
 public class RobotContainer {
@@ -189,13 +189,13 @@ public class RobotContainer {
     .onTrue(
        new InstantCommand(() -> m_elevator.elavatorGo(.1))
 	).onFalse(
-		new InstantCommand(()-> m_elevator.elavatorGo(0.5))
+		new InstantCommand(()-> m_elevator.elavatorGo(0.03))
 	);
 	new JoystickButton(m_operatorController.getHID(), 6)
     .onTrue(
        new InstantCommand(() -> m_elevator.elavatorGo(-.1))
 	).onFalse(
-		new InstantCommand(()-> m_elevator.elavatorGo(0.5))
+		new InstantCommand(()-> m_elevator.elavatorGo(0.03))
 	);
 	
 	

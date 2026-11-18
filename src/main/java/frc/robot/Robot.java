@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     DashboardConfigsSubsystem.set("Status of Inventory Shell",false);
     UsbCamera camera = CameraServer.startAutomaticCapture();
 camera.setResolution(320, 240);
-camera.setFPS(15);
+camera.setFPS(30);
 
   }
 
