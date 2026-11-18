@@ -170,7 +170,7 @@ public class RobotContainer {
 //align
 	new Trigger(() -> m_driverController.getRawAxis(ControllerConstants.k_leftTrigger) > 0.05)
 		.whileTrue(
-				new RunCommand(() ->m_alignSubsystem.align(m_drivetrain,2))
+				new RunCommand(() ->m_alignSubsystem.align(m_drivetrain,0))
 		)
 		.onFalse(
 				new InstantCommand(() -> m_alignSubsystem.swerveStop(m_drivetrain))
@@ -189,13 +189,13 @@ public class RobotContainer {
     .onTrue(
        new InstantCommand(() -> m_elevator.elavatorGo(.1))
 	).onFalse(
-		new InstantCommand(()-> m_elevator.stopElevator())
+		new InstantCommand(()-> m_elevator.elavatorGo(0.5))
 	);
 	new JoystickButton(m_operatorController.getHID(), 6)
     .onTrue(
        new InstantCommand(() -> m_elevator.elavatorGo(-.1))
 	).onFalse(
-		new InstantCommand(()-> m_elevator.stopElevator())
+		new InstantCommand(()-> m_elevator.elavatorGo(0.5))
 	);
 	
 	

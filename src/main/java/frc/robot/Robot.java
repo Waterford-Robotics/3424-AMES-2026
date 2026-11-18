@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import frc.robot.subsystems.Elevator;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+
 
 
 
@@ -55,7 +58,9 @@ public class Robot extends TimedRobot {
     DashboardConfigsSubsystem.set("Peg Board Slot 12", false);
     DashboardConfigsSubsystem.set("Status of Inventory Cell", false);
     DashboardConfigsSubsystem.set("Status of Inventory Shell",false);
-
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+camera.setResolution(320, 240);
+camera.setFPS(15);
 
   }
 

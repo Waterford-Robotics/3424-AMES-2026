@@ -1,113 +1,156 @@
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.Limelight.LimelightHelpers;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Limelight.LimelightHelpers;
 
+// Positions Robot at the Nearest Valid Target
 public class AlignCommand extends Command {
-  private PIDController xController, yController, rotController;
-  private double targetX, targetY, targetRot;
-  private Timer dontSeeTagTimer, stopTimer;
-  private CommandSwerveDrivetrain drivebase;
-  private double tagID = -1;
 
-  private final SwerveRequest.RobotCentric driveRequest = new SwerveRequest.RobotCentric();
+  // CTRE Swerve Drivetrain & Robot-Centric Request
+  private final CommandSwerveDrivetrain m_CommandSwerveDrivetrain;
+  private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric();
 
-  public AlignCommand(boolean isRightScore, CommandSwerveDrivetrain drivebase, double targetX, double targetY, double targetRot) {
-    this(
-        targetX,
-        isRightScore ? targetY : -targetY,
-        targetRot,
-        drivebase
-    );
-  }
+  // Max speeds pulled from CTRE TunerConstants (replaces YAGSL SwerveConstants)
+  private final double maxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+  private final double maxAngularSpeed = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
-  public AlignCommand(double targetX, double targetY, double targetRot, CommandSwerveDrivetrain drivebase) {
-    xController = new PIDController(0.1, 0.0, 0);  // Vertical movement
-    yController = new PIDController(0.1, 0.0, 0);  // Horitontal movement
-    rotController = new PIDController(0.1, 0, 0);  // Rotation
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.targetRot = targetRot;
-    this.drivebase = drivebase;
-    addRequirements(drivebase);
+  // Timer for cancellation with failed robot adjustment
+  Timer timer = new Timer();
+
+  // PID Controllers
+  PIDController m_aimController = new PIDController(VisionConstants.kP_aim, VisionConstants.kI_aim, VisionConstants.kD_aim);
+  PIDController m_rangeController = new PIDController(VisionConstants.kP_range, VisionConstants.kI_range, VisionConstants.kD_range);
+  PIDController m_strafeController = new PIDController(VisionConstants.kP_strafe, VisionConstants.kI_strafe, VisionConstants.kD_strafe);
+
+  // Bot Pose Target Space Relative [TX, TY, TZ, Pitch, Yaw, Roll]
+  private double[] botPoseTargetSpace = new double[6];
+
+  // All the Valid IDs available for positioning
+  int[] validIDs = {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
+
+  // Boolean for checking "Tag In View"
+  private boolean tiv;
+
+  // Target Setpoints
+  private double m_rangeTarget;
+  private double m_strafeTarget;
+  private double m_aimTarget;
+
+  public AlignCommand(CommandSwerveDrivetrain driveSubsystem) {
+    m_CommandSwerveDrivetrain = driveSubsystem;
+    addRequirements(driveSubsystem);
   }
 
   @Override
   public void initialize() {
-    this.stopTimer = new Timer();
-    this.stopTimer.start();
-    this.dontSeeTagTimer = new Timer();
-    this.dontSeeTagTimer.start();
+    VisionConstants.k_positioned = false;
 
-    rotController.setSetpoint(targetRot);
-    rotController.setTolerance(0.1);
+    // Filter out undesired AprilTag IDs
+    LimelightHelpers.SetFiducialIDFiltersOverride(VisionConstants.k_limelightName, validIDs);
 
-    xController.setSetpoint(targetX);
-    xController.setTolerance(0.1);
+    // Update BotPoseTargetSpace
+    botPoseTargetSpace = NetworkTableInstance.getDefault()
+        .getTable(VisionConstants.k_limelightName)
+        .getEntry("botpose_targetspace")
+        .getDoubleArray(new double[6]);
 
-    yController.setSetpoint(targetY);
-    yController.setTolerance(0.1);
+    // Check for TIV
+    tiv = (LimelightHelpers.getTV(VisionConstants.k_limelightName)
+        && botPoseTargetSpace[2] > VisionConstants.k_tzValidRange
+        && Math.abs(botPoseTargetSpace[4]) < VisionConstants.k_yawValidRange);
 
-    tagID = LimelightHelpers.getFiducialID("");
+    // Set Constants
+    if (VisionConstants.k_isRightReef) {
+      m_strafeTarget = VisionConstants.k_strafeReefRightTarget;
+      m_rangeTarget = VisionConstants.k_rangeReefRightTarget;
+      m_aimTarget = VisionConstants.k_aimReefRightTarget;
+    } else {
+      m_strafeTarget = VisionConstants.k_strafeReefLeftTarget;
+      m_rangeTarget = VisionConstants.k_rangeReefLeftTarget;
+      m_aimTarget = VisionConstants.k_aimReefLeftTarget;
+    }
+
+    timer.restart();
   }
 
   @Override
   public void execute() {
-    if (LimelightHelpers.getTV("") && LimelightHelpers.getFiducialID("") == tagID) {
-      this.dontSeeTagTimer.reset();
+    VisionConstants.k_positioning = true;
 
-      double[] postions = LimelightHelpers.getBotPose_TargetSpace("");
-      SmartDashboard.putNumber("x", postions[2]);
+    // Update the pose from NetworkTables (Limelight Readings)
+    botPoseTargetSpace = NetworkTableInstance.getDefault()
+        .getTable(VisionConstants.k_limelightName)
+        .getEntry("botpose_targetspace")
+        .getDoubleArray(new double[6]);
 
-      double xSpeed = xController.calculate(postions[2]);
-      SmartDashboard.putNumber("xspee", xSpeed);
-      double ySpeed = -yController.calculate(postions[0]);
-      double rotValue = -rotController.calculate(postions[4]);
+    // Drive using CTRE RobotCentric SwerveRequest
+    if (tiv) {
+      tiv = LimelightHelpers.getTV(VisionConstants.k_limelightName)
+          && botPoseTargetSpace[2] > VisionConstants.k_tzValidRange;
 
-      drivebase.setControl(
-          driveRequest
-              .withVelocityX(xSpeed)
-              .withVelocityY(ySpeed)
-              .withRotationalRate(rotValue)
-      );
-
-      if (!rotController.atSetpoint() ||
-          !yController.atSetpoint() ||
-          !xController.atSetpoint()) {
-        stopTimer.reset();
-      }
-    } else {
-      drivebase.setControl(
-          driveRequest
-              .withVelocityX(0)
-              .withVelocityY(0)
-              .withRotationalRate(0)
-      );
+      m_CommandSwerveDrivetrain.setControl(
+          drive.withVelocityX(limelight_range_PID())
+               .withVelocityY(limelight_strafe_PID())
+               .withRotationalRate(limelight_aim_PID()));
     }
-
-    SmartDashboard.putNumber("poseValidTimer", stopTimer.get());
   }
 
   @Override
   public void end(boolean interrupted) {
-    drivebase.setControl(
-        driveRequest
-            .withVelocityX(0)
-            .withVelocityY(0)
-            .withRotationalRate(0)
-    );
+    VisionConstants.k_positioning = false;
+
+    // Stop the CTRE swerve drivetrain when the command finishes or interrupts
+    m_CommandSwerveDrivetrain.setControl(
+        drive.withVelocityX(0)
+             .withVelocityY(0)
+             .withRotationalRate(0));
+
+    if (Math.abs(botPoseTargetSpace[0] - m_strafeTarget) < VisionConstants.k_strafeThreshold
+        && Math.abs(botPoseTargetSpace[2] - m_rangeTarget) < VisionConstants.k_rangeThreshold
+        && Math.abs(botPoseTargetSpace[4] - m_aimTarget) < VisionConstants.k_aimThreshold) {
+      VisionConstants.k_positioned = true;
+    }
   }
 
   @Override
   public boolean isFinished() {
-    // Requires the robot to stay in the correct position for 0.3 seconds, as long as it gets a tag in the camera
-    return this.dontSeeTagTimer.hasElapsed(0.25) ||
-        stopTimer.hasElapsed(0.2);
+    return (Math.abs(botPoseTargetSpace[0] - m_strafeTarget) < VisionConstants.k_strafeThreshold
+        && Math.abs(botPoseTargetSpace[2] - m_rangeTarget) < VisionConstants.k_rangeThreshold
+        && Math.abs(botPoseTargetSpace[4] - m_aimTarget) < VisionConstants.k_aimThreshold)
+        || !tiv
+        || timer.get() > 2;
+  }
+
+  // Strafe velocity in m/s (+Y = left in CTRE RobotCentric)
+  private double limelight_strafe_PID() {
+    double targetingStrafeSpeed = m_strafeController.calculate(botPoseTargetSpace[0] - m_strafeTarget);
+    targetingStrafeSpeed *= -1.0 * maxSpeed;
+    return targetingStrafeSpeed;
+  }
+
+  // Forward velocity in m/s (+X = forward in CTRE RobotCentric)
+  private double limelight_range_PID() {
+    double targetingForwardSpeed = m_rangeController.calculate(botPoseTargetSpace[2] - m_rangeTarget);
+    targetingForwardSpeed *= 1.0 * maxSpeed;
+    return targetingForwardSpeed;
+  }
+
+  // Angular velocity in rad/s (+CCW in CTRE RobotCentric)
+  private double limelight_aim_PID() {
+    m_aimController.enableContinuousInput(-30, 30);
+    double targetingAngularVelocity = m_aimController.calculate(botPoseTargetSpace[4] - m_aimTarget);
+    targetingAngularVelocity *= -0.1 * maxAngularSpeed;
+    return targetingAngularVelocity;
   }
 }
