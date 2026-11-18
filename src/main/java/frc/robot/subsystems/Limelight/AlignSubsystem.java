@@ -19,7 +19,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class AlignSubsystem extends SubsystemBase {
-    private final PIDController rotPID = new PIDController(Constants.AlignmentConstants.pRot,
+    private final PIDController rotPID = new PIDController(0.05,
             Constants.AlignmentConstants.iRot, Constants.AlignmentConstants.dRot);
     private final PIDController driveXPID = new PIDController(Constants.AlignmentConstants.pDrive,
             Constants.AlignmentConstants.iDrive, Constants.AlignmentConstants.dDrive);
@@ -62,7 +62,6 @@ public class AlignSubsystem extends SubsystemBase {
     public void align(CommandSwerveDrivetrain swerve, int targetIndex) {
         double Yaw=VisionSubsystem.getBotPose().getRotation().getZ();
 
-        
         swerve.setControl(drive.withRotationalRate(-MathUtil.clamp(1, -1, rotPID.calculate(VisionSubsystem.getBotPose().getRotation().getZ(),0))));
         double errorX=VisionSubsystem.getBotPose().getX()-Constants.VisionConstants.targetX[VisionSubsystem.getTargetAlign()];
         double errorY=VisionSubsystem.getBotPose().getY()-Constants.VisionConstants.targetY[VisionSubsystem.getTargetAlign()];
@@ -70,8 +69,15 @@ public class AlignSubsystem extends SubsystemBase {
         double yP=0.1;
         errorX*=xP;
         errorY*=yP;
-        if(Math.abs(Yaw) <=(Yaw+ 0.1)||Math.abs(Yaw) <=(Yaw- 0.1)){
-            swerve.setControl(drive.withVelocityX(errorX).withVelocityY(errorY));
+        SmartDashboard.putNumber("Yaw", Yaw);
+        SmartDashboard.putNumber("X", errorX);
+        SmartDashboard.putNumber("Y", errorY);
+        if(Yaw>=0.1||Yaw<=-0.1){
+            SmartDashboard.putBoolean("Driving", true);
+            swerve.setControl(drive.withVelocityY(errorX).withVelocityX(errorY));
+        }
+        else{
+            SmartDashboard.putBoolean("Driving", true);
         }
         
     }

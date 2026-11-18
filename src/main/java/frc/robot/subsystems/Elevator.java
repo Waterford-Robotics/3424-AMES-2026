@@ -46,6 +46,9 @@ public class Elevator extends SubsystemBase{
   public double getPosition() {
         return ((-m_elavatorLeft.getPosition().getValueAsDouble()+m_elavatorRight.getPosition().getValueAsDouble())/2);
     }
+    public double getSpeed(){
+      return ((m_elavatorLeft.getVelocity().getValueAsDouble()+m_elavatorRight.getVelocity().getValueAsDouble())/2);
+    }
   
   
 
