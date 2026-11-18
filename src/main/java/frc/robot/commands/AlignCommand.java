@@ -1,139 +1,113 @@
 package frc.robot.commands;
-import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.DashboardConfigsSubsystem;
-
-import frc.robot.subsystems.Limelight.LimelightHelpers;
-import frc.robot.subsystems.Limelight.LimelightHelpers.LimelightTarget_Retro;
-import frc.robot.RobotContainer;
 import frc.robot.Constants;
-import frc.robot.Constants.AlignmentConstants;
-import frc.robot.Constants.ElavatorConstants;
-import frc.robot.RobotContainer;
+import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+public class AlignCommand extends Command {
+  private PIDController xController, yController, rotController;
+  private double targetX, targetY, targetRot;
+  private Timer dontSeeTagTimer, stopTimer;
+  private CommandSwerveDrivetrain drivebase;
+  private double tagID = -1;
 
-public class AlignCommand extends Command{
-  CommandSwerveDrivetrain swerveSubsystem;
-  private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric();
-    
- 
-  DashboardConfigsSubsystem dashboard;
-  
-  double m_seconds;
-  Timer m_timer = new Timer();
-  
-  
-  
+  private final SwerveRequest.RobotCentric driveRequest = new SwerveRequest.RobotCentric();
 
-  // Constructor
-  CommandSwerveDrivetrain m_swerveSubsystem;
-  public AlignCommand(double seconds,DashboardConfigsSubsystem m_dashboard,CommandSwerveDrivetrain m_swerveSubsystem) {
-       
-    
-    dashboard = m_dashboard;
-    m_seconds = seconds;
-    swerveSubsystem = m_swerveSubsystem;
-    addRequirements(swerveSubsystem);
-    
+  public AlignCommand(boolean isRightScore, CommandSwerveDrivetrain drivebase) {
+    this(
+        Constants.X_SETPOINT_ALIGNMENT,
+        isRightScore ? Constants.Y_SETPOINT_ALIGNMENT : -Constants.Y_SETPOINT_ALIGNMENT,
+        Constants.ROT_SETPOINT_ALIGNMENT,
+        drivebase
+    );
   }
 
+  public AlignCommand(double targetX, double targetY, double targetRot, CommandSwerveDrivetrain drivebase) {
+    xController = new PIDController(Constants.X_ALIGNMENT_P, 0.0, 0);  // Vertical movement
+    yController = new PIDController(Constants.Y_ALIGNMENT_P, 0.0, 0);  // Horitontal movement
+    rotController = new PIDController(Constants.ROT_ALIGNMENT_P, 0, 0);  // Rotation
+    this.targetX = targetX;
+    this.targetY = targetY;
+    this.targetRot = targetRot;
+    this.drivebase = drivebase;
+    addRequirements(drivebase);
+  }
 
-  // Reset timer when the command starts executing
+  @Override
   public void initialize() {
-    m_timer.start();
-    m_timer.reset();
-    
-    
-    
+    this.stopTimer = new Timer();
+    this.stopTimer.start();
+    this.dontSeeTagTimer = new Timer();
+    this.dontSeeTagTimer.start();
+
+    rotController.setSetpoint(targetRot);
+    rotController.setTolerance(Constants.ROT_TOLERANCE_ALIGNMENT);
+
+    xController.setSetpoint(targetX);
+    xController.setTolerance(Constants.X_TOLERANCE_ALIGNMENT);
+
+    yController.setSetpoint(targetY);
+    yController.setTolerance(Constants.Y_TOLERANCE_ALIGNMENT);
+
+    tagID = LimelightHelpers.getFiducialID("");
   }
-  public int getTargetAlign(){
-    
-    boolean[] shelfSlots = {
-        DashboardConfigsSubsystem.get("Shelf Slot 1"),
-        DashboardConfigsSubsystem.get("Shelf Slot 2"),
-        DashboardConfigsSubsystem.get("Shelf Slot 3"),
-        DashboardConfigsSubsystem.get("Shelf Slot 4"),
-        DashboardConfigsSubsystem.get("Shelf Slot 5"),
-        DashboardConfigsSubsystem.get("Shelf Slot 6"),
-        DashboardConfigsSubsystem.get("Shelf Slot 7"),
-        DashboardConfigsSubsystem.get("Shelf Slot 8"),
-        DashboardConfigsSubsystem.get("Shelf Slot 9")
-    };
 
-    boolean[] pegboard = {
-        DashboardConfigsSubsystem.get("Peg Board Slot 1"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 2"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 3"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 4"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 5"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 6"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 7"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 8"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 9"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 10"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 11"),
-        DashboardConfigsSubsystem.get("Peg Board Slot 12")
-    };
-
-    // Check shelf slots (Indices 0 to 8 mapped to targets 1 to 9)
-    for (int i = 0; i < shelfSlots.length; i++) {
-        if (shelfSlots[i]) {
-            return i + 1;
-        }
-    }
-
-    // Check pegboard slots (Indices 0 to 11 mapped to targets 10 to 21)
-    for (int i = 0; i < pegboard.length; i++) {
-        if (pegboard[i]) {
-            return i + 10;
-        }
-    }
-
-    // Default target if none selected (e.g., 0 for fallback pose or error handling)
-    return 22;
-}
-
- 
-  
- @Override
-  // Actual command
+  @Override
   public void execute() {
-    
-    
-    
-    swerveSubsystem.setControl(drive.withVelocityY(0.1));
-     
-}
-    
-    
-  
+    if (LimelightHelpers.getTV("") && LimelightHelpers.getFiducialID("") == tagID) {
+      this.dontSeeTagTimer.reset();
 
+      double[] postions = LimelightHelpers.getBotPose_TargetSpace("");
+      SmartDashboard.putNumber("x", postions[2]);
 
-  // Stuff that happens when command is over
+      double xSpeed = xController.calculate(postions[2]);
+      SmartDashboard.putNumber("xspee", xSpeed);
+      double ySpeed = -yController.calculate(postions[0]);
+      double rotValue = -rotController.calculate(postions[4]);
+
+      drivebase.setControl(
+          driveRequest
+              .withVelocityX(xSpeed)
+              .withVelocityY(ySpeed)
+              .withRotationalRate(rotValue)
+      );
+
+      if (!rotController.atSetpoint() ||
+          !yController.atSetpoint() ||
+          !xController.atSetpoint()) {
+        stopTimer.reset();
+      }
+    } else {
+      drivebase.setControl(
+          driveRequest
+              .withVelocityX(0)
+              .withVelocityY(0)
+              .withRotationalRate(0)
+      );
+    }
+
+    SmartDashboard.putNumber("poseValidTimer", stopTimer.get());
+  }
+
+  @Override
   public void end(boolean interrupted) {
-    
+    drivebase.setControl(
+        driveRequest
+            .withVelocityX(0)
+            .withVelocityY(0)
+            .withRotationalRate(0)
+    );
   }
 
-
-  // Checks if the command is done
+  @Override
   public boolean isFinished() {
-    // Am I done?  Am I done? Am I finally done?
-    
-    return m_timer.hasElapsed(m_seconds);
+    // Requires the robot to stay in the correct position for 0.3 seconds, as long as it gets a tag in the camera
+    return this.dontSeeTagTimer.hasElapsed(Constants.DONT_SEE_TAG_WAIT_TIME) ||
+        stopTimer.hasElapsed(Constants.POSE_VALIDATION_TIME);
   }
 }
-    
-
-
-    

@@ -28,13 +28,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
-
+import frc.robot.commands.AlignCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.DashboardConfigsSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ScorerSubsystem;
 import frc.robot.subsystems.Limelight.AlignSubsystem;
+import frc.robot.commands.AlignCommand;
 
 
 public class RobotContainer {
@@ -174,6 +175,10 @@ public class RobotContainer {
 		.onFalse(
 				new InstantCommand(() -> m_alignSubsystem.swerveStop(m_drivetrain))
 		);
+		
+    m_driverController.leftTrigger()
+        .onTrue(new AlignCommand(-1.0, 0.0, 0.0, m_drivetrain));
+	
 	//reset gyro
 	new JoystickButton(m_driverController.getHID(), 7)
     .onTrue(
