@@ -36,8 +36,8 @@ public class Constants {
 
   }
   public static final class ScorerConstants {
-    public static final double scoreSpeed=0.8;
-    public static final double indexSpeed=0.1;
+    public static final double scoreSpeed=0.5;
+    public static final double indexSpeed=0.12;
         
   }
   public static final class ElavatorConstants{

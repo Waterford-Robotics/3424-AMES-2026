@@ -176,8 +176,8 @@ public class RobotContainer {
 				new InstantCommand(() -> m_alignSubsystem.swerveStop(m_drivetrain))
 		);
 		
-    m_driverController.leftTrigger()
-        .onTrue(new AlignCommand(-1.0, 0.0, 0.0, m_drivetrain));
+    // m_driverController.leftTrigger()
+    //     .onTrue(new AlignCommand(-1.0, 0.0, 0.0, m_drivetrain));
 	
 	//reset gyro
 	new JoystickButton(m_driverController.getHID(), 7)

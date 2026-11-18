@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Configs.ScorerConfigs;
@@ -23,6 +26,7 @@ public class ScorerSubsystem extends SubsystemBase{
     m_socrer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
     m_indexer.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.05);
     m_socrer2.getConfigurator().apply(ScorerConfigs.SCORER_TALON_FX_CONFIGURATION, 0.5);
+    SmartDashboard.putNumber("Score Speed",0.13);
     
 
   
@@ -41,8 +45,8 @@ public class ScorerSubsystem extends SubsystemBase{
     
   }
   public void index(){
-    m_indexer.set(Constants.ScorerConstants.indexSpeed);
-    m_socrer2.set(-Constants.ScorerConstants.indexSpeed);
+    m_indexer.set(SmartDashboard.getNumber("Score Speed", 0.13));
+    m_socrer2.set(-SmartDashboard.getNumber("Score Speed", 0.13));
   }
   
 

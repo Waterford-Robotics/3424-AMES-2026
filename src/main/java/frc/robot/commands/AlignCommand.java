@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.Limelight.LimelightHelpers;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class AlignCommand extends Command {
@@ -18,19 +18,19 @@ public class AlignCommand extends Command {
 
   private final SwerveRequest.RobotCentric driveRequest = new SwerveRequest.RobotCentric();
 
-  public AlignCommand(boolean isRightScore, CommandSwerveDrivetrain drivebase) {
+  public AlignCommand(boolean isRightScore, CommandSwerveDrivetrain drivebase, double targetX, double targetY, double targetRot) {
     this(
-        Constants.X_SETPOINT_ALIGNMENT,
-        isRightScore ? Constants.Y_SETPOINT_ALIGNMENT : -Constants.Y_SETPOINT_ALIGNMENT,
-        Constants.ROT_SETPOINT_ALIGNMENT,
+        targetX,
+        isRightScore ? targetY : -targetY,
+        targetRot,
         drivebase
     );
   }
 
   public AlignCommand(double targetX, double targetY, double targetRot, CommandSwerveDrivetrain drivebase) {
-    xController = new PIDController(Constants.X_ALIGNMENT_P, 0.0, 0);  // Vertical movement
-    yController = new PIDController(Constants.Y_ALIGNMENT_P, 0.0, 0);  // Horitontal movement
-    rotController = new PIDController(Constants.ROT_ALIGNMENT_P, 0, 0);  // Rotation
+    xController = new PIDController(0.1, 0.0, 0);  // Vertical movement
+    yController = new PIDController(0.1, 0.0, 0);  // Horitontal movement
+    rotController = new PIDController(0.1, 0, 0);  // Rotation
     this.targetX = targetX;
     this.targetY = targetY;
     this.targetRot = targetRot;
@@ -46,13 +46,13 @@ public class AlignCommand extends Command {
     this.dontSeeTagTimer.start();
 
     rotController.setSetpoint(targetRot);
-    rotController.setTolerance(Constants.ROT_TOLERANCE_ALIGNMENT);
+    rotController.setTolerance(0.1);
 
     xController.setSetpoint(targetX);
-    xController.setTolerance(Constants.X_TOLERANCE_ALIGNMENT);
+    xController.setTolerance(0.1);
 
     yController.setSetpoint(targetY);
-    yController.setTolerance(Constants.Y_TOLERANCE_ALIGNMENT);
+    yController.setTolerance(0.1);
 
     tagID = LimelightHelpers.getFiducialID("");
   }
@@ -107,7 +107,7 @@ public class AlignCommand extends Command {
   @Override
   public boolean isFinished() {
     // Requires the robot to stay in the correct position for 0.3 seconds, as long as it gets a tag in the camera
-    return this.dontSeeTagTimer.hasElapsed(Constants.DONT_SEE_TAG_WAIT_TIME) ||
-        stopTimer.hasElapsed(Constants.POSE_VALIDATION_TIME);
+    return this.dontSeeTagTimer.hasElapsed(0.25) ||
+        stopTimer.hasElapsed(0.2);
   }
 }
